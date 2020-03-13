@@ -1,9 +1,35 @@
-<h1> Welcome to SoftSearch </h1>
 
-<%= form_with(url: "#", method: "get") do %>
-<%= label_tag(:q, "Search for:") %>
-<%= text_field_tag(:q) %>
-<%= submit_tag("Search") %>
-<% end %>
+ <div className="nav-bar-homepage">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Insert Logo</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="#">Find Jobs</a>
+        <a class="p-2 text-dark" href="#">Post a Job</a>
+        <a class="btn btn-outline-primary" href="#">Log In</a>
+    </nav>
+    <a class="btn btn-outline-primary" href="#">Sign up</a>
+    </div>
+</div> 
 
-<%= react_component "Hello" %>
+<div className="top-banner-homepage">
+    <div id="title-homepage">Get Hired. Start Coding</div> 
+    
+    <%= form_with(url: "#", method: "get") do %>
+    <%= label_tag(:q, "") %> 
+    <%= text_field_tag(:q) %>
+    <%= submit_tag("SEARCH JOBS") %>
+    <% end %>
+
+</div>
+
+<div className="companyinfo-homepage">
+    <div id="subtitles-homepage">Over 1000+ Jobs Posted</div> 
+
+</div>
+
+<div className="testimonials-homepage">
+    <div id="subtitles-homepage">They believe in us. We believe in them.</div> 
+
+</div>
+
+<%= react_component "Footer" %>
