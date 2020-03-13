@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :jobs, dependent: :destroy
+  has_many :user_jobs, through: :jobs, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
