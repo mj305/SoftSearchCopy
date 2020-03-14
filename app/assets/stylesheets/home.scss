@@ -1,3 +1,26 @@
+// Fonts
+@font-face {
+  font-family: 'Metropolis-Bold';
+  src: url('/app/assets/fonts/Metropolis-Bold.otf')
+}
+@font-face {
+  font-family: 'Metropolis-Regular';
+  src: url('/app/assets/fonts/Metropolis-Regular.otf')
+}
+@font-face {
+  font-family: 'Metropolis-SemiBold';
+  src: url('/app/assets/fonts/Metropolis-SemiBold.otf')
+}
+
+//nav
+
+//banner
+
+.test {
+  color: red;
+  font-family: Metropolis-Bold;
+}
+
 .top-banner-homepage {
   position: relative;
   background-color: #343a40;
@@ -6,8 +29,6 @@
   padding-top: 15rem;
   padding-bottom: 12rem;
 }
-
-
 
 .top-banner-homepage h1 {
   font-size: 200rem;
