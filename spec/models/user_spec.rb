@@ -8,19 +8,25 @@ RSpec.describe User, type: :model do
                         )
   }
 
-  it "is valid with valid attributes" do 
-    expect(subject).to be_valid
+  describe "Validations" do
+    it "is valid with valid attributes" do 
+      expect(subject).to be_valid
+    end
+
+    it "is not valid without a email" do
+      subject.email = nil
+      expect(subject).to_not be_valid 
+    end
+
+    it "is not valid without a password" do
+      subject.password = nil
+      expect(subject).to_not be_valid
+    end
   end
 
-  it "is not valid without a email" do
-    subject.email = nil
-    expect(subject).to_not be_valid 
+  describe "Associations" do
+    it "should have many jobs if employer:true" do
+     should have_many(:jobs) # should check if employer is true in job test
+    end
   end
-
-  it "is not valid without a password" do
-    subject.password = nil
-    expect(subject).to_not be_valid
-  end
-
-  
 end
