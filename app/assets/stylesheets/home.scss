@@ -1,0 +1,24 @@
+.top-banner-homepage {
+  position: relative;
+  background-color: #343a40;
+  background: url("../img/bg-masthead.jpg") no-repeat center center;
+  background-size: cover;
+  padding-top: 15rem;
+  padding-bottom: 12rem;
+}
+
+
+
+.top-banner-homepage h1 {
+  font-size: 200rem;
+}
+
+@media (min-width: 768px) {
+.top-banner-homepage {
+    padding-top: 12rem;
+    padding-bottom: 12rem;
+  }
+  .top-banner-homepage h1 {
+    font-size: 3rem;
+  }
+}
