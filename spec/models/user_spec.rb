@@ -120,6 +120,13 @@ RSpec.describe User, type: :model do
 
   describe "UserFavorite Associations" do # add a test to check that only employer:false users can favorite jobs
 
+    it "it should not create a UserFavorite if employer: true" do
+      employer_user = employer
+      employee_user = employee
+      employer_jobs = jobs(employer_user.id)
+      expect(user_favs(employer_user.id,employer_jobs).length).to eq 0
+    end
+
     it "should be able to access its user_favorites" do
       user_favorites = user_meta_data[3]
       expect(user_favorites.length).to eq 2
