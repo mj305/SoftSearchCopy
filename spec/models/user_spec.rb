@@ -9,11 +9,19 @@ RSpec.describe User, type: :model do
                         )
   }
 
-  def create_employer
-    employer = User.create(
-    email: "employer@gmail.com",
-    password: "Lodsfdsfremh",
-    employer: true
+  def employer
+      User.create(
+      email: "TESTINGemployer@gmail.com",
+      password: "aaaaaa",
+      employer: true
+                      )
+  end
+
+  def employee
+    User.create(
+      email: "employee@gmail.com",
+      password: "aaaaaa",
+      employer: false
                       )
   end
 
@@ -34,6 +42,19 @@ RSpec.describe User, type: :model do
       latitude:45.1,
       user_id: id
                       )
+    Job.where(user_id: id)
+  end
+
+  def user_favs(id,job_ids)
+    UserFavorite.create(
+      user_id: id,
+      job_id: job_ids[0].id
+    )
+    UserFavorite.create(
+      user_id: id,
+      job_id: job_ids[1].id
+    )
+    UserFavorite.where(user_id: id)
   end
 
 
@@ -56,24 +77,44 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "Associations" do
+  describe "Job Associations" do
 
     it "should be able to access its jobs" do
-      jobs(create_employer.id)
-      user = User.where(email: "employer@gmail.com")[0]
-      expect(user.jobs[0].position).to eq 'sr. dev'
+      employer_user = employer
+      jobs(employer_user.id)
+      expect(employer_user.jobs[0].position).to eq 'sr. dev'
+    end
+
+    it "destroy its corresponding jobs when destroyed" do
+      employer_user = employer
+      employer_jobs = jobs(employer_user.id)
+      employer_user.destroy
+      expect(employer_jobs.length).to eq 0
     end
 
     it "should have many jobs and destroy all associated jobs when destroyed" do
       should have_many(:jobs).dependent(:destroy) 
     end
 
-    it "should have many user_favorites and destroy all associated user_favorites when destroyed" do
-      should have_many(:user_favorites).dependent(:destroy) 
-    end
-
     it "should have many job_apps and destroy all associated job_apps when destroyed"  do
       should have_many(:job_apps).dependent(:destroy) 
      end
+  end
+
+
+  describe "UserFavorite Associations" do
+
+    it "should be able to access its user_favorites" do
+      employer_user = employer  
+      employee_user = employee
+      employer_jobs = jobs(employer_user.id)
+      user_favs(employee_user.id, employer_jobs)
+      expect(employee_user.user_favorites.length).to eq 2
+    end
+
+
+    it "should have many user_favorites and destroy all associated user_favorites when destroyed" do
+      should have_many(:user_favorites).dependent(:destroy) 
+    end
   end
 end
