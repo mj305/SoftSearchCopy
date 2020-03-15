@@ -33,8 +33,9 @@ RSpec.describe User, type: :model do
   describe "Job Associations" do
 
     it "should be able to access its jobs" do
-      employer_jobs = UserData::user_meta_data[2]
-      expect(employer_jobs[0].position).to eq 'sr. dev'
+      employer_user = UserData::user_meta_data[0]
+      employer_job = employer_user.jobs[0]
+      expect(employer_job.position).to eq 'sr. dev'
     end
 
     it "destroy its corresponding jobs when destroyed" do
@@ -57,13 +58,14 @@ RSpec.describe User, type: :model do
     end
 
     it "should be able to access its job_apps" do 
-      employee_job_apps = UserData::user_meta_data[4] 
-      expect(employee_job_apps.length).to eq 2
+      employee_user = UserData::user_meta_data[1]
+      expect(employee_user.job_apps.length).to eq 2
     end
 
     it "should be able to access the job associated with the JobApp" do
-      employee_job_apps = UserData::user_meta_data[4]
-      expect(employee_job_apps[0].job.position).to eq 'sr. dev'
+      employee_user = UserData::user_meta_data[1]
+      employee_job_app = employee_user.job_apps[0]
+      expect(employee_job_app.job.position).to eq 'sr. dev'
     end
 
     it "destroy its corresponding job_apps when destroyed" do
@@ -86,13 +88,14 @@ RSpec.describe User, type: :model do
     end
 
     it "should be able to access its user_favorites" do
-      user_favorites = UserData::user_meta_data[3]
-      expect(user_favorites.length).to eq 2
+      employee_user = UserData::user_meta_data[1]
+      expect(employee_user.user_favorites.length).to eq 2
     end
 
     it "should be able to access the job associated with the UserFavorite" do
-      user_favorites = UserData::user_meta_data[3]
-      expect(user_favorites[0].job.position).to eq 'sr. dev'
+      employee_user = UserData::user_meta_data[1]
+      user_favorite = employee_user.user_favorites[0]
+      expect(user_favorite.job.position).to eq 'sr. dev'
     end
 
     it "destroy its corresponding user_favorites when destroyed" do

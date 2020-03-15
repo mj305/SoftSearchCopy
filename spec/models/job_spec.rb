@@ -64,12 +64,34 @@ RSpec.describe Job, type: :model do
       expect(subject.user.email).to eq "blah@yahoo.com"
     end
 
-    it "should have many user_favorites and destroy all associated user_favorites when destroyed" do
-      should have_many(:user_favorites).dependent(:destroy) 
+    # it "should have many user_favorites and destroy all associated user_favorites when destroyed" do
+    #   should have_many(:user_favorites).dependent(:destroy) 
+    # end
+
+    # it "should have many job_apps and destroy all associated job_apps when destroyed"  do
+    #   should have_many(:job_apps).dependent(:destroy) 
+    # end  
+  end
+
+  describe "JobApp Associations" do
+
+    it "should be able to access its job_apps" do 
+      employer_job = UserData::user_meta_data[2][0]
+      expect(employer_job.job_apps.length).to eq 1
+    end
+
+    it "should be able to access the user associated with the JobApp" do
+      employer_job = UserData::user_meta_data[2][0]
+      expect(employer_job.job_apps[0].user.email).to eq "employee@gmail.com"
+    end
+
+    it "destroy its corresponding job_apps when destroyed" do
+      job_apps = UserData::user_meta_data(2)
+      expect(job_apps.length).to eq 0
     end
 
     it "should have many job_apps and destroy all associated job_apps when destroyed"  do
       should have_many(:job_apps).dependent(:destroy) 
-    end  
+     end
   end
 end
