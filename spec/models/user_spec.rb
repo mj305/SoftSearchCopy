@@ -84,7 +84,7 @@ RSpec.describe User, type: :model do
       [employee_user,employer_user.jobs,employee_favs]
     when 1
       employee_user.destroy
-      [employer_user,employer_jobs,employee_user.user_favorites]
+      [employer_user,employer_jobs,employee_user.user_favorites,employee_user.job_apps]
     else
       [employer_user,employee_user,employer_jobs,employee_favs,employee_apps]
     end
@@ -126,12 +126,15 @@ RSpec.describe User, type: :model do
       should have_many(:jobs).dependent(:destroy) 
     end
 
-    it "should have many job_apps and destroy all associated job_apps when destroyed"  do
-      should have_many(:job_apps).dependent(:destroy) 
-     end
   end
 
-  describe "JobApp Associations" do # add test to check that only users of type employer:false can make apps
+  describe "JobApp Associations" do 
+
+    it "should not create a JobApp if employer: true" do 
+      employer_user = employer
+      employer_jobs = jobs(employer_user.id)
+      expect(job_apps(employer_user.id,employer_jobs).length).to eq 0
+    end
 
     it "should be able to access its job_apps" do 
       employee_job_apps = user_meta_data[4] 
@@ -143,26 +146,14 @@ RSpec.describe User, type: :model do
       expect(employee_job_apps[0].job.position).to eq 'sr. dev'
     end
 
-    # it "should not create a UserFavorite if employer: true" do
-    #   employer_user = employer
-    #   employee_user = employee
-    #   employer_jobs = jobs(employer_user.id)
-    #   expect(user_favs(employer_user.id,employer_jobs).length).to eq 0
-    # end
+    it "destroy its corresponding job_apps when destroyed" do
+      user_job_apps = user_meta_data(1)[3]
+      expect(user_job_apps.length).to eq 0
+    end
 
-    # it "should be able to access its user_favorites" do
-    #   user_favorites = user_meta_data[3]
-    #   expect(user_favorites.length).to eq 2
-    # end
-
-    # it "destroy its corresponding user_favorites when destroyed" do
-    #   user_favorites = user_meta_data(1)[2]
-    #   expect(user_favorites.length).to eq 0
-    # end
-
-    # it "should have many user_favorites and destroy all associated user_favorites when destroyed" do
-    #   should have_many(:user_favorites).dependent(:destroy) 
-    # end
+    it "should have many job_apps and destroy all associated job_apps when destroyed"  do
+      should have_many(:job_apps).dependent(:destroy) 
+     end
   end
 
 
@@ -170,7 +161,6 @@ RSpec.describe User, type: :model do
 
     it "should not create a UserFavorite if employer: true" do
       employer_user = employer
-      employee_user = employee
       employer_jobs = jobs(employer_user.id)
       expect(user_favs(employer_user.id,employer_jobs).length).to eq 0
     end
@@ -178,6 +168,11 @@ RSpec.describe User, type: :model do
     it "should be able to access its user_favorites" do
       user_favorites = user_meta_data[3]
       expect(user_favorites.length).to eq 2
+    end
+
+    it "should be able to access the job associated with the UserFavorite" do
+      user_favorites = user_meta_data[3]
+      expect(user_favorites[0].job.position).to eq 'sr. dev'
     end
 
     it "destroy its corresponding user_favorites when destroyed" do
