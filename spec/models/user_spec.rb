@@ -3,8 +3,9 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
 
   subject {
-    described_class.new(email: "Anything@gmail.com",
-                        password: "Loremh"
+    described_class.new(
+      email: "anything@gmail.com",
+      password: "Loremh"
                         )
   }
 
@@ -21,6 +22,9 @@ RSpec.describe User, type: :model do
     it "is not valid without a password" do
       subject.password = nil
       expect(subject).to_not be_valid
+    end
+    it do 
+      should validate_uniqueness_of(:email).case_insensitive 
     end
   end
 
