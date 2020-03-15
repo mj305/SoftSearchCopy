@@ -49,8 +49,6 @@ RSpec.describe Job, type: :model do
       should validate_presence_of(:user_id)
     end
 
-    
-
     it "is not valid with a user_id that belongs to a user where employer:false" do
       employee
       subject.user_id = User.where(email:"employee@yahoo.com")[0].id
@@ -58,10 +56,17 @@ RSpec.describe Job, type: :model do
     end
  
     describe "Associations" do
-      it "should belong to a user" do
+      
+      it "should belong to a unique user where { employer: true }" do
        should belong_to(:user).
+       with_foreign_key('user_id').
        conditions(employer:true) 
       end
+
+      it "should be able to access its user" do
+        expect(subject.user).to be_valid
+      end
+
   
       # it "destroy all associated jobs when destroyed" do
       #   should have_many(:jobs).dependent(:destroy) 
