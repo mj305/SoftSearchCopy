@@ -4,6 +4,7 @@ require 'user_data'
 
 RSpec.describe User, type: :model do
   include UserData
+  
   subject {
     described_class.new(
       email: "anything@gmail.com",
@@ -39,14 +40,13 @@ RSpec.describe User, type: :model do
     end
 
     it "destroy its corresponding jobs when destroyed" do
-      employer_jobs = UserData::user_meta_data(0)[1]
-      expect(employer_jobs.length).to eq 0
+      jobs = UserData::user_meta_data(0)
+      expect(jobs.length).to eq 0
     end
 
     it "should have many jobs and destroy all associated jobs when destroyed" do
       should have_many(:jobs).dependent(:destroy) 
     end
-
   end
 
   describe "JobApp Associations" do 
@@ -69,7 +69,7 @@ RSpec.describe User, type: :model do
     end
 
     it "destroy its corresponding job_apps when destroyed" do
-      user_job_apps = UserData::user_meta_data(1)[3]
+      user_job_apps = UserData::user_meta_data(1)[1]
       expect(user_job_apps.length).to eq 0
     end
 
@@ -99,7 +99,7 @@ RSpec.describe User, type: :model do
     end
 
     it "destroy its corresponding user_favorites when destroyed" do
-      user_favorites = UserData::user_meta_data(1)[2]
+      user_favorites = UserData::user_meta_data(1)[0]
       expect(user_favorites.length).to eq 0
     end
 

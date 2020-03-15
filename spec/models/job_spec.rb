@@ -3,6 +3,7 @@ require 'user_data'
 
 RSpec.describe Job, type: :model do
   include UserData
+  
   subject {
     described_class.new(
       position: "sr. dev",
@@ -63,14 +64,6 @@ RSpec.describe Job, type: :model do
     it "should be able to access its poster" do
       expect(subject.user.email).to eq "blah@yahoo.com"
     end
-
-    # it "should have many user_favorites and destroy all associated user_favorites when destroyed" do
-    #   should have_many(:user_favorites).dependent(:destroy) 
-    # end
-
-    # it "should have many job_apps and destroy all associated job_apps when destroyed"  do
-    #   should have_many(:job_apps).dependent(:destroy) 
-    # end  
   end
 
   describe "JobApp Associations" do
@@ -86,12 +79,34 @@ RSpec.describe Job, type: :model do
     end
 
     it "destroy its corresponding job_apps when destroyed" do
-      job_apps = UserData::user_meta_data(2)
+      job_apps = UserData::user_meta_data(2)[0]
       expect(job_apps.length).to eq 0
     end
 
     it "should have many job_apps and destroy all associated job_apps when destroyed"  do
       should have_many(:job_apps).dependent(:destroy) 
+     end
+  end
+
+  describe "UserFavorite Associations" do
+
+    it "should be able to access its user_favorites" do 
+      employer_job = UserData::user_meta_data[2][0]
+      expect(employer_job.user_favorites.length).to eq 1
+    end
+
+    it "should be able to access the user associated with the UserFavorite" do
+      employer_job = UserData::user_meta_data[2][0]
+      expect(employer_job.user_favorites[0].user.email).to eq "employee@gmail.com"
+    end
+
+    it "destroy its corresponding user_favorites when destroyed" do
+      user_favs = UserData::user_meta_data(2)[1]
+      expect(user_favs.length).to eq 0
+    end
+
+    it "should have many user_favorites and destroy all associated user_favorites when destroyed"  do
+      should have_many(:user_favorites).dependent(:destroy) 
      end
   end
 end
