@@ -12,6 +12,7 @@ RSpec.describe Job, type: :model do
       user_id: User.create(email:"blah@yahoo.com",password:"123456", employer:true).id 
                       )
   }
+
   def employee
     User.create(
       email:"employee@yahoo.com",
@@ -19,6 +20,8 @@ RSpec.describe Job, type: :model do
       employer:false)
       .id               
   end
+
+
 
   describe "Validations" do
     
@@ -64,6 +67,10 @@ RSpec.describe Job, type: :model do
       should belong_to(:user).
       with_foreign_key('user_id').
       conditions(employer:true) 
+    end
+
+    it "something" do
+      expect(subject.id).to eq ''
     end
 
     it "should be able to access its user" do

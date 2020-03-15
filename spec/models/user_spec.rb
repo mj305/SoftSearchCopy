@@ -1,95 +1,15 @@
 require 'rails_helper'
+require 'user_data'
+
 
 RSpec.describe User, type: :model do
-
+  include UserData
   subject {
     described_class.new(
       email: "anything@gmail.com",
       password: "Loremh"
                         )
   }
-
-  def employer
-      User.create(
-      email: "TESTINGemployer@gmail.com",
-      password: "aaaaaa",
-      employer: true
-                      )
-  end
-
-  def employee
-    User.create(
-      email: "employee@gmail.com",
-      password: "aaaaaa",
-      employer: false
-                      )
-  end
-
-  def jobs(id)
-    Job.create(
-      position: "sr. dev",
-      description: "Loremh",
-      date: "02/03/2020",
-      longitude: -80.2,
-      latitude:45.1,
-      user_id: id
-                      )
-    Job.create(
-      position: "jr. dev",
-      description: "Lsdfsdfsforemh",
-      date: "01/03/2020",
-      longitude: -80.2,
-      latitude:45.1,
-      user_id: id
-                      )
-    Job.where(user_id: id)
-  end
-
-  def job_apps(id,job_ids)
-    JobApp.create(
-      user_id: id,
-      job_id: job_ids[0].id
-    )
-    JobApp.create(
-      user_id: id,
-      job_id: job_ids[1].id,
-      status: 1
-    )
-    JobApp.where(user_id: id)
-  end
-
-  def user_favs(id,job_ids)
-    UserFavorite.create(
-      user_id: id,
-      job_id: job_ids[0].id
-    )
-    UserFavorite.create(
-      user_id: id,
-      job_id: job_ids[1].id
-    )
-    UserFavorite.where(user_id: id)
-  end
-  
-  # if argument if 0 destroy employer, if 1 destroy employee
-  def user_meta_data(destruction = nil)
-    employer_user = employer
-    employee_user = employee
-    employer_jobs = jobs(employer_user.id)
-    employee_favs = user_favs(employee_user.id,employer_jobs)
-    employee_apps = job_apps(employee_user.id,employer_jobs)
-
-    case destruction
-    when 0
-      employer_user.destroy
-      [employee_user,employer_user.jobs,employee_favs]
-    when 1
-      employee_user.destroy
-      [employer_user,employer_jobs,employee_user.user_favorites,employee_user.job_apps]
-    else
-      [employer_user,employee_user,employer_jobs,employee_favs,employee_apps]
-    end
-  end
-
 
   describe "Validations" do
     it "is valid with valid attributes" do 
@@ -113,12 +33,12 @@ RSpec.describe User, type: :model do
   describe "Job Associations" do
 
     it "should be able to access its jobs" do
-      employer_jobs = user_meta_data[2]
+      employer_jobs = UserData::user_meta_data[2]
       expect(employer_jobs[0].position).to eq 'sr. dev'
     end
 
     it "destroy its corresponding jobs when destroyed" do
-      employer_jobs = user_meta_data(0)[1]
+      employer_jobs = UserData::user_meta_data(0)[1]
       expect(employer_jobs.length).to eq 0
     end
 
@@ -131,23 +51,24 @@ RSpec.describe User, type: :model do
   describe "JobApp Associations" do 
 
     it "should not create a JobApp if employer: true" do 
-      employer_user = employer
-      employer_jobs = jobs(employer_user.id)
-      expect(job_apps(employer_user.id,employer_jobs).length).to eq 0
+      employer_user = UserData::employer
+      employer_jobs = UserData::jobs(employer_user.id)
+      puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#{employer_jobs[0].position}"
+      expect(UserData::job_apps(employer_user.id,employer_jobs).length).to eq 0
     end
 
     it "should be able to access its job_apps" do 
-      employee_job_apps = user_meta_data[4] 
+      employee_job_apps = UserData::user_meta_data[4] 
       expect(employee_job_apps.length).to eq 2
     end
 
     it "should be able to access the job associated with the JobApp" do
-      employee_job_apps = user_meta_data[4]
+      employee_job_apps = UserData::user_meta_data[4]
       expect(employee_job_apps[0].job.position).to eq 'sr. dev'
     end
 
     it "destroy its corresponding job_apps when destroyed" do
-      user_job_apps = user_meta_data(1)[3]
+      user_job_apps = UserData::user_meta_data(1)[3]
       expect(user_job_apps.length).to eq 0
     end
 
@@ -160,23 +81,23 @@ RSpec.describe User, type: :model do
   describe "UserFavorite Associations" do
 
     it "should not create a UserFavorite if employer: true" do
-      employer_user = employer
-      employer_jobs = jobs(employer_user.id)
-      expect(user_favs(employer_user.id,employer_jobs).length).to eq 0
+      employer_user = UserData::employer
+      employer_jobs = UserData::jobs(employer_user.id)
+      expect(UserData::user_favs(employer_user.id,employer_jobs).length).to eq 0
     end
 
     it "should be able to access its user_favorites" do
-      user_favorites = user_meta_data[3]
+      user_favorites = UserData::user_meta_data[3]
       expect(user_favorites.length).to eq 2
     end
 
     it "should be able to access the job associated with the UserFavorite" do
-      user_favorites = user_meta_data[3]
+      user_favorites = UserData::user_meta_data[3]
       expect(user_favorites[0].job.position).to eq 'sr. dev'
     end
 
     it "destroy its corresponding user_favorites when destroyed" do
-      user_favorites = user_meta_data(1)[2]
+      user_favorites = UserData::user_meta_data(1)[2]
       expect(user_favorites.length).to eq 0
     end
 
