@@ -67,7 +67,7 @@ RSpec.describe Job, type: :model do
     end
 
     it "should be able to access its user" do
-      expect(subject.user).to be_valid
+      expect(subject.user).to be_valid         # check this one
     end
 
     it "should have many user_favorites and destroy all associated user_favorites when destroyed" do
