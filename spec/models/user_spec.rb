@@ -56,6 +56,25 @@ RSpec.describe User, type: :model do
     )
     UserFavorite.where(user_id: id)
   end
+  
+  # if argument if 0 destroy employer, if 1 destroy employee
+  def user_meta_data(destruction = nil)
+    employer_user = employer
+    employee_user = employee
+    employer_jobs = jobs(employer_user.id)
+    employee_favs = user_favs(employee_user.id,employer_jobs)
+
+    case destruction
+    when 0
+      employer_user.destroy
+      [employee_user,employer_user.jobs,employee_favs]
+    when 1
+      employee_user.destroy
+      [employer_user,employer_jobs,employee_user.user_favorites]
+    else
+      [employer_user,employee_user,employer_jobs,employee_favs]
+    end
+  end
 
 
   describe "Validations" do
@@ -80,15 +99,12 @@ RSpec.describe User, type: :model do
   describe "Job Associations" do
 
     it "should be able to access its jobs" do
-      employer_user = employer
-      jobs(employer_user.id)
-      expect(employer_user.jobs[0].position).to eq 'sr. dev'
+      employer_jobs = user_meta_data[2]
+      expect(employer_jobs[0].position).to eq 'sr. dev'
     end
 
     it "destroy its corresponding jobs when destroyed" do
-      employer_user = employer
-      employer_jobs = jobs(employer_user.id)
-      employer_user.destroy
+      employer_jobs = user_meta_data(0)[1]
       expect(employer_jobs.length).to eq 0
     end
 
@@ -102,16 +118,17 @@ RSpec.describe User, type: :model do
   end
 
 
-  describe "UserFavorite Associations" do
+  describe "UserFavorite Associations" do # add a test to check that only employer:false users can favorite jobs
 
     it "should be able to access its user_favorites" do
-      employer_user = employer  
-      employee_user = employee
-      employer_jobs = jobs(employer_user.id)
-      user_favs(employee_user.id, employer_jobs)
-      expect(employee_user.user_favorites.length).to eq 2
+      user_favorites = user_meta_data[3]
+      expect(user_favorites.length).to eq 2
     end
 
+    it "destroy its corresponding user_favorites when destroyed" do
+      user_favorites = user_meta_data(1)[2]
+      expect(user_favorites.length).to eq 0
+    end
 
     it "should have many user_favorites and destroy all associated user_favorites when destroyed" do
       should have_many(:user_favorites).dependent(:destroy) 
