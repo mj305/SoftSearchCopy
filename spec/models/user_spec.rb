@@ -25,8 +25,28 @@ RSpec.describe User, type: :model do
   end
 
   describe "Associations" do
-    it "should have many jobs if employer:true" do
+    it "should have many jobs" do
      should have_many(:jobs) # should check if employer is true in job test
+    end
+
+    it "destroy all associated jobs when destroyed" do
+      should have_many(:jobs).dependent(:destroy) 
+    end
+
+    it "should have many user_favorites" do
+      should have_many(:user_favorites) 
+    end
+
+    it "destroy all associated user_favorites when destroyed" do
+      should have_many(:user_favorites).dependent(:destroy) 
+    end
+
+    it "should have many job_apps" do
+      should have_many(:job_apps) 
+     end
+
+    it "destroy all associated job_apps when destroyed" do
+      should have_many(:job_apps).dependent(:destroy) 
     end
   end
 end
