@@ -1,7 +1,8 @@
 require 'rails_helper'
+require 'user_data'
 
 RSpec.describe Job, type: :model do
-
+  include UserData
   subject {
     described_class.new(
       position: "sr. dev",
@@ -12,16 +13,6 @@ RSpec.describe Job, type: :model do
       user_id: User.create(email:"blah@yahoo.com",password:"123456", employer:true).id 
                       )
   }
-
-  def employee
-    User.create(
-      email:"employee@yahoo.com",
-      password:"123fsdfsdf456", 
-      employer:false)
-      .id               
-  end
-
-
 
   describe "Validations" do
     
@@ -54,14 +45,14 @@ RSpec.describe Job, type: :model do
     end
 
     it "is not valid with a user_id that belongs to a user where employer:false" do
-      employee
-      subject.user_id = User.where(email:"employee@yahoo.com")[0].id
-      expect(subject).to_not be_valid
+      employee_user = UserData::employee
+      employee_jobs = UserData::jobs(employee_user.id)
+      expect(employee_jobs.length).to eq 0
     end
   end
 
 
-  describe "Associations" do
+  describe "User Associations" do
     
     it "should belong to a unique user where { employer: true }" do
       should belong_to(:user).
@@ -69,11 +60,7 @@ RSpec.describe Job, type: :model do
       conditions(employer:true) 
     end
 
-    it "something" do
-      expect(subject.id).to eq ''
-    end
-
-    it "should be able to access its user" do
+    it "should be able to access its poster" do
       expect(subject.user.email).to eq "blah@yahoo.com"
     end
 

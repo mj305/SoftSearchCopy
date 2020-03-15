@@ -53,7 +53,6 @@ RSpec.describe User, type: :model do
     it "should not create a JobApp if employer: true" do 
       employer_user = UserData::employer
       employer_jobs = UserData::jobs(employer_user.id)
-      puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#{employer_jobs[0].position}"
       expect(UserData::job_apps(employer_user.id,employer_jobs).length).to eq 0
     end
 
