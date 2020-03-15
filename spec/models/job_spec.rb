@@ -25,9 +25,31 @@ RSpec.describe Job, type: :model do
       expect(subject).to be_valid
     end
 
-    it "is not valid without a position, description, date, longitude, latitude, user_id" do
+    it "is not valid without a position" do
       should validate_presence_of(:position)
     end
+
+    it "is not valid without a description" do
+      should validate_presence_of(:description)
+    end
+
+    it "is not valid without a date" do
+      should validate_presence_of(:date)
+    end
+
+    it "is not valid without a longitude" do
+      should validate_presence_of(:longitude)
+    end
+
+    it "is not valid without a latitude" do
+      should validate_presence_of(:latitude)
+    end
+
+    it "is not valid without a user_id" do
+      should validate_presence_of(:user_id)
+    end
+
+    
 
     it "is not valid with a user_id that belongs to a user where employer:false" do
       employee
@@ -35,17 +57,31 @@ RSpec.describe Job, type: :model do
       expect(subject).to_not be_valid
     end
  
-  #   it "is not valid without a email" do
-  #     subject.email = nil
-  #     expect(subject).to_not be_valid 
-  #   end
-
-  #   it "is not valid without a password" do
-  #     subject.password = nil
-  #     expect(subject).to_not be_valid
-  #   end
-  #   it "should have a unique email" do 
-  #     should validate_uniqueness_of(:email).case_insensitive 
-  #   end
+    describe "Associations" do
+      it "should belong to a user" do
+       should belong_to(:user).
+       conditions(employer:true) 
+      end
+  
+      # it "destroy all associated jobs when destroyed" do
+      #   should have_many(:jobs).dependent(:destroy) 
+      # end
+  
+      # it "should have many user_favorites" do
+      #   should have_many(:user_favorites) 
+      # end
+  
+      # it "destroy all associated user_favorites when destroyed" do
+      #   should have_many(:user_favorites).dependent(:destroy) 
+      # end
+  
+      # it "should have many job_apps" do
+      #   should have_many(:job_apps) 
+      #  end
+  
+      # it "destroy all associated job_apps when destroyed" do
+      #   should have_many(:job_apps).dependent(:destroy) 
+      # end
+    end
   end
 end
