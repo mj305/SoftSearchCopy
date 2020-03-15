@@ -68,13 +68,9 @@ RSpec.describe Job, type: :model do
       end
 
   
-      # it "destroy all associated jobs when destroyed" do
-      #   should have_many(:jobs).dependent(:destroy) 
-      # end
-  
-      # it "should have many user_favorites" do
-      #   should have_many(:user_favorites) 
-      # end
+      it "should have many user_favorites" do
+        should have_many(:user_favorites) 
+      end
   
       # it "destroy all associated user_favorites when destroyed" do
       #   should have_many(:user_favorites).dependent(:destroy) 
