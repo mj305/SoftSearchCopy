@@ -9,6 +9,11 @@ RSpec.describe User, type: :model do
                         )
   }
 
+  def employee
+
+  end
+
+
   describe "Validations" do
     it "is valid with valid attributes" do 
       expect(subject).to be_valid
@@ -29,7 +34,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "Associations" do
-    
+
     it "should have many jobs and destroy all associated jobs when destroyed" do
       should have_many(:jobs).dependent(:destroy) 
     end

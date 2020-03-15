@@ -21,6 +21,7 @@ RSpec.describe Job, type: :model do
   end
 
   describe "Validations" do
+    
     it "is valid with valid attributes" do 
       expect(subject).to be_valid
     end
@@ -54,35 +55,27 @@ RSpec.describe Job, type: :model do
       subject.user_id = User.where(email:"employee@yahoo.com")[0].id
       expect(subject).to_not be_valid
     end
- 
-    describe "Associations" do
-      
-      it "should belong to a unique user where { employer: true }" do
-       should belong_to(:user).
-       with_foreign_key('user_id').
-       conditions(employer:true) 
-      end
+  end
 
-      it "should be able to access its user" do
-        expect(subject.user).to be_valid
-      end
 
-  
-      it "should have many user_favorites" do
-        should have_many(:user_favorites) 
-      end
-  
-      # it "destroy all associated user_favorites when destroyed" do
-      #   should have_many(:user_favorites).dependent(:destroy) 
-      # end
-  
-      # it "should have many job_apps" do
-      #   should have_many(:job_apps) 
-      #  end
-  
-      # it "destroy all associated job_apps when destroyed" do
-      #   should have_many(:job_apps).dependent(:destroy) 
-      # end
+  describe "Associations" do
+    
+    it "should belong to a unique user where { employer: true }" do
+      should belong_to(:user).
+      with_foreign_key('user_id').
+      conditions(employer:true) 
     end
+
+    it "should be able to access its user" do
+      expect(subject.user).to be_valid
+    end
+
+    it "should have many user_favorites and destroy all associated user_favorites when destroyed" do
+      should have_many(:user_favorites).dependent(:destroy) 
+    end
+
+    it "should have many job_apps and destroy all associated job_apps when destroyed"  do
+      should have_many(:job_apps).dependent(:destroy) 
+    end  
   end
 end
