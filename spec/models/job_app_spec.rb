@@ -64,8 +64,8 @@ RSpec.describe JobApp, type: :model do
       conditions(employer:false) 
     end
 
-    # it "should be able to access its poster" do
-    #   expect(subject.user.email).to eq "blah@yahoo.com"
-    # end
+    it "should be able to access the user associated with it" do
+      expect(subject.user.email).to eq "blahblah@yahoo.com"
+    end
   end
 end
