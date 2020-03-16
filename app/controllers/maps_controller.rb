@@ -1,6 +1,6 @@
 class MapsController < ApplicationController
     def show 
-        puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! In the maps controller!!!!!!!!!!!!!"
-        render 'show'
+        @location = Geocoder.search(params['location']).first.coordinates
+        puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! In the maps controller!!!!!!!!!!!!!#{@location}"
     end
 end 
