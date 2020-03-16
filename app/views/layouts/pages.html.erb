@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>FinalProjectTemplate</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,126 +12,124 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+</head>
 
-    <div class='top-section'>
-    <%= react_component "NavigationHome" %> 
+<div class='top-section'>
+    <%= react_component "NavigationHome" %>
     <%# render partial: '/layouts/nav'%>
 
-<!-- Header -->
-<header class="top-banner-homepage">
-    <h1 class="title-homepage">Get Hired. Start Coding</h1> 
-    <div class="search-bar">
-    <%= form_with(url: "#", method: "get") do %>
-    <%= label_tag(:q, "") %> 
-    <%= text_field_tag(:q, "Set a Location") %> 
-    <%= submit_tag("SEARCH JOBS") %>
-    <% end %>
-    </div>
-</header>
+    <!-- Header -->
+    <header class="top-banner-homepage">
+        <h1 class="title-homepage">Get Hired. Start Coding</h1>
+        <div class="search-bar">
+            <%= form_with(url: "#", method: "get") do %>
+            <%= label_tag(:q, "") %>
+            <%= text_field_tag(:q, "Set a Location") %>
+            <%= submit_tag("SEARCH JOBS") %>
+            <% end %>
+        </div>
+    </header>
 </div>
 
-  <body>
+<body>
 
-<!-- Skills Cards -->
-<section class="companyinfo-homepage">
-    <h2 class="subtitles-homepage">Explore By Skill</h2> 
-    <h3 class="subsheading-subtitles-homepage">Narrow the search down by what you are good at.<br>Or learn what's in demand.</h3> 
-    
-    <div class="centered">
-    <section class="cards">
-      <article class="card" style="width: 18rem;">
-      <div class="card-body">
-          <h5 class="card-title">Javascript</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="card-link">More Info</a>
-        </div>     
-      </article>
+    <!-- Skills Cards -->
+    <section class="companyinfo-homepage">
+        <h2 class="subtitles-homepage">Explore By Skill</h2>
+        <h3 class="subsheading-subtitles-homepage">Narrow the search down by what you are good at.<br>Or learn what's in demand.</h3>
 
-      <article class="card" style="width: 18rem;">
-      <div class="card-body">
-          <h5 class="card-title">Javascript</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="card-link">More Info</a>
-        </div>     
-      </article>
-      
-      <article class="card" style="width: 18rem;">
-      <div class="card-body">
-          <h5 class="card-title">Javascript</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="card-link">More Info</a>
-        </div>     
-      </article>
+        <div class="centered">
+            <section class="cards">
+                <article class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Javascript</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">More Info</a>
+                    </div>
+                </article>
 
-      <article class="card" style="width: 18rem;">
-      <div class="card-body">
-          <h5 class="card-title">Javascript</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="card-link">More Info</a>
-        </div>     
-      </article>
+                <article class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Javascript</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">More Info</a>
+                    </div>
+                </article>
 
-      
-      
+                <article class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Javascript</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">More Info</a>
+                    </div>
+                </article>
 
-    </section>
-</div>
+                <article class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Javascript</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">More Info</a>
+                    </div>
+                </article>
+
+            </section>
+        </div>
 
 
 
         <%
 =begin%>
- <form action="cards">
+        <form action="cards">
             <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">Javascript</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">More Info</a>
-              </div>
+                <div class="card-body">
+                    <h5 class="card-title">Javascript</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="card-link">More Info</a>
+                </div>
 
-              <div class="card" style="width: 18rem;">
-              <div class="card-body">
-              <h5 class="card-title">React</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">More Info</a>
-              </div>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">React</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">More Info</a>
+                    </div>
 
-              <div class="card" style="width: 18rem;">
-              <div class="card-body">
-              <h5 class="card-title">Ruby</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">More Info</a>
-            </div>
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Ruby</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="card-link">More Info</a>
+                        </div>
 
-              <div class="card" style="width: 18rem;">
-              <div class="card-body">
-              <h5 class="card-title">Ruby</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">More Info</a>
-            </div>
-            </div>
-        </form> 
-<%
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Ruby</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <a href="#" class="card-link">More Info</a>
+                            </div>
+                        </div>
+        </form>
+        <%
 =end%>
-</section>
+    </section>
 
-<!-- Company Info -->
-<section class="about-homepage">
-    <h2 class="subtitles-homepage">Over 1000+ Jobs Posted</h2> 
-    <h3 class="subsheading-subtitles-homepage">Insert one sentence blurb about how amazing our founders are wow</h3> 
-    <p>Insert paragraph about company Insert paragraph about company Insert paragraph about company</p> 
-</section>
+    <!-- Company Info -->
+    <section class="about-homepage">
+        <h2 class="subtitles-homepage">Over 1000+ Jobs Posted</h2>
+        <h3 class="subsheading-subtitles-homepage">Insert one sentence blurb about how amazing our founders are wow</h3>
+        <p>Insert paragraph about company Insert paragraph about company Insert paragraph about company</p>
+    </section>
 
-<!-- Testimonials -->
-<section class="testimonials-homepage">
-    <h2 class="subtitles-homepage">They believe in us. We believe in them.</h2> 
-</section>
-  
-<!-- Footer -->
-<%= react_component "Footer" %>
+    <!-- Testimonials -->
+    <section class="testimonials-homepage">
+        <h2 class="subtitles-homepage">They believe in us. We believe in them.</h2>
+    </section>
 
-<%= stylesheet_link_tag 'home' %>  
+    <!-- Footer -->
+    <%= react_component "Footer" %>
 
-  </body>
+    <%= stylesheet_link_tag 'home' %>
+
+</body>
+
 </html>

@@ -1,10 +1,29 @@
+<<<<<<< HEAD
+=======
+<!-- Navigation -->
+<nav className="nav-bar-homepage">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <h5 class="my-0 mr-md-auto font-weight-normal">Insert Logo</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" href="#">Find Jobs</a>
+            <a class="p-2 text-dark" href="#">Post a Job</a>
+            <% if current_user %>
+                <a class="btn btn-primary" href=<%="#{destroy_user_session_path	}"%>>Sign out</a>
+            <% else %>
+                <a class="btn btn-outline-primary" href=<%="#{new_user_session_path}"%>>Log In</a>
+                <a class="btn btn-primary" href=<%="#{new_user_registration_path}"%>>Sign up</a>
+            <% end %>
+        </nav>
+    </div>
+</nav> 
+>>>>>>> 35f00d58a967d94252305aabf4d7d998e0dff258
 
 <!-- Header -->
 <header className="top-banner-homepage">
     <h1 class="title-homepage">Get Hired. Start Coding</h1> 
-    <%= form_with(url: "#", method: "get") do %>
+    <%= form_with(url: "/search", method: "post") do %>
     <%= label_tag(:q, "") %> 
-    <%= text_field_tag(:q, "Set a Location") %> 
+    <%= text_field_tag(:q, "") %> 
     <%= submit_tag("SEARCH JOBS") %>
     <% end %>
 </header>
