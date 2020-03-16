@@ -2,11 +2,12 @@ Rails.application.routes.draw do
   devise_for :users
   root "pages#home"
 
-
-
   resource :map, only: [:show]
 
-  authenticated :user, ->(u) { !u.employer } do
+
+  post '/search' => "pages#search"
+
+  authenticated :user, ->(u) {!u.employer} do
     namespace :applicants do
       resources :users, only: [:index]
       # resource :user_job_applications, only: [:new]
