@@ -13,7 +13,6 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
     <div class='top-section'>
     <%= react_component "NavigationHome" %> 
     <%# render partial: '/layouts/nav'%>
@@ -31,10 +30,38 @@
 </header>
 </div>
 
+  <body>
+
 <!-- Skills Cards -->
 <section class="companyinfo-homepage">
     <h2 class="subtitles-homepage">Explore By Skill</h2> 
     <h3 class="subsheading-subtitles-homepage">Narrow the search down by what you are good at.<br>Or learn what's in demand.</h3> 
+      <div class="mid-buttons">
+        <form action="">
+          <button id="observe-button"><h1>Observe</h1>
+               <p>See every classroom at your <br> leasure</p>
+          </button>
+          <button id="evaluate-button"><h1>Evaluate & develope</h1>
+              <p>Find and grow those rock <br> star teachers</p>
+          </button>
+          <button id="collaborate-button"><h1>Collaborate</h1>
+              <p>Sibme keeps teams, depart- <br> ments, and 
+                 schools working <br> and growing together.</p>
+          </button>
+          <button id="academic-button"><h1>Academic gain</h1>
+              <p>Better teachers = increased <br> student
+                 achievement</p>
+          </button>
+        </form>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+        <h5 class="card-title">Javascript</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="card-link">More Info</a>
+        </div>
+        
+</div>
 </section>
 
 <!-- Company Info -->
