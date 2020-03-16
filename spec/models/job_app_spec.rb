@@ -68,4 +68,16 @@ RSpec.describe JobApp, type: :model do
       expect(subject.user.email).to eq "blahblah@yahoo.com"
     end
   end
+
+  describe "Job Associations" do
+    
+    it "should belong to a unique job" do
+      should belong_to(:job).
+      with_foreign_key('job_id')
+    end
+
+    it "should be able to access the job associated with it" do
+      expect(subject.job.position).to eq "sr. dev"
+    end
+  end
 end

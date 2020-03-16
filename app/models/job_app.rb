@@ -7,5 +7,5 @@ class JobApp < ApplicationRecord
                                     less_than_or_equal_to: 1 }
   attribute :status, :integer, default: 0
   belongs_to :user, -> { where employer:false }, foreign_key: 'user_id'
-  belongs_to :job
+  belongs_to :job, foreign_key: 'job_id'
 end
