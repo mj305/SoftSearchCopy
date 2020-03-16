@@ -1,5 +1,26 @@
 Rails.application.routes.draw do
   devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root "pages#home"
+
+
+
+  resource :map, only: [:show]
+
+    authenticated :user, ->(u) {!u.employer} do
+    namespace :applicants do
+      resources :users, only: [:index]
+      # resource :user_job_applications, only: [:new]
+      root to: "users#index"
+    end
+  end
+
+    authenticated :user, ->(u) {u.employer} do
+    namespace :employers do
+      resources :admins, only: [:index]
+      root to: "admins#index"
+      # resource :admin_job_applications, only: [:new, :create]
+      
+    # root "pages#home"
+    end
+end
 end
