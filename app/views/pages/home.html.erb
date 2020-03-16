@@ -18,7 +18,7 @@
 <!-- Header -->
 <header className="top-banner-homepage">
     <h1 class="title-homepage">Get Hired. Start Coding</h1> 
-    <%= form_with(url: "#", method: "get") do %>
+    <%= form_with(url: "/search", method: "post") do %>
     <%= label_tag(:q, "") %> 
     <%= text_field_tag(:q, "Set a Location") %> 
     <%= submit_tag("SEARCH JOBS") %>

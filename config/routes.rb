@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   resource :map, only: [:show]
 
+  post '/search' => "pages#search"
+
   authenticated :user, ->(u) {!u.employer} do
     namespace :applicants do
       resources :users, only: [:index]
