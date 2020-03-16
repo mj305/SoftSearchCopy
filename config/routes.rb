@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resource :map, only: [:show]
 
-    authenticated :user, ->(u) {!u.employer} do
+  authenticated :user, ->(u) { !u.employer } do
     namespace :applicants do
       resources :users, only: [:index]
       # resource :user_job_applications, only: [:new]
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     end
   end
 
-    authenticated :user, ->(u) {u.employer} do
+  authenticated :user, ->(u) { u.employer } do
     namespace :employers do
       resources :admins, only: [:index]
       root to: "admins#index"
@@ -22,5 +22,5 @@ Rails.application.routes.draw do
       
     # root "pages#home"
     end
-end
+  end
 end
