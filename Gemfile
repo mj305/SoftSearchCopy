@@ -7,6 +7,7 @@ gem 'hirb'
 gem 'devise-bootstrap-views', '~> 1.0'
 gem 'react-rails'
 gem 'geocoder'
+gem 'dotenv-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.1'
