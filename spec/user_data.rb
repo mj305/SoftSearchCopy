@@ -1,5 +1,6 @@
 module UserData
     
+    # creates an employer User
     def self.employer
         User.create(
         email: "TESTINGemployer@gmail.com",
@@ -8,6 +9,7 @@ module UserData
                         )
     end
 
+    # creates an employee User
     def self.employee
         User.create(
             email: "employee@gmail.com",
@@ -16,6 +18,7 @@ module UserData
                             )
     end
 
+    # creates jobs and returns them as a collection
     def self.jobs(id)
     Job.create(
         position: "sr. dev",
@@ -36,6 +39,7 @@ module UserData
     Job.where(user_id: id)
     end
 
+    # creates job_apps and returns them as a collection
     def self.job_apps(id,job_ids)
     JobApp.create(
         user_id: id,
@@ -49,6 +53,7 @@ module UserData
     JobApp.where(user_id: id)
     end
 
+    # creates user_favorites and returns them as a collection
     def self.user_favs(id,job_ids)
     UserFavorite.create(
         user_id: id,

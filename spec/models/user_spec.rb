@@ -26,6 +26,7 @@ RSpec.describe User, type: :model do
       subject.password = nil
       expect(subject).to_not be_valid
     end
+    
     it "should have a unique email" do 
       should validate_uniqueness_of(:email).case_insensitive 
     end
