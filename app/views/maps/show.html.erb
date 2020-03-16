@@ -2,4 +2,6 @@
 
 <h1><%="#{@location}"%></h1>
 
+<%= react_component 'Map', {API_KEY: @API_KEY} %>
+
 <%= link_to 'Home', root_path %>
