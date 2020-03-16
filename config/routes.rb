@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resource :map, only: [:show]
 
+
   post '/search' => "pages#search"
 
   authenticated :user, ->(u) {!u.employer} do
@@ -14,7 +15,7 @@ Rails.application.routes.draw do
     end
   end
 
-  authenticated :user, ->(u) {u.employer} do
+  authenticated :user, ->(u) { u.employer } do
     namespace :employers do
       resources :admins, only: [:index]
       root to: "admins#index"
