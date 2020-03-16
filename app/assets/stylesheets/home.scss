@@ -58,6 +58,7 @@ form {
   padding-top: 20px;
 }
 
+
 .top-section {
   background: rgb(86,172,254);
   background: radial-gradient(circle, rgba(86,172,254,1) 0%, rgba(47,119,242,1) 71%);
@@ -67,7 +68,7 @@ form {
   padding: 230px 30px;
 }
 .title-homepage {
-  font-family: Metropolis-Bold;
+  font-family: "Metropolis-Bold";
   font-size: 55px;
   display: flex;
   justify-content: center;;
@@ -75,4 +76,33 @@ form {
 }
 
 //body
+.subtitles-homepage {
+  font-family: "Metropolis-SemiBold";
+  font-size: 40px;
+  color: #2f78f3;
+}
 
+.subsheading-subtitles-homepage {
+  color: #525f7f;
+  font-size: 22px;
+  font-family: "Metropolis-Regular";;
+}
+
+p {
+  font-size: 17px;
+  color: #525f7f;
+  font-family: "Metropolis-Regular";;
+}
+
+.companyinfo-homepage {
+  padding: 160px 210px 10px;
+}
+
+
+.about-homepage {
+  padding: 100px 210px 10px;
+}
+
+.testimonials-homepage {
+  padding: 100px 210px 10px;
+}
