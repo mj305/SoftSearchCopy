@@ -1,18 +1,24 @@
 import React, { useEffect } from 'react'
 
-const Map = ({API_KEY}) => {
+const Map = ({API_KEY, coords}) => {
 
     const style = {
-        width: "400px",
-        height: "300px"
+        width: "600px",
+        height: "500px"
     }
 
     useEffect(() => {
         mapboxgl.accessToken = API_KEY;
         var map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11'
+        style: 'mapbox://styles/mapbox/dark-v10',
+        center: coords,
+        zoom: 6
         });
+        
+        var marker = new mapboxgl.Marker({color: '#a83232'})
+        .setLngLat(coords)
+        .addTo(map)
     },[])
     return(
         <div>

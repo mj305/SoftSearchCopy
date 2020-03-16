@@ -2,6 +2,12 @@
 
 <h1><%="#{@location}"%></h1>
 
-<%= react_component 'Map', {API_KEY: @API_KEY} %>
+<h2><%="!!!!!!!!!!!!!!!!#{@coords}"%></h2>
 
+<%= react_component('Map', 
+{
+    API_KEY: ENV['MAPBOX_KEY'],
+    coords: @coords,
+
+}) %>
 <%= link_to 'Home', root_path %>
