@@ -7,7 +7,7 @@ class MapsController < ApplicationController
             @coords = coords.first.coordinates.reverse
         else
             p "THIS IS FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #{coords.first}"
-            render 'pages/home'
+            redirect_to root_path
         end
     end
 end 
