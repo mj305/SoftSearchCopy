@@ -2,6 +2,7 @@ require 'rails_helper'
 require 'user_data'
 
 RSpec.describe JobApp, type: :model do
+  include UserData
   
   subject {
     described_class.new(
@@ -23,18 +24,48 @@ RSpec.describe JobApp, type: :model do
       expect(subject).to be_valid
     end
 
-    it "is not valid withoud a user_id" do
-      subject.user_id = nil
-      expect(subject).to_not be_valid
+    it "is not valid without a user_id" do
+      should validate_presence_of(:user_id)
     end
 
-    it "is not valid without a job_id" do 
-      subject.job_id = nil
-      expect(subject).to_not be_valid
+
+    it "is not valid without a job_id" do
+      should validate_presence_of(:job_id)
+    end
+
+    it "should have status that defaults to 0" do
+      expect(subject.status).to eq 0
+    end
+
+    it "should only allow integer statuses in the set [-1,0,1]" do
+      should validate_numericality_of(:status)
+      .only_integer
+      .is_greater_than_or_equal_to(-1)
+      .is_less_than_or_equal_to(1)
     end
 
     it "should not have multiple identical user_ids and job_ids" do 
       should validate_uniqueness_of(:user_id).scoped_to(:job_id)
     end
+
+    it "is not valid with a user_id that belongs to a user where employer:true" do
+      employer_user = UserData::employer
+      employer_jobs = UserData::jobs(employer_user.id)
+      employer_apps = UserData::job_apps(employer_user.id,employer_jobs)
+      expect(employer_apps.length).to eq 0
+    end
+  end
+
+  describe "User Associations" do
+    
+    it "should belong to a unique user where { employer: false }" do
+      should belong_to(:user).
+      with_foreign_key('user_id').
+      conditions(employer:false) 
+    end
+
+    # it "should be able to access its poster" do
+    #   expect(subject.user.email).to eq "blah@yahoo.com"
+    # end
   end
 end
