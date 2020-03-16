@@ -20,15 +20,15 @@
   font-family: "Metropolis-SemiBold";
 }
 
-#login:hover {
-  background-color: white;
-  color: #3099fc;
-}
-
 #signup{
   width: 6rem;
   height: 2.5rem;
   font-family: "Metropolis-SemiBold";
+  color: #3099fc;
+}
+
+#login:hover {
+  background-color: white;
   color: #3099fc;
 }
 
@@ -51,13 +51,13 @@
   background-color: white;
   border-color: white; 
 }
-
-//if someone needs an alert, use dis
-.notice, .alert {
-  display: none;
-}
  
 //banner
+form {
+  text-align: center;
+  padding-top: 20px;
+}
+
 .top-section {
   background: rgb(86,172,254);
   background: radial-gradient(circle, rgba(86,172,254,1) 0%, rgba(47,119,242,1) 71%);
@@ -68,8 +68,11 @@
 }
 .title-homepage {
   font-family: Metropolis-Bold;
+  font-size: 55px;
   display: flex;
   justify-content: center;;
   color: white;
 }
+
+//body
 
