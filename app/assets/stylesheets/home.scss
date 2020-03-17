@@ -214,3 +214,28 @@ p {
   width: 90%;  
   height: 100%;
 }
+
+.form_submit {
+  padding-left: 50px;
+  padding-right: 50px;
+  color: white;
+  background: #0c53BF;
+  border-width: 0px;
+  border-radius: 3px;
+  height: 50px;
+  margin-left: 10px;
+}
+.form_input {
+  border-radius: 4px;
+  height: 50px;
+  width: 40%;
+  padding-left: 10px;
+  border-width: 0px;
+
+}
+
+.form_input ::placeholder {
+  color: black;
+  font-size: 1.2em;
+  font-style: italic;
+}
