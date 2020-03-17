@@ -1,55 +1,119 @@
-<!-- Navigation -->
+
 <%= render 'pages/modal' %>
-<nav className="nav-bar-homepage">
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <h5 class="my-0 mr-md-auto font-weight-normal">Insert Logo</h5>
-        <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="#">Find Jobs</a>
-            <a class="p-2 text-dark" href="#">Post a Job</a>
-            <% if current_user %>
-                 <a class="btn btn-primary" href=<%="#{destroy_user_session_path	}"%>>Sign out</a>
-            <% else %>
-                <!-- a class="btn btn-outline-primary" href=<%#="#{new_user_session_path}"%>> Log In </a -->
-                <!-- a class="btn btn-primary" href=<%#="#{new_user_registration_path}"%>> Sign Up </a -->
-                <%= link_to "Sign In", signin_path, :class => "", :remote => true %>
-                <%= link_to "Sign Up", signup_path, :class => "",:remote => true %>
 
+
+<div class='top-section'>
+    <%= react_component "NavigationHome", { isSignedIn: current_user } %>
+    <%# render partial: '/layouts/nav'%>
+
+    <!-- Header -->
+    <header class="top-banner-homepage">
+        <h1 class="title-homepage">Get Hired. Start Coding</h1>
+        <div class="search-bar">
+            <%= form_with(url: "/search", method: "post") do %>
+            <%= label_tag(:q, "") %>
+            <%= text_field_tag(:q, "") %>
+            <%= submit_tag("SEARCH JOBS") %>
             <% end %>
-        </nav>
-    </div>
-</nav> 
+        </div>
+    </header>
+</div>
 
-<!-- Header -->
-<header className="top-banner-homepage">
-    <h1 class="title-homepage">Get Hired. Start Coding</h1> 
-    <%= form_with(url: "/search", method: "post") do %>
-    <%= label_tag(:q, "") %> 
-    <%= text_field_tag(:q, "") %> 
-    <%= submit_tag("SEARCH JOBS") %>
-    <% end %>
-</header>
+<body>
 
-<!-- Skills Cards -->
-<section className="companyinfo-homepage">
-    <h2 class="subtitles-homepage">Explore By Skill</h2> 
-    <p class="test">Red</p>
-    <h3 class="subsheading-subtitles-homepage">Narrow the search down by what you are good at.<br>Or learn what's in demand.</h3> 
-</section>
+    <!-- Skills Cards -->
+    <section class="companyinfo-homepage">
+        <h2 class="subtitles-homepage">Explore By Skill</h2>
+        <h3 class="subsheading-subtitles-homepage">Narrow the search down by what you are good at.<br>Or learn what's in demand.</h3>
 
-<!-- Company Info -->
-<section className="companyinfo-homepage">
-    <h2 class="subtitles-homepage">Over 1000+ Jobs Posted</h2> 
-    <h3 class="subsheading-subtitles-homepage">Insert one sentence blurb about how amazing our founders are wow</h3> 
-    <p class="subsheading-subtitles-homepage">Insert paragraph about company Insert paragraph about company Insert paragraph about company</p> 
-</section>
+        <div class="centered">
+            <section class="cards">
+                <article class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Javascript</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">More Info</a>
+                    </div>
+                </article>
 
-<!-- Testimonials -->
-<section className="testimonials-homepage">
-    <h2 class="subtitles-homepage">They believe in us. We believe in them.</h2> 
-</section>
-  
-<!-- Footer -->
-<%= react_component "Footer" %>
+                <article class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Javascript</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">More Info</a>
+                    </div>
+                </article>
 
-<%= stylesheet_link_tag 'home' %>  
+                <article class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Javascript</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">More Info</a>
+                    </div>
+                </article>
 
+                <article class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Javascript</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">More Info</a>
+                    </div>
+                </article>
+
+            </section>
+        </div>
+
+
+
+
+        <%# <form action="cards">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Javascript</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="card-link">More Info</a>
+                </div>
+
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">React</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">More Info</a>
+                    </div>
+
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Ruby</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="card-link">More Info</a>
+                        </div>
+
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Ruby</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <a href="#" class="card-link">More Info</a>
+                            </div>
+                        </div>
+        </form>
+         %>
+    </section>
+
+    <!-- Company Info -->
+    <section class="about-homepage">
+        <h2 class="subtitles-homepage">Over 1000+ Jobs Posted</h2>
+        <h3 class="subsheading-subtitles-homepage">Insert one sentence blurb about how amazing our founders are wow</h3>
+        <p>Insert paragraph about company Insert paragraph about company Insert paragraph about company</p>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-homepage">
+        <h2 class="subtitles-homepage">They believe in us. We believe in them.</h2>
+    </section>
+
+    <!-- Footer -->
+    <%= react_component "Footer" %>
+
+    <%= stylesheet_link_tag 'home' %>
+
+</body>
