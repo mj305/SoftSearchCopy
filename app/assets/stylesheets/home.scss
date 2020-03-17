@@ -1,12 +1,10 @@
-body {
-  font-family: 'MetropolisRegular';
-  font-weight: normal;
-  font-style: normal;
+//page
+p.alert {
+  padding: 0;
+  border: 0;
 }
 
-
 //nav
-
 #login, #signup{
   width: 6rem;
   height: 2.5rem;
@@ -19,7 +17,7 @@ body {
 }
 
 #login:hover {
-  background-color: white;
+  background-color:  dwhite;
   color: #3099fc;
 }
 
@@ -44,11 +42,11 @@ body {
 }
  
 //banner
+
 form {
   text-align: center;
   padding-top: 20px;
 }
-
 
 .container, .top-section {
   background: rgb(86,172,254);
@@ -56,7 +54,7 @@ form {
 }
 
 .top-banner-homepage {
-  padding: 230px 30px;
+  padding: 170px 30px 130px 30px;
 }
 .title-homepage {
   font-family: "MetropolisBold";
@@ -68,8 +66,9 @@ form {
 
 //body
 
-body {
-  background-color: #f9f9f9;
+
+.companyinfo-homepage {
+  background: white;
 }
 
 .subtitles-homepage {
@@ -103,20 +102,6 @@ p {
 }
 
 //skills cards
-
-.cards {
-  border-radius: 0.6rem;
-  margin-top: 50px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.card {
-  box-shadow: 0 20px 40px -14px rgba(0,0,0,0.25);
-  border-radius: 0.6rem;
-}
-
 .cards {
   border-radius: 0.6rem;
   margin-top: 50px;
@@ -131,6 +116,7 @@ p {
   margin-top:20px;
   width: 100%;
 }
+
 .card-img {
   text-align:center;
   width: 30px;
@@ -182,12 +168,12 @@ p {
   color: #000000;
   background-color: #fff;
 }
-
+                
 .search-item {
-  vertical-align: middle;
+  text-align: center;
   margin: auto;
   margin-top: 60px;
-  width: 80%;
+  width: 60%;
 
 }
 .u-btn-outline-primary {
@@ -218,7 +204,7 @@ p {
 }
 .form_input {
   border-radius: 4px;
-  height: 50px;
+  height: 42px;
   width: 40%;
   padding-left: 10px;
   border-width: 0px;
@@ -272,9 +258,4 @@ li {
   display: -webkit-box!important;
   display: -ms-flexbox!important;
   display: flex!important;
-}
-
-.container{
-  width: 100%;
-  text-align: center;
 }
