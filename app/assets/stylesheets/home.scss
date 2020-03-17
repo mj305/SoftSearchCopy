@@ -239,3 +239,51 @@ p {
   font-size: 1.2em;
   font-style: italic;
 }
+
+ul {
+  display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+        margin: 0px;
+    padding: 0px;
+}
+
+.catagory_area .popular_search ul li {
+    display: inline-block;
+    margin-right: 7px;
+}
+.catagory_area .popular_search ul li a {
+    color: #0A8CFF;
+    font-size: 14px;
+    font-weight: 400;
+    border: 1px solid #CEE8FF;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 7px 14px;
+}
+a, button {
+  color: #1F1F1F;
+  outline: medium none;
+}
+li {
+  list-style: none;
+}
+.align-items-center {
+  -webkit-box-align: center!important;
+  -ms-flex-align: center!important;
+  align-items: center!important;
+}
+.d-flex {
+  display: -webkit-box!important;
+  display: -ms-flexbox!important;
+  display: flex!important;
+}
+
+.container{
+  width: 100%;
+  text-align: center;
+}
