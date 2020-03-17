@@ -6,8 +6,8 @@ const Map = ({API_KEY, coords, jobs}) => {
     const usCenter = [-98.5795,39.8283] // center of the united states
 
     const style = {
-        width: "600px",
-        height: "100px"
+        width: "100rem",
+        height: "600px"
     }
 
     // var from = turf.point(coords);
@@ -88,8 +88,7 @@ const Map = ({API_KEY, coords, jobs}) => {
         )
     },[])
     return(
-        <div style={{display:'flex',flexDirection:'row'}}>
-            <div id='map' style={style}></div>
+        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
             <div style={{right:'0'}}>
                 {filteredJobs.map( (job,index) => {
                     return(
@@ -101,6 +100,8 @@ const Map = ({API_KEY, coords, jobs}) => {
                     )
                 })}
             </div>
+            <div id='map' style={style}></div>
+
         </div>
     )
 }
