@@ -1,27 +1,45 @@
-
-
 <div class='top-section'>
     <%= react_component "NavigationHome", { isSignedIn: current_user } %>
     <%# render partial: '/layouts/nav'%>
 
-    <!-- Header -->
-    <header class="top-banner-homepage">
-        <h1 class="title-homepage">Get Hired. Start Coding</h1>
-        <div class="search-bar">
-            <%= form_with(url: "/search", method: "post") do %>
-            <%= label_tag(:q, "") %>
-            <%= text_field_tag(:q, "") %>
-            <%= submit_tag("SEARCH JOBS") %>
-            <% end %>
-        </div>
-    </header>
-</div>
+<!-- Header -->
+<header class="top-banner-homepage">
+    <h1 class="title-homepage">Get Hired. Start Coding</h1>
+    <div class="search-bar">
+        <%= form_with(url: "/search", method: "post") do %>
+        <%= label_tag(:q, "") %>
+        <%= text_field_tag(:q, "", class: "form_input", placeholder: "Set a Location") %>
+        <%= submit_tag("SEARCH JOBS") %>
+        <% end %>
+    </div>     
+    <div class="search-item">
+
+    <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+All</a>
+    <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+React</a>
+    <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+Java</a>
+    <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+Javascript</a>
+    <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+C++</a>
+    <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+C55</a>
+    <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+Magento</a>
+    <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+SQL</a>
+    <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+Python</a>
+    <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+C Sharp</a>
+    <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+Swift</a>
+    <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+C+</a>
+    <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+Python</a>
+    <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+Objective C</a>
+    </div>
+</header>
 
 <body>
 
-    <!-- Skills Cards -->
+# Skill Cards 
     <section class="companyinfo-homepage">
         <h2 class="subtitles-homepage">Explore By Skill</h2>
+        <h3 class="subheading-subtitles-homepage">Narrow the search down by what you are good at.<br> Or learn what's in demand.</h3>
+
+
+
         <h3 class="subsheading-subtitles-homepage">Narrow the search down by what you are good at.<br>Or learn what's in demand.</h3>
 
         <div class="centered">
@@ -61,55 +79,19 @@
             </section>
         </div>
 
-
-
-
-        <%# <form action="cards">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Javascript</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">More Info</a>
-                </div>
-
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">React</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="card-link">More Info</a>
-                    </div>
-
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">Ruby</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="card-link">More Info</a>
-                        </div>
-
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">Ruby</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="card-link">More Info</a>
-                            </div>
-                        </div>
-        </form>
-         %>
-    </section>
-
-    <!-- Company Info -->
+# Company Info
     <section class="about-homepage">
         <h2 class="subtitles-homepage">Over 1000+ Jobs Posted</h2>
         <h3 class="subsheading-subtitles-homepage">Insert one sentence blurb about how amazing our founders are wow</h3>
         <p>Insert paragraph about company Insert paragraph about company Insert paragraph about company</p>
     </section>
 
-    <!-- Testimonials -->
+#Testimonials
     <section class="testimonials-homepage">
         <h2 class="subtitles-homepage">They believe in us. We believe in them.</h2>
     </section>
 
-    <!-- Footer -->
+#Footer
     <%= react_component "Footer" %>
 
     <%= stylesheet_link_tag 'home' %>
