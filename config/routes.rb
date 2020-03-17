@@ -24,4 +24,10 @@ Rails.application.routes.draw do
     # root "pages#home"
     end
   end
+  
+  get '/signin/path' => 'pages#trigger_signin', as: 'signin'
+  get '/signup/path' => 'pages#trigger_signup', as: 'signup'
+
 end
+
+
