@@ -1,0 +1,15 @@
+<!-- this is like a template, secretly loads in background from render at top of actual page -->
+<div class="modal modal-mainmenu fade" tabindex="-1" role="dialog"> <!-- open popup on this class -->
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class=""><!-- modal-header -->
+        <button style="margin:10px;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span><i class="fa fa-times fa-2x"></i></span>
+        </button>
+      </div>
+      <div class="modal-body-mainmenu" style="max-height:2000px;background-color:#ffffff">
+        <!-- javescript will insert _partial.html.erb as body here, by targetting div class, not filename! -->
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
