@@ -8,6 +8,7 @@ gem 'devise-bootstrap-views', '~> 1.0'
 gem 'react-rails'
 gem 'geocoder'
 gem 'dotenv-rails'
+gem 'faker'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.1'
@@ -62,4 +63,4 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'mini_racer', platforms: :ruby
+# gem 'mini_racer', platforms: :ruby

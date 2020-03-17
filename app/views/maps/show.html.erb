@@ -1,13 +1,12 @@
-<div>A map will be going here</div>
+<h1 style='text-align:center; margin-bottom:2rem'>Map Page</h1>
 
-<h1><%="#{@location}"%></h1>
-
-<h2><%="!!!!!!!!!!!!!!!!#{@coords}"%></h2>
-
+<div style='text-align:center; margin-bottom:5rem'>
+    <%= link_to 'Home', root_path %>
+</div>
 <%= react_component('Map', 
 {
     API_KEY: ENV['MAPBOX_KEY'],
     coords: @coords,
+    jobs: @jobs
 
 }) %>
-<%= link_to 'Home', root_path %>
