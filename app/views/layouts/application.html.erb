@@ -20,11 +20,8 @@
   <body>
     <p class = "notice" ><%= notice %> </p>
     <p class = "alert" ><%= alert %></p>
-    <%
-=begin%>
- <%= react_component "Navigation" %> 
-<%
-=end%>
+ <%= react_component "NavigationInner" %> 
+  <%# render partial: '/layouts/nav'%>
     <div class='container'>
       <%= yield %>
     </div>
