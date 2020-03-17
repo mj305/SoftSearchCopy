@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 
 const Map = ({API_KEY, coords, jobs}) => {
     const [filteredJobs, setFilteredJobs] = useState([])
+    const [search, setSearch] = useState('')
+    const [query, setQuery] = useState('')
 
     const usCenter = [-98.5795,39.8283] // center of the united states
 
@@ -74,26 +76,49 @@ const Map = ({API_KEY, coords, jobs}) => {
                     enableHighAccuracy: false
                 },
                 trackUserLocation: false,
-                showAccuracyCircle: false
+                showAccuracyCircle: false,
+                fitBoundsOptions: {
+                    maxZoom: 6
+                }
             })
         )
-    },[])
-    return(
-        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-            <div>
-                {filteredJobs.map( (job,index) => {
-                    return(
-                        <div key={index}>
-                            <h1>{job.position}</h1>
-                            <p>{job.date}</p>
-                            <p>{job.description}</p>
-                        </div>
-                    )
-                })}
-            </div>
-            <div id='map' style={style}></div>
+    },[query])
 
-        </div>
+    function onChange(event) {
+        console.log(event.target.value)
+        setSearch(event.target.value)
+    }
+
+    function onSubmit(event) {
+        // event.preventDefault()
+        console.log(`This is the query!!!!!!!!!! ${query}`)
+        setQuery(search)
+        map.remove()
+
+    }
+    // `/map?location=${query}`
+    return(
+        <>
+            <form style={{marginBottom:'5rem'}} action='/search' method='POST' onSubmit={onSubmit}>
+                <input type="text" name={query} onChange={onChange}/>
+                <input type="submit" name="q" value={query}/>
+            </form>
+            <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                <div>
+                    {filteredJobs.map( (job,index) => {
+                        return(
+                            <div key={index}>
+                                <h1>{job.position}</h1>
+                                <p>{job.date}</p>
+                                <p>{job.description}</p>
+                            </div>
+                        )
+                    })}
+                </div>
+                <div id='map' style={style}></div>
+
+            </div>
+        </>
     )
 }
 
