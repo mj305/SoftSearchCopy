@@ -27,3 +27,28 @@ UserFavorite.create_or_find_by!(user_id: User.where(email: "shawn@gmail.com").id
 UserFavorite.create_or_find_by!(user_id: User.where(email: "trystan@gmail.com").ids[0], job_id: Job.third.id)
 UserFavorite.create_or_find_by!(user_id: User.where(email: "carolina@gmail.com").ids[0], job_id: Job.fourth.id)
 UserFavorite.create_or_find_by!(user_id: User.where(email: "chris@gmail.com").ids[0], job_id: Job.fifth.id)
+
+1000.times do 
+    User.find_or_create_by(
+        email: Faker::Internet.email,
+        password: Faker::Lorem.word,
+        employer: true
+    )
+end
+
+
+
+10000.times do 
+    latlng = Geocoder
+    .search(Faker::Address.street_address)
+    .first.coordinates
+
+    Job.find_or_create_by(
+        position: Faker::Job.title,
+        description: Faker::Lorem.paragraph,
+        date: Faker::Date.backward(days: 120),
+        longitude: latlng[1],
+        latitude: latlng[0],
+        user_id: User.where(employer:true)[rand(1..1000)].id
+    )
+end
