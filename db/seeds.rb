@@ -39,7 +39,7 @@
 
 
 10000.times do 
-    latlng = Geocoder.search(Faker::Address.street_address).first
+    # latlng = Geocoder.search(Faker::Address.street_address).first
 
     next unless latlng
 

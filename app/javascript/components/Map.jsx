@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 
 const Map = ({API_KEY, coords}) => {
 
+    const usCenter = [-98.5795,39.8283] // center of the united states
+
     const style = {
         width: "600px",
         height: "500px"
@@ -12,13 +14,31 @@ const Map = ({API_KEY, coords}) => {
         var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/dark-v10',
-        center: coords,
-        zoom: 6
+        center: usCenter,
+        zoom: 3
         });
         
         var marker = new mapboxgl.Marker({color: '#a83232'})
-        .setLngLat(coords)
+        .setLngLat(usCenter)
         .addTo(map)
+
+
+        // add geolocate control to the map
+
+        map.addControl(
+            new mapboxgl.GeolocateControl({
+                positionOptions: {
+                    enableHighAccuracy: false
+                },
+                trackUserLocation: false,
+                showAccuracyCircle: false
+            })
+        )
+
+
+
+
+
     },[])
     return(
         <div>
