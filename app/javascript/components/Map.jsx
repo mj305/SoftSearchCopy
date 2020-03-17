@@ -7,7 +7,7 @@ const Map = ({API_KEY, coords, jobs}) => {
 
     const style = {
         width: "600px",
-        height: "500px"
+        height: "100px"
     }
 
     // var from = turf.point(coords);
@@ -88,14 +88,15 @@ const Map = ({API_KEY, coords, jobs}) => {
         )
     },[])
     return(
-        <div>
-            <h1>Hello React!</h1>
+        <div style={{display:'flex',flexDirection:'row'}}>
             <div id='map' style={style}></div>
-            <div>
-                {filteredJobs.map( job => {
+            <div style={{right:'0'}}>
+                {filteredJobs.map( (job,index) => {
                     return(
-                        <div>
+                        <div key={index}>
                             <h1>{job.position}</h1>
+                            <p>{job.date}</p>
+                            <p>{job.description}</p>
                         </div>
                     )
                 })}
