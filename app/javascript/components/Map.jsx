@@ -15,19 +15,10 @@ const Map = ({API_KEY, coords, jobs}) => {
     // var options = {units: 'miles'};
     // var distance = turf.distance(from, to, options);
 
-    // returns points within a specified radius
-    // function filterGeoJsonPoints(points) {
-    //     var center = coords;
-    //     var radius = 500;
-    //     var options = {steps: 64, units: 'miles', properties: {foo: 'bar'}};
-    //     var circle = turf.circle(center, radius, options);
-    //     var geoPoints = turf.points(points)
-    //     return( turf.pointsWithinPolygon(geoPoints, circle).features )
-    //   }
 
     function filterGeoJsonPoints(points) {
         var center = coords;
-        var radius = 500;
+        var radius = 100;
         var options = {steps: 64, units: 'miles', properties: {foo: 'bar'}};
         var circle = turf.circle(center, radius, options);
         var geoPoints = turf.points(points)
@@ -89,7 +80,7 @@ const Map = ({API_KEY, coords, jobs}) => {
     },[])
     return(
         <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-            <div style={{right:'0'}}>
+            <div>
                 {filteredJobs.map( (job,index) => {
                     return(
                         <div key={index}>
