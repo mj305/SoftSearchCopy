@@ -5,6 +5,41 @@ const Map = ({API_KEY, coords, jobs}) => {
     const [search, setSearch] = useState('')
     const [query, setQuery] = useState('')
 
+    /////////////////////////////////////////////////////////////////////////////// EXPERIMENTAL 
+    
+    let geoJsonPoints = {
+        type: 'FeatureCollection',
+        features: []
+      }
+      
+      function geoJsonPoint(geoPoint) {
+        return(
+          {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [geoPoint.longitude, geoPoint.latitude]
+        },
+        properties: {
+          title: geoPoint.position,
+          description: ''
+        }
+      }
+        )
+      }
+
+      const MARKER_LAYER = {
+        id: 'markers',
+        type: 'symbol',
+        source: 'markers',
+        layout: {
+          'icon-image': 'restaurant-15',
+          'icon-size': 1.5,
+          'icon-allow-overlap': true
+        }
+      };
+
+    ////////////////////////////////////////////////////////////////////////////// EXPERIMENTAL 
     const usCenter = [-98.5795,39.8283] // center of the united states
 
     const style = {
@@ -39,13 +74,13 @@ const Map = ({API_KEY, coords, jobs}) => {
       }
 
     // takes a json type object and returns an array of [longitude, latitude] sub arrays
-    function geoJsonPoints(array) {
-        let points = array.map( ({longitude,latitude}) => {
-            return [longitude,latitude]
-        })
-        // console.log(points)
-        return points //points is an array of 2D LngLat arrays
-    }
+    // function geoJsonPoints(array) {
+    //     let points = array.map( ({longitude,latitude}) => {
+    //         return [longitude,latitude]
+    //     })
+    //     // console.log(points)
+    //     return points //points is an array of 2D LngLat arrays
+    // }
 
 
     useEffect(() => {
@@ -53,20 +88,34 @@ const Map = ({API_KEY, coords, jobs}) => {
         var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/dark-v10',
-        center: coords,
+        center: usCenter,
         zoom: 6
         });
         
-        var marker = new mapboxgl.Marker({color: '#a83232'})
+        let marker = new mapboxgl.Marker({color: '#a83232'})
         .setLngLat(coords)
         .addTo(map)
-    
-        filterGeoJsonPoints(geoJsonPoints(jobs))
-        .forEach(({geometry}) => {
-          new mapboxgl.Marker()
-          .setLngLat(geometry.coordinates)
-          .addTo(map);
+
+
+        jobs.forEach( job => {
+            geoJsonPoints.features.push(geoJsonPoint(job))
+          })
+        
+        console.log(geoJsonPoints)
+
+        map.on('load', () => {
+            map.addSource('markers', {type: 'geojson', data: geoJsonPoints })
+            map.addLayer(MARKER_LAYER)
         })
+
+        
+    
+        // filterGeoJsonPoints(geoJsonPoints(jobs))
+        // .forEach(({geometry}) => {
+        //   new mapboxgl.Marker()
+        //   .setLngLat(geometry.coordinates)
+        //   .addTo(map);
+        // })
 
         // add geolocate control to the map
 
@@ -90,19 +139,17 @@ const Map = ({API_KEY, coords, jobs}) => {
     }
 
     function onSubmit(event) {
-        // event.preventDefault()
         console.log(`This is the query!!!!!!!!!! ${query}`)
         setQuery(search)
         map.remove()
-
     }
-    // `/map?location=${query}`
     return(
         <>
             <form style={{marginBottom:'5rem'}} action='/search' method='POST' onSubmit={onSubmit}>
                 <input type="text" name={query} onChange={onChange}/>
-                <input type="submit" name="q" value={query}/>
+                <input type="submit" name="q" value={query || "Search Now"}/>
             </form>
+
             <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                 <div>
                     {filteredJobs.map( (job,index) => {
