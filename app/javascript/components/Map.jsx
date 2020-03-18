@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import JobPic from '../../assets/images/job.png'
+
 
 const Map = ({API_KEY, coords, jobs}) => {
     const [filteredJobs, setFilteredJobs] = useState([])
@@ -24,6 +26,13 @@ const Map = ({API_KEY, coords, jobs}) => {
         height: "600px"
     }
 
+    async function geoCoder() {
+        const apiCall = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=${API_KEY}`)
+        console.log(apiCall)
+    } 
+
+    geoCoder()
+
     // var from = turf.point(coords);
     // var to = turf.point([-80.1373,26.1224]);
     // var options = {units: 'miles'};
@@ -43,6 +52,7 @@ const Map = ({API_KEY, coords, jobs}) => {
       }
 
     useEffect(() => {
+        // if(query) 
         mapboxgl.accessToken = API_KEY;
         var map = new mapboxgl.Map({
         container: 'map',
@@ -54,8 +64,6 @@ const Map = ({API_KEY, coords, jobs}) => {
         let marker = new mapboxgl.Marker({color: '#a83232'})
         .setLngLat(coords)
         .addTo(map)
-
-
 
         const features = jobs.map( job => {
             return {
@@ -115,15 +123,15 @@ const Map = ({API_KEY, coords, jobs}) => {
     }
 
     function onSubmit(event) {
+        event.preventDefault()
         console.log(`This is the query!!!!!!!!!! ${query}`)
         setQuery(search)
-        map.remove()
     }
     return(
         <>
-            <form style={{marginBottom:'5rem'}} action='/search' method='POST' onSubmit={onSubmit}>
+            <form style={{marginBottom:'5rem'}} action='/search' method='GET' onSubmit={onSubmit}>
                 <input type="text" name={query} onChange={onChange}/>
-                <input type="submit" name="q" value={query || "Search Now"}/>
+                {/* <input type="submit" name="q" value={query || "Search Now"}/> */}
             </form>
 
             <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
