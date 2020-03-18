@@ -1,7 +1,26 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import Jobs from './Jobs'
+import Pagination from './Pagination'
+import JobPic from '../../assets/images/job.png'
+import SearchPin from '../../assets/images/search.png'
+import { 
+    filterGeoJsonPoints,
+    geoJsonMarkers, onLoad,
+    geoLocationOptions,flyToProps
+} from './mapFunctions'
+
 
 const Map = ({API_KEY, coords, jobs}) => {
     const [filteredJobs, setFilteredJobs] = useState([])
+    const [apiCoords, setApiCoords] = useState([])
+    const [map, setMap] = useState({})
+    const [search, setSearch] = useState('')
+    const [query, setQuery] = useState('')    
+
+    const [loading, setLoading] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [jobsPerPage, setJobsPerPage] = useState(10)
 
     const usCenter = [-98.5795,39.8283] // center of the united states
 
@@ -10,90 +29,181 @@ const Map = ({API_KEY, coords, jobs}) => {
         height: "600px"
     }
 
-    // var from = turf.point(coords);
-    // var to = turf.point([-80.1373,26.1224]);
-    // var options = {units: 'miles'};
-    // var distance = turf.distance(from, to, options);
+    let options = {
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: coords,
+        zoom: 6
+        }
 
+    const allJobsOption = {
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: usCenter,
+        zoom: 4
+    }
 
-    function filterGeoJsonPoints(points) {
-        var center = coords;
-        var radius = 100;
-        var options = {steps: 64, units: 'miles', properties: {foo: 'bar'}};
-        var circle = turf.circle(center, radius, options);
-        var geoPoints = turf.points(points)
-        var filteredPoints = turf.pointsWithinPolygon(geoPoints, circle).features
-        jobsInRange(filteredPoints)
-        return(filteredPoints)
-      }
+    const geoJSON = geoJsonMarkers(jobs)
 
-      function jobsInRange(geoPoints) {
-         setFilteredJobs(jobs.filter( job => {
-              return(geoPoints.some( ({geometry}) => {
-                  return(geometry.coordinates[0] === job.longitude 
-                    && geometry.coordinates[1] === job.latitude)
-              }))
-          }))
-      }
+    function createMap(mapOptions) {
+        const map = new mapboxgl.Map(mapOptions)
 
-    // takes a json type object and returns an array of [longitude, latitude] sub arrays
-    function geoJsonPoints(array) {
-        let points = array.map( ({longitude,latitude}) => {
-            return [longitude,latitude]
-        })
-        // console.log(points)
-        return points //points is an array of 2D LngLat arrays
+        coords = (coords ? coords : usCenter)
+       
+        const filteredPoints = filterGeoJsonPoints(coords,geoJSON,3000)
+       
+        setLoading(true)
+
+       
+        setFilteredJobs(filteredPoints)
+
+        onLoad(map,coords,filteredPoints,JobPic,SearchPin)
+       
+        map.addControl(
+            new mapboxgl.GeolocateControl(geoLocationOptions)
+        )
+
+        setMap( map )
     }
 
 
     useEffect(() => {
         mapboxgl.accessToken = API_KEY;
-        var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/dark-v10',
-        center: coords,
-        zoom: 6
-        });
-        
-        var marker = new mapboxgl.Marker({color: '#a83232'})
-        .setLngLat(coords)
-        .addTo(map)
+
+        options = (coords ? options : allJobsOption)
+
+        createMap(options)
+
+        return () => {
+            map.remove()
+        }
+    },[])
+
+
+    useEffect(() => {
+        if(apiCoords.length) {
+
+            const filteredPoints = filterGeoJsonPoints(apiCoords,geoJSON,100)
+            
+            setLoading(true)
+
+            
+            setFilteredJobs(filteredPoints)
+
+
+            console.log(filteredPoints)
+
+            map.getSource('markers').setData({
+                type: 'FeatureCollection',
+                features: filteredPoints
+            })
+
+            map.getSource('search').setData({
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: apiCoords
+                },
+                properties: {foo: 'bar'}
+            })
+            
+            map.flyTo({
+                center: apiCoords, 
+                ...flyToProps
+            })
+        }
+
+
+    },[apiCoords])
+
+    useEffect(() => {
+        if(!query) return
+
+        const geoCoder = async () => {
+            const response = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${API_KEY}`)
+            setApiCoords(response.data.features[0].geometry.coordinates)
+        } 
+
+        geoCoder()
     
-        filterGeoJsonPoints(geoJsonPoints(jobs))
-        .forEach(({geometry}) => {
-          new mapboxgl.Marker()
-          .setLngLat(geometry.coordinates)
-          .addTo(map);
+    },[query])
+
+
+
+    function onChange(event) {
+        console.log(event.target.value)
+        setSearch(event.target.value)
+    }
+
+    function onSubmit(event) {
+        event.preventDefault()
+        console.log(`This is the query!!!!!!!!!! ${query}`)
+        setQuery(search)
+    }
+
+    function allJobs() {
+        const filteredPoints = filterGeoJsonPoints(usCenter,geoJSON,3000)
+        setLoading(true)
+        setFilteredJobs(filteredPoints)
+
+        map.getSource('markers').setData({
+            type: 'FeatureCollection',
+            features: filteredPoints
         })
 
-        // add geolocate control to the map
+        map.getSource('search').setData({
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                coordinates: usCenter
+            },
+            properties: {foo: 'bar'}
+        })
+        
+        map.flyTo({
+            center: usCenter, 
+            speed: 0.5, 
+            zoom: 4
+        })
+    }
 
-        map.addControl(
-            new mapboxgl.GeolocateControl({
-                positionOptions: {
-                    enableHighAccuracy: false
-                },
-                trackUserLocation: false,
-                showAccuracyCircle: false
-            })
-        )
-    },[])
+    useEffect(() => {
+        if(!filteredJobs.length) return
+        setLoading(false)
+    },[filteredJobs])
+
+    // get current jobs 
+
+    const indexOfLastJob = currentPage * jobsPerPage
+    const indexOfFirstJob = indexOfLastJob - jobsPerPage
+    const currentJobs = filteredJobs.slice(indexOfFirstJob,indexOfLastJob)
+
+    const paginate = pageNumber => setCurrentPage(pageNumber)
+
     return(
-        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-            <div>
-                {filteredJobs.map( (job,index) => {
-                    return(
-                        <div key={index}>
-                            <h1>{job.position}</h1>
-                            <p>{job.date}</p>
-                            <p>{job.description}</p>
-                        </div>
-                    )
-                })}
+        <>
+            <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}> 
+                <form style={{marginBottom:'1rem'}}  onSubmit={onSubmit}>
+                    <input type="text" name={query} onChange={onChange}/>
+                    <input type="submit"/>
+                </form>
+                <button style={{marginBottom:'5rem'}} onClick={allJobs}>SEE ALL JOBS</button>
             </div>
-            <div id='map' style={style}></div>
-
-        </div>
+                {/* <div>
+                    {filteredJobs.map( ({properties},index) => {
+                        return(
+                            <div key={index}>
+                                <h1>{properties.position}</h1>
+                                <p>{properties.date}</p>
+                                <p>{properties.description}</p>
+                            </div>
+                        )
+                    })}
+                </div> */}
+                <div id='map' style={style}></div>
+                <Jobs jobs={currentJobs} loading={loading} />
+                <Pagination jobsPerPage={jobsPerPage} totalJobs={filteredJobs.length} paginate={paginate} />
+        </>
     )
 }
 
