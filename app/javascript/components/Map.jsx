@@ -4,7 +4,8 @@ import JobPic from '../../assets/images/job.png'
 import SearchPin from '../../assets/images/search.png'
 import { 
     filterGeoJsonPoints,
-    geoJsonMarkers, onLoad
+    geoJsonMarkers, onLoad,
+    geoLocationOptions,flyToProps
 } from './mapFunctions'
 
 
@@ -21,32 +22,20 @@ const Map = ({API_KEY, coords, jobs}) => {
         height: "600px"
     }
 
-    async function geoCoder() {
-        const response = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${API_KEY}`)
-        console.log(response.data.features[0].geometry.coordinates)
-        return response
-    } 
+    // async function geoCoder() {
+    //     const response = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${API_KEY}`)
+    //     console.log(response.data.features[0].geometry.coordinates)
+    //     return (response.data.features[0].geometry.coordinates)
+    // } 
 
 
-    // var from = turf.point(coords);
-    // var to = turf.point([-80.1373,26.1224]);
-    // var options = {units: 'miles'};
-    // var distance = turf.distance(from, to, options);
     function createMap(mapOptions) {
         const map = new mapboxgl.Map(mapOptions)
         
         map.addControl(
-            new mapboxgl.GeolocateControl({
-                positionOptions: {
-                    enableHighAccuracy: false
-                },
-                trackUserLocation: false,
-                showAccuracyCircle: false,
-                fitBoundsOptions: {
-                    maxZoom: 6
-                }
-            })
+            new mapboxgl.GeolocateControl(geoLocationOptions)
         )
+
         setMap( map )
     }
 
@@ -78,12 +67,40 @@ const Map = ({API_KEY, coords, jobs}) => {
 
         onLoad(map,coords,filteredPoints,JobPic,SearchPin)
 
+        // if(query) {
+        //     map.flyTo({
+        //         center: geoCoder(), 
+        //         ...flyToProps
+        //     })
+        // }
+
 
         // return () => {
         //     map.remove()
         // }
 
     },[map])
+
+    useEffect(() => {
+        if(!query) return
+
+        const geoCoder = async () => {
+            const response = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${API_KEY}`)
+
+            map.flyTo({
+                center: response.data.features[0].geometry.coordinates, 
+                ...flyToProps
+            })
+
+            return (response.data.features[0].geometry.coordinates)
+        } 
+
+        geoCoder()
+
+
+
+        
+    },[query])
 
 
 

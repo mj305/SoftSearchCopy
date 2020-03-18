@@ -1,3 +1,18 @@
+
+export const flyToProps = { speed: 0.3, zoom: 14, bearing: 20, pitch: 20 };
+
+
+export const geoLocationOptions = {
+    positionOptions: {
+        enableHighAccuracy: false
+    },
+    trackUserLocation: false,
+    showAccuracyCircle: false,
+    fitBoundsOptions: {
+        maxZoom: 6
+    }
+}
+
 export const MARKER_LAYER = {
     id: 'markers',
     type: 'symbol',
