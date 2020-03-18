@@ -7,9 +7,9 @@ const Jobs = ({jobs, loading}) => {
 
     return(
         <ul className='list-group mb-4'>
-            {jobs.map((job,index) => (
+            {jobs.map(({properties},index) => (
                 <li key={index} className='list-group-item'>
-                    {job.position}
+                    {properties.position}
                 </li>
             ))}
         </ul>

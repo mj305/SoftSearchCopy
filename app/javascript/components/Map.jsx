@@ -162,6 +162,13 @@ const Map = ({API_KEY, coords, jobs}) => {
             zoom: 4
         })
     }
+
+    // get current jobs 
+
+    const indexOfLastJob = currentPage * jobsPerPage
+    const indexOfFirstJob = indexOfLastJob - jobsPerPage
+    const currentJobs = filteredJobs.slice(indexOfFirstJob,indexOfLastJob)
+
     return(
         <>
             <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}> 
@@ -183,7 +190,7 @@ const Map = ({API_KEY, coords, jobs}) => {
                         )
                     })}
                 </div> */}
-                <Jobs jobs={jobs} loading={loading} />
+                <Jobs jobs={currentJobs} loading={loading} />
                 <div id='map' style={style}></div>
 
             </div>
