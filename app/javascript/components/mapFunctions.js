@@ -1,5 +1,5 @@
 
-export const flyToProps = { speed: 0.3, zoom: 14, bearing: 20, pitch: 20 };
+export const flyToProps = { speed: 0.5, zoom: 6, bearing: 0, pitch: 0 };
 
 
 export const geoLocationOptions = {

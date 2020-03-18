@@ -3,6 +3,7 @@ import axios from 'axios'
 import JobPic from '../../assets/images/job.png'
 import SearchPin from '../../assets/images/search.png'
 import { 
+    pointFeature,
     filterGeoJsonPoints,
     geoJsonMarkers, onLoad,
     geoLocationOptions,flyToProps
@@ -11,9 +12,10 @@ import {
 
 const Map = ({API_KEY, coords, jobs}) => {
     const [filteredJobs, setFilteredJobs] = useState([])
+    const [apiCoords, setApiCoords] = useState([])
+    const [map, setMap] = useState({})
     const [search, setSearch] = useState('')
     const [query, setQuery] = useState('')    
-    const [map, setMap] = useState({})
 
     const usCenter = [-98.5795,39.8283] // center of the united states
 
@@ -22,16 +24,15 @@ const Map = ({API_KEY, coords, jobs}) => {
         height: "600px"
     }
 
-    // async function geoCoder() {
-    //     const response = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${API_KEY}`)
-    //     console.log(response.data.features[0].geometry.coordinates)
-    //     return (response.data.features[0].geometry.coordinates)
-    // } 
-
+    const geoJSON = geoJsonMarkers(jobs)
 
     function createMap(mapOptions) {
         const map = new mapboxgl.Map(mapOptions)
-        
+       
+        const filteredPoints = filterGeoJsonPoints(coords,geoJSON)
+        setFilteredJobs(filteredPoints)
+        onLoad(map,coords,filteredPoints,JobPic,SearchPin)
+       
         map.addControl(
             new mapboxgl.GeolocateControl(geoLocationOptions)
         )
@@ -51,55 +52,56 @@ const Map = ({API_KEY, coords, jobs}) => {
             }
 
         createMap(options)
+
+        return () => {
+            map.remove()
+        }
     },[])
 
 
     useEffect(() => {
-        if(Object.entries(map).length === 0) return
+        if(apiCoords.length) {
+            // map.removeLayer('markers')
+            // map.removeLayer('search')
+
+            const filteredPoints = filterGeoJsonPoints(apiCoords,geoJSON)
+            setFilteredJobs(filteredPoints)
+
+            console.log(filteredPoints)
+
+            map.getSource('markers').setData({
+                type: 'FeatureCollection',
+                features: filteredPoints
+            })
+
+            map.getSource('search').setData({
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: apiCoords
+                },
+                properties: {foo: 'bar'}
+            })
+            
+            map.flyTo({
+                center: apiCoords, 
+                ...flyToProps
+            })
+        }
 
 
-        const filteredPoints = filterGeoJsonPoints(coords,geoJsonMarkers(jobs))
-
-        setFilteredJobs(filteredPoints)
-        
-        // console.log(geoJsonMarkers)
-
-
-        onLoad(map,coords,filteredPoints,JobPic,SearchPin)
-
-        // if(query) {
-        //     map.flyTo({
-        //         center: geoCoder(), 
-        //         ...flyToProps
-        //     })
-        // }
-
-
-        // return () => {
-        //     map.remove()
-        // }
-
-    },[map])
+    },[apiCoords])
 
     useEffect(() => {
         if(!query) return
 
         const geoCoder = async () => {
             const response = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${API_KEY}`)
-
-            map.flyTo({
-                center: response.data.features[0].geometry.coordinates, 
-                ...flyToProps
-            })
-
-            return (response.data.features[0].geometry.coordinates)
+            setApiCoords(response.data.features[0].geometry.coordinates)
         } 
 
         geoCoder()
-
-
-
-        
+    
     },[query])
 
 
