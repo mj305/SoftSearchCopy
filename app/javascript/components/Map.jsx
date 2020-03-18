@@ -124,12 +124,41 @@ const Map = ({API_KEY, coords, jobs}) => {
         console.log(`This is the query!!!!!!!!!! ${query}`)
         setQuery(search)
     }
+
+    function allJobs() {
+        const filteredPoints = filterGeoJsonPoints(usCenter,geoJSON,3000)
+        setFilteredJobs(filteredPoints)
+
+
+        map.getSource('markers').setData({
+            type: 'FeatureCollection',
+            features: filteredPoints
+        })
+
+        map.getSource('search').setData({
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                coordinates: usCenter
+            },
+            properties: {foo: 'bar'}
+        })
+        
+        map.flyTo({
+            center: usCenter, 
+            speed: 0.5, 
+            zoom: 4
+        })
+    }
     return(
         <>
-            <form style={{marginBottom:'5rem'}}  onSubmit={onSubmit}>
-                <input type="text" name={query} onChange={onChange}/>
-            </form>
-
+            <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}> 
+                <form style={{marginBottom:'1rem'}}  onSubmit={onSubmit}>
+                    <input type="text" name={query} onChange={onChange}/>
+                    <input type="submit"/>
+                </form>
+                <button style={{marginBottom:'5rem'}} onClick={allJobs}>SEE ALL JOBS</button>
+            </div>
             <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                 <div>
                     {filteredJobs.map( ({properties},index) => {
