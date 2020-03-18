@@ -7,26 +7,6 @@ const Map = ({API_KEY, coords, jobs}) => {
 
     /////////////////////////////////////////////////////////////////////////////// EXPERIMENTAL 
     
-    let geoJsonPoints = {
-        type: 'FeatureCollection',
-        features: []
-      }
-      
-      function geoJsonPoint(geoPoint) {
-        return(
-          {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [geoPoint.longitude, geoPoint.latitude]
-        },
-        properties: {
-          title: geoPoint.position,
-          description: ''
-        }
-      }
-        )
-      }
 
       const MARKER_LAYER = {
         id: 'markers',
@@ -58,29 +38,22 @@ const Map = ({API_KEY, coords, jobs}) => {
         var radius = 100;
         var options = {steps: 64, units: 'miles', properties: {foo: 'bar'}};
         var circle = turf.circle(center, radius, options);
-        var geoPoints = turf.points(points)
-        var filteredPoints = turf.pointsWithinPolygon(geoPoints, circle).features
-        jobsInRange(filteredPoints)
+
+        var filteredPoints = turf.pointsWithinPolygon(points, circle).features
+        // console.log(filteredPoints)
+        setFilteredJobs(filteredPoints)
         return(filteredPoints)
       }
 
-      function jobsInRange(geoPoints) {
-         setFilteredJobs(jobs.filter( job => {
-              return(geoPoints.some( ({geometry}) => {
-                  return(geometry.coordinates[0] === job.longitude 
-                    && geometry.coordinates[1] === job.latitude)
-              }))
-          }))
-      }
+    //   function jobsInRange(geoPoints) {
+    //      setFilteredJobs(jobs.filter( job => {
+    //           return(geoPoints.some( ({geometry}) => {
+    //               return(geometry.coordinates[0] === job.longitude 
+    //                 && geometry.coordinates[1] === job.latitude)
+    //           }))
+    //       }))
+    //   }
 
-    // takes a json type object and returns an array of [longitude, latitude] sub arrays
-    // function geoJsonPoints(array) {
-    //     let points = array.map( ({longitude,latitude}) => {
-    //         return [longitude,latitude]
-    //     })
-    //     // console.log(points)
-    //     return points //points is an array of 2D LngLat arrays
-    // }
 
 
     useEffect(() => {
@@ -88,7 +61,7 @@ const Map = ({API_KEY, coords, jobs}) => {
         var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/dark-v10',
-        center: usCenter,
+        center: coords,
         zoom: 6
         });
         
@@ -97,25 +70,41 @@ const Map = ({API_KEY, coords, jobs}) => {
         .addTo(map)
 
 
-        jobs.forEach( job => {
-            geoJsonPoints.features.push(geoJsonPoint(job))
-          })
+
+        const features = jobs.map( job => {
+            return {
+                type: 'Feature',
+                geometry: {
+                  type: 'Point',
+                  coordinates: [job.longitude, job.latitude]
+                },
+                properties: {...job}
+              }
+        })
+
+        const geoJsonMarkers = {
+            type: "FeatureCollection",
+            features
+        }
+
+
         
-        console.log(geoJsonPoints)
+        // console.log(geoJsonMarkers)
 
         map.on('load', () => {
-            map.addSource('markers', {type: 'geojson', data: geoJsonPoints })
+            map.addSource('markers', {type: 'geojson', data: {
+                type: 'FeatureCollection',
+                features: filterGeoJsonPoints(geoJsonMarkers)
+            } })
             map.addLayer(MARKER_LAYER)
         })
 
         
-    
-        // filterGeoJsonPoints(geoJsonPoints(jobs))
-        // .forEach(({geometry}) => {
-        //   new mapboxgl.Marker()
-        //   .setLngLat(geometry.coordinates)
-        //   .addTo(map);
-        // })
+        ////////////////////////////
+        console.log(filterGeoJsonPoints(geoJsonMarkers))
+
+        ////////////////////////////
+
 
         // add geolocate control to the map
 
@@ -152,12 +141,12 @@ const Map = ({API_KEY, coords, jobs}) => {
 
             <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                 <div>
-                    {filteredJobs.map( (job,index) => {
+                    {filteredJobs.map( ({properties},index) => {
                         return(
                             <div key={index}>
-                                <h1>{job.position}</h1>
-                                <p>{job.date}</p>
-                                <p>{job.description}</p>
+                                <h1>{properties.position}</h1>
+                                <p>{properties.date}</p>
+                                <p>{properties.description}</p>
                             </div>
                         )
                     })}
