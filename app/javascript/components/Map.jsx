@@ -48,13 +48,11 @@ const Map = ({API_KEY, coords, jobs}) => {
     function createMap(mapOptions) {
         const map = new mapboxgl.Map(mapOptions)
 
+        const rad = (coords ? 100 : 3000)
         coords = (coords ? coords : usCenter)
-       
-        const filteredPoints = filterGeoJsonPoints(coords,geoJSON,3000)
-       
+        
+        const filteredPoints = filterGeoJsonPoints(coords,geoJSON,rad)
         setLoading(true)
-
-       
         setFilteredJobs(filteredPoints)
 
         onLoad(map,coords,filteredPoints,JobPic,SearchPin)
@@ -69,9 +67,7 @@ const Map = ({API_KEY, coords, jobs}) => {
 
     useEffect(() => {
         mapboxgl.accessToken = API_KEY;
-
         options = (coords ? options : allJobsOption)
-
         createMap(options)
 
         return () => {
@@ -83,15 +79,9 @@ const Map = ({API_KEY, coords, jobs}) => {
     useEffect(() => {
         if(apiCoords.length) {
 
-            const filteredPoints = filterGeoJsonPoints(apiCoords,geoJSON,100)
-            
+            const filteredPoints = filterGeoJsonPoints(apiCoords,geoJSON,100)            
             setLoading(true)
-
-            
             setFilteredJobs(filteredPoints)
-
-
-            console.log(filteredPoints)
 
             map.getSource('markers').setData({
                 type: 'FeatureCollection',
@@ -189,17 +179,6 @@ const Map = ({API_KEY, coords, jobs}) => {
                 </form>
                 <button style={{marginBottom:'5rem'}} onClick={allJobs}>SEE ALL JOBS</button>
             </div>
-                {/* <div>
-                    {filteredJobs.map( ({properties},index) => {
-                        return(
-                            <div key={index}>
-                                <h1>{properties.position}</h1>
-                                <p>{properties.date}</p>
-                                <p>{properties.description}</p>
-                            </div>
-                        )
-                    })}
-                </div> */}
                 <div id='map' style={style}></div>
                 <Jobs jobs={currentJobs} loading={loading} />
                 <Pagination jobsPerPage={jobsPerPage} totalJobs={filteredJobs.length} paginate={paginate} />
