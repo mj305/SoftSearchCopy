@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from 'react'
+import JobPic from '../../assets/images/job.png'
 
 const Map = ({API_KEY, coords, jobs}) => {
     const [filteredJobs, setFilteredJobs] = useState([])
     const [search, setSearch] = useState('')
-    const [query, setQuery] = useState('')
-
-    /////////////////////////////////////////////////////////////////////////////// EXPERIMENTAL 
-    
+    const [query, setQuery] = useState('')    
 
       const MARKER_LAYER = {
         id: 'markers',
         type: 'symbol',
         source: 'markers',
         layout: {
-          'icon-image': 'restaurant-15',
-          'icon-size': 1.5,
+          'icon-image': 'JobPic',
+          'icon-size': 0.25,
           'icon-allow-overlap': true
         }
       };
 
-    ////////////////////////////////////////////////////////////////////////////// EXPERIMENTAL 
     const usCenter = [-98.5795,39.8283] // center of the united states
 
     const style = {
@@ -45,22 +42,11 @@ const Map = ({API_KEY, coords, jobs}) => {
         return(filteredPoints)
       }
 
-    //   function jobsInRange(geoPoints) {
-    //      setFilteredJobs(jobs.filter( job => {
-    //           return(geoPoints.some( ({geometry}) => {
-    //               return(geometry.coordinates[0] === job.longitude 
-    //                 && geometry.coordinates[1] === job.latitude)
-    //           }))
-    //       }))
-    //   }
-
-
-
     useEffect(() => {
         mapboxgl.accessToken = API_KEY;
         var map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/dark-v10',
+        style: 'mapbox://styles/mapbox/streets-v11',
         center: coords,
         zoom: 6
         });
@@ -86,24 +72,20 @@ const Map = ({API_KEY, coords, jobs}) => {
             type: "FeatureCollection",
             features
         }
-
-
         
         // console.log(geoJsonMarkers)
 
         map.on('load', () => {
+            map.loadImage(JobPic, (error, image) => {
+                if (error) throw error
+                map.addImage('JobPic', image)
+            })
             map.addSource('markers', {type: 'geojson', data: {
                 type: 'FeatureCollection',
                 features: filterGeoJsonPoints(geoJsonMarkers)
             } })
             map.addLayer(MARKER_LAYER)
         })
-
-        
-        ////////////////////////////
-        console.log(filterGeoJsonPoints(geoJsonMarkers))
-
-        ////////////////////////////
 
 
         // add geolocate control to the map
@@ -120,6 +102,11 @@ const Map = ({API_KEY, coords, jobs}) => {
                 }
             })
         )
+
+        return () => {
+            map.remove()
+        }
+
     },[query])
 
     function onChange(event) {
