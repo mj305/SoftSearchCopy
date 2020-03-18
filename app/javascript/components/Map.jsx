@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Jobs from './Jobs'
 import JobPic from '../../assets/images/job.png'
 import SearchPin from '../../assets/images/search.png'
 import { 
@@ -15,6 +16,10 @@ const Map = ({API_KEY, coords, jobs}) => {
     const [map, setMap] = useState({})
     const [search, setSearch] = useState('')
     const [query, setQuery] = useState('')    
+
+    const [loading, setLoading] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [jobsPerPage, setJobsPerPage] = useState(10)
 
     const usCenter = [-98.5795,39.8283] // center of the united states
 
@@ -46,6 +51,9 @@ const Map = ({API_KEY, coords, jobs}) => {
        
         const filteredPoints = filterGeoJsonPoints(coords,geoJSON,3000)
         setFilteredJobs(filteredPoints)
+
+        setLoading(false)
+
         onLoad(map,coords,filteredPoints,JobPic,SearchPin)
        
         map.addControl(
@@ -74,6 +82,8 @@ const Map = ({API_KEY, coords, jobs}) => {
 
             const filteredPoints = filterGeoJsonPoints(apiCoords,geoJSON,100)
             setFilteredJobs(filteredPoints)
+
+            setLoading(false)
 
             console.log(filteredPoints)
 
@@ -129,6 +139,8 @@ const Map = ({API_KEY, coords, jobs}) => {
         const filteredPoints = filterGeoJsonPoints(usCenter,geoJSON,3000)
         setFilteredJobs(filteredPoints)
 
+        setLoading(false)
+
 
         map.getSource('markers').setData({
             type: 'FeatureCollection',
@@ -160,7 +172,7 @@ const Map = ({API_KEY, coords, jobs}) => {
                 <button style={{marginBottom:'5rem'}} onClick={allJobs}>SEE ALL JOBS</button>
             </div>
             <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-                <div>
+                {/* <div>
                     {filteredJobs.map( ({properties},index) => {
                         return(
                             <div key={index}>
@@ -170,7 +182,8 @@ const Map = ({API_KEY, coords, jobs}) => {
                             </div>
                         )
                     })}
-                </div>
+                </div> */}
+                <Jobs jobs={jobs} loading={loading} />
                 <div id='map' style={style}></div>
 
             </div>
