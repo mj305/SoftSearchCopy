@@ -48,9 +48,11 @@ const Map = ({API_KEY, coords, jobs}) => {
     function createMap(mapOptions) {
         const map = new mapboxgl.Map(mapOptions)
 
+        const rad = (coords ? 100 : 3000)
+
         coords = (coords ? coords : usCenter)
        
-        const filteredPoints = filterGeoJsonPoints(coords,geoJSON,3000)
+        const filteredPoints = filterGeoJsonPoints(coords,geoJSON,rad)
        
         setLoading(true)
 
