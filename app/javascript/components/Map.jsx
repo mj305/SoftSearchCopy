@@ -7,6 +7,7 @@ const Map = ({API_KEY, coords, jobs}) => {
     const [filteredJobs, setFilteredJobs] = useState([])
     const [search, setSearch] = useState('')
     const [query, setQuery] = useState('')    
+    const [map, setMap] = useState({})
 
       const MARKER_LAYER = {
         id: 'markers',
@@ -27,11 +28,12 @@ const Map = ({API_KEY, coords, jobs}) => {
     }
 
     async function geoCoder() {
-        const apiCall = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=${API_KEY}`)
-        console.log(apiCall)
+        const response = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${API_KEY}`)
+        console.log(response.data.features[0].geometry.coordinates)
+        return response
     } 
 
-    geoCoder()
+
 
     // var from = turf.point(coords);
     // var to = turf.point([-80.1373,26.1224]);
@@ -51,54 +53,61 @@ const Map = ({API_KEY, coords, jobs}) => {
         return(filteredPoints)
       }
 
+    const features = jobs.map( job => {
+        return {
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                coordinates: [job.longitude, job.latitude]
+            },
+            properties: {...job}
+            }
+        })
+
+    const geoJsonMarkers = {
+        type: "FeatureCollection",
+        features
+    }
+
     useEffect(() => {
-        // if(query) 
         mapboxgl.accessToken = API_KEY;
-        var map = new mapboxgl.Map({
+        setMap( new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
         center: coords,
         zoom: 6
-        });
+        }))
+    },[])
+
+
+    useEffect(() => {
+        if(Object.entries(map).length === 0) return
+
+        const mapInstance = map
         
         let marker = new mapboxgl.Marker({color: '#a83232'})
         .setLngLat(coords)
-        .addTo(map)
+        .addTo(mapInstance)
 
-        const features = jobs.map( job => {
-            return {
-                type: 'Feature',
-                geometry: {
-                  type: 'Point',
-                  coordinates: [job.longitude, job.latitude]
-                },
-                properties: {...job}
-              }
-        })
-
-        const geoJsonMarkers = {
-            type: "FeatureCollection",
-            features
-        }
         
         // console.log(geoJsonMarkers)
 
-        map.on('load', () => {
-            map.loadImage(JobPic, (error, image) => {
+        mapInstance.on('load', () => {
+            mapInstance.loadImage(JobPic, (error, image) => {
                 if (error) throw error
-                map.addImage('JobPic', image)
+                mapInstance.addImage('JobPic', image)
             })
-            map.addSource('markers', {type: 'geojson', data: {
+            mapInstance.addSource('markers', {type: 'geojson', data: {
                 type: 'FeatureCollection',
                 features: filterGeoJsonPoints(geoJsonMarkers)
             } })
-            map.addLayer(MARKER_LAYER)
+            mapInstance.addLayer(MARKER_LAYER)
         })
 
 
         // add geolocate control to the map
 
-        map.addControl(
+        mapInstance.addControl(
             new mapboxgl.GeolocateControl({
                 positionOptions: {
                     enableHighAccuracy: false
@@ -111,11 +120,21 @@ const Map = ({API_KEY, coords, jobs}) => {
             })
         )
 
-        return () => {
-            map.remove()
-        }
+        // return () => {
+        //     map.remove()
+        // }
+
+    },[map])
+
+
+    useEffect(() => {
+        if(!query) return
+        console.log(map)
+
+        map.removeLayer('markers')
 
     },[query])
+
 
     function onChange(event) {
         console.log(event.target.value)
