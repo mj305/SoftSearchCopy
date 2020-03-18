@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import JobPic from '../../assets/images/job.png'
+import SearchPin from '../../assets/images/search.png'
+import { 
+    filterGeoJsonPoints,
+    geoJsonMarkers, onLoad
+} from './mapFunctions'
 
 
 const Map = ({API_KEY, coords, jobs}) => {
@@ -8,17 +13,6 @@ const Map = ({API_KEY, coords, jobs}) => {
     const [search, setSearch] = useState('')
     const [query, setQuery] = useState('')    
     const [map, setMap] = useState({})
-
-      const MARKER_LAYER = {
-        id: 'markers',
-        type: 'symbol',
-        source: 'markers',
-        layout: {
-          'icon-image': 'JobPic',
-          'icon-size': 0.25,
-          'icon-allow-overlap': true
-        }
-      };
 
     const usCenter = [-98.5795,39.8283] // center of the united states
 
@@ -34,80 +28,14 @@ const Map = ({API_KEY, coords, jobs}) => {
     } 
 
 
-
     // var from = turf.point(coords);
     // var to = turf.point([-80.1373,26.1224]);
     // var options = {units: 'miles'};
     // var distance = turf.distance(from, to, options);
-
-
-    function filterGeoJsonPoints(points) {
-        var center = coords;
-        var radius = 100;
-        var options = {steps: 64, units: 'miles', properties: {foo: 'bar'}};
-        var circle = turf.circle(center, radius, options);
-
-        var filteredPoints = turf.pointsWithinPolygon(points, circle).features
-        // console.log(filteredPoints)
-        setFilteredJobs(filteredPoints)
-        return(filteredPoints)
-      }
-
-    const features = jobs.map( job => {
-        return {
-            type: 'Feature',
-            geometry: {
-                type: 'Point',
-                coordinates: [job.longitude, job.latitude]
-            },
-            properties: {...job}
-            }
-        })
-
-    const geoJsonMarkers = {
-        type: "FeatureCollection",
-        features
-    }
-
-    useEffect(() => {
-        mapboxgl.accessToken = API_KEY;
-        setMap( new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: coords,
-        zoom: 6
-        }))
-    },[])
-
-
-    useEffect(() => {
-        if(Object.entries(map).length === 0) return
-
-        const mapInstance = map
+    function createMap(mapOptions) {
+        const map = new mapboxgl.Map(mapOptions)
         
-        let marker = new mapboxgl.Marker({color: '#a83232'})
-        .setLngLat(coords)
-        .addTo(mapInstance)
-
-        
-        // console.log(geoJsonMarkers)
-
-        mapInstance.on('load', () => {
-            mapInstance.loadImage(JobPic, (error, image) => {
-                if (error) throw error
-                mapInstance.addImage('JobPic', image)
-            })
-            mapInstance.addSource('markers', {type: 'geojson', data: {
-                type: 'FeatureCollection',
-                features: filterGeoJsonPoints(geoJsonMarkers)
-            } })
-            mapInstance.addLayer(MARKER_LAYER)
-        })
-
-
-        // add geolocate control to the map
-
-        mapInstance.addControl(
+        map.addControl(
             new mapboxgl.GeolocateControl({
                 positionOptions: {
                     enableHighAccuracy: false
@@ -119,6 +47,37 @@ const Map = ({API_KEY, coords, jobs}) => {
                 }
             })
         )
+        setMap( map )
+    }
+
+
+    useEffect(() => {
+        mapboxgl.accessToken = API_KEY;
+
+        const options = {
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: coords,
+            zoom: 6
+            }
+
+        createMap(options)
+    },[])
+
+
+    useEffect(() => {
+        if(Object.entries(map).length === 0) return
+
+
+        const filteredPoints = filterGeoJsonPoints(coords,geoJsonMarkers(jobs))
+
+        setFilteredJobs(filteredPoints)
+        
+        // console.log(geoJsonMarkers)
+
+
+        onLoad(map,coords,filteredPoints,JobPic,SearchPin)
+
 
         // return () => {
         //     map.remove()
@@ -126,14 +85,6 @@ const Map = ({API_KEY, coords, jobs}) => {
 
     },[map])
 
-
-    useEffect(() => {
-        if(!query) return
-        console.log(map)
-
-        map.removeLayer('markers')
-
-    },[query])
 
 
     function onChange(event) {
