@@ -9,7 +9,9 @@ const Jobs = ({jobs, loading}) => {
         <ul className='list-group mb-4'>
             {jobs.map(({properties},index) => (
                 <li key={index} className='list-group-item'>
-                    {properties.position}
+                    <h1>{properties.position}</h1>
+                    <p>{properties.date}</p>
+                    <p>{properties.description}</p>
                 </li>
             ))}
         </ul>

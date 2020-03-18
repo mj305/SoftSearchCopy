@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Jobs from './Jobs'
+import Pagination from './Pagination'
 import JobPic from '../../assets/images/job.png'
 import SearchPin from '../../assets/images/search.png'
 import { 
@@ -50,9 +51,11 @@ const Map = ({API_KEY, coords, jobs}) => {
         coords = (coords ? coords : usCenter)
        
         const filteredPoints = filterGeoJsonPoints(coords,geoJSON,3000)
-        setFilteredJobs(filteredPoints)
+       
+        setLoading(true)
 
-        setLoading(false)
+       
+        setFilteredJobs(filteredPoints)
 
         onLoad(map,coords,filteredPoints,JobPic,SearchPin)
        
@@ -81,9 +84,12 @@ const Map = ({API_KEY, coords, jobs}) => {
         if(apiCoords.length) {
 
             const filteredPoints = filterGeoJsonPoints(apiCoords,geoJSON,100)
+            
+            setLoading(true)
+
+            
             setFilteredJobs(filteredPoints)
 
-            setLoading(false)
 
             console.log(filteredPoints)
 
@@ -137,10 +143,8 @@ const Map = ({API_KEY, coords, jobs}) => {
 
     function allJobs() {
         const filteredPoints = filterGeoJsonPoints(usCenter,geoJSON,3000)
+        setLoading(true)
         setFilteredJobs(filteredPoints)
-
-        setLoading(false)
-
 
         map.getSource('markers').setData({
             type: 'FeatureCollection',
@@ -163,11 +167,18 @@ const Map = ({API_KEY, coords, jobs}) => {
         })
     }
 
+    useEffect(() => {
+        if(!filteredJobs.length) return
+        setLoading(false)
+    },[filteredJobs])
+
     // get current jobs 
 
     const indexOfLastJob = currentPage * jobsPerPage
     const indexOfFirstJob = indexOfLastJob - jobsPerPage
     const currentJobs = filteredJobs.slice(indexOfFirstJob,indexOfLastJob)
+
+    const paginate = pageNumber => setCurrentPage(pageNumber)
 
     return(
         <>
@@ -178,7 +189,6 @@ const Map = ({API_KEY, coords, jobs}) => {
                 </form>
                 <button style={{marginBottom:'5rem'}} onClick={allJobs}>SEE ALL JOBS</button>
             </div>
-            <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                 {/* <div>
                     {filteredJobs.map( ({properties},index) => {
                         return(
@@ -190,10 +200,9 @@ const Map = ({API_KEY, coords, jobs}) => {
                         )
                     })}
                 </div> */}
-                <Jobs jobs={currentJobs} loading={loading} />
                 <div id='map' style={style}></div>
-
-            </div>
+                <Jobs jobs={currentJobs} loading={loading} />
+                <Pagination jobsPerPage={jobsPerPage} totalJobs={filteredJobs.length} paginate={paginate} />
         </>
     )
 }
