@@ -67,7 +67,20 @@ form {
 //body
 
 .companyinfo-homepage {
+  padding: 160px 170px 10px;
   background: white;
+}
+
+.about-homepage {
+  padding: 200px 150px 10px;
+  background: white;
+}
+
+.testimonials-homepage {
+  padding: 100px 150px 100px;
+  background: white;
+  display: flex;
+  justify-content: center;
 }
 
 .subtitles-homepage {
@@ -250,14 +263,3 @@ li {
 
 //company info
 
-.companyinfo-homepage {
-  padding: 160px 210px 10px;
-}
-
-.about-homepage {
-  padding: 100px 0px 10px;
-}
-
-.testimonials-homepage {
-  padding: 100px 10px 10px;
-}
