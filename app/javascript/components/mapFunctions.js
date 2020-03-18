@@ -35,9 +35,9 @@ export  const SEARCH_LAYER = {
     }
   };
 
-export function filterGeoJsonPoints(search,points) {
+export function filterGeoJsonPoints(search,points,rad) {
     var center = search;
-    var radius = 100;
+    var radius = rad;
     var options = {steps: 64, units: 'miles', properties: {foo: 'bar'}};
     var circle = turf.circle(center, radius, options);
 
@@ -71,7 +71,6 @@ export function geoJsonMarkers(jobJson) {
         features
     }
 }
-
 
 export function onLoad(MAP, search, points, ...pics) {
     MAP.on('load', () => {

@@ -3,7 +3,6 @@ import axios from 'axios'
 import JobPic from '../../assets/images/job.png'
 import SearchPin from '../../assets/images/search.png'
 import { 
-    pointFeature,
     filterGeoJsonPoints,
     geoJsonMarkers, onLoad,
     geoLocationOptions,flyToProps
@@ -24,12 +23,28 @@ const Map = ({API_KEY, coords, jobs}) => {
         height: "600px"
     }
 
+    let options = {
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: coords,
+        zoom: 6
+        }
+
+    const allJobsOption = {
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: usCenter,
+        zoom: 4
+    }
+
     const geoJSON = geoJsonMarkers(jobs)
 
     function createMap(mapOptions) {
         const map = new mapboxgl.Map(mapOptions)
+
+        coords = (coords ? coords : usCenter)
        
-        const filteredPoints = filterGeoJsonPoints(coords,geoJSON)
+        const filteredPoints = filterGeoJsonPoints(coords,geoJSON,3000)
         setFilteredJobs(filteredPoints)
         onLoad(map,coords,filteredPoints,JobPic,SearchPin)
        
@@ -44,12 +59,7 @@ const Map = ({API_KEY, coords, jobs}) => {
     useEffect(() => {
         mapboxgl.accessToken = API_KEY;
 
-        const options = {
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: coords,
-            zoom: 6
-            }
+        options = (coords ? options : allJobsOption)
 
         createMap(options)
 
@@ -61,10 +71,8 @@ const Map = ({API_KEY, coords, jobs}) => {
 
     useEffect(() => {
         if(apiCoords.length) {
-            // map.removeLayer('markers')
-            // map.removeLayer('search')
 
-            const filteredPoints = filterGeoJsonPoints(apiCoords,geoJSON)
+            const filteredPoints = filterGeoJsonPoints(apiCoords,geoJSON,100)
             setFilteredJobs(filteredPoints)
 
             console.log(filteredPoints)
@@ -118,9 +126,8 @@ const Map = ({API_KEY, coords, jobs}) => {
     }
     return(
         <>
-            <form style={{marginBottom:'5rem'}} action='/search' method='GET' onSubmit={onSubmit}>
+            <form style={{marginBottom:'5rem'}}  onSubmit={onSubmit}>
                 <input type="text" name={query} onChange={onChange}/>
-                {/* <input type="submit" name="q" value={query || "Search Now"}/> */}
             </form>
 
             <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>

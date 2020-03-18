@@ -18,8 +18,6 @@ class PagesController < ApplicationController
     def trigger_signup
     end
 
-
-
     
     def ensure_applicant_user!
         unless current_user and current_user.employer == false
