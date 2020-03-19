@@ -109,4 +109,11 @@ RSpec.describe Job, type: :model do
       should have_many(:user_favorites).dependent(:destroy) 
      end
   end
+
+  describe "JobSkill Associations" do
+
+    it "should have many job_skills and destroy all associated job_skills when destroyed"  do
+      should have_many(:job_skills).dependent(:destroy) 
+     end
+  end
 end

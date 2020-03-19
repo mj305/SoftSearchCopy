@@ -6,8 +6,7 @@ RSpec.describe Skill, type: :model do
 
   subject {
     described_class.new(
-      job_id: MetaData::jobs(MetaData::employer.id)[1].id,
-      skill_id: Skill.create(name: 'C++').id
+        name: 'C++'
                       )
   }
 
@@ -17,15 +16,19 @@ RSpec.describe Skill, type: :model do
       expect(subject).to be_valid
     end
 
-    it "is not valid without a job_id" do
-      should validate_presence_of(:job_id)
+    it "is not valid without a name" do
+      should validate_presence_of(:name)
     end
 
-    it "is not valid without a skill_id" do
-      should validate_presence_of(:skill_id)
+    it "should be unique" do 
+      should validate_uniqueness_of(:name)
     end
+  end
 
-    it "should not have multiple identical job_ids and skill_ids" do 
-      should validate_uniqueness_of(:job_id).scoped_to(:skill_id)
-    end
-  endend
+  describe "JobSkill Associations" do
+
+    it "should have many job_skills and destroy all associated job_skills when destroyed"  do
+      should have_many(:job_skills).dependent(:destroy) 
+     end
+  end
+end
