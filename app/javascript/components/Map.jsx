@@ -51,7 +51,7 @@ const Map = ({API_KEY, coords, jobs}) => {
 
     useEffect(() => {
         if(apiCoords.length) {
-            const filteredPoints = filterGeoJsonPoints(apiCoords,geoJSON,100)            
+            const filteredPoints = filterGeoJsonPoints(apiCoords,geoJSON,100)         /////////////////////////////////////   
             setLoading(true)
             setFilteredJobs(filteredPoints)
             map.getSource('markers').setData(geoJsonMarkers(filteredPoints))
@@ -67,11 +67,15 @@ const Map = ({API_KEY, coords, jobs}) => {
         const map = new mapboxgl.Map(mapOptions)
         let filteredPoints
         if(coords) {
-            filteredPoints = filterGeoJsonPoints(coords,geoJSON,100)
+            // filteredPoints = filterGeoJsonPoints(coords,geoJSON,100)  //////////////////////////////
+            filteredPoints = geoJsonMarkers(jobs).features
+            console.log(filteredPoints)
         } else {
             coords = usCenter
-            filteredPoints = geoJSON.features
+            filteredPoints = geoJSON.features /////////////////////////////////////////////
         }
+        console.log(jobs)
+
         setLoading(true)
         setFilteredJobs(filteredPoints)
         onLoad(map,coords,filteredPoints,JobPic,SearchPin)
@@ -86,7 +90,7 @@ const Map = ({API_KEY, coords, jobs}) => {
     }
 
     function allJobs() {
-        const filteredPoints = filterGeoJsonPoints(usCenter,geoJSON,3000)
+        const filteredPoints = filterGeoJsonPoints(usCenter,geoJSON,3000)  /////////////////////
         setLoading(true)
         setFilteredJobs(filteredPoints)
         map.getSource('markers').setData(geoJsonMarkers(filteredPoints))

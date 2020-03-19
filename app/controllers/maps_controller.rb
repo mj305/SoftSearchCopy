@@ -14,7 +14,7 @@ class MapsController < ApplicationController
         coords = [-80.1918,25.7617]
 
 
-        trial_run = Job.all.select { |job| Job.calc_dist(coords[0],coords[1],job.longitude,job.latitude) <= 100 }
+        # trial_run = Job.all.select { |job| Job.calc_dist(coords[0],coords[1],job.longitude,job.latitude) <= 100 }
 
 
 
@@ -25,9 +25,10 @@ class MapsController < ApplicationController
             coords = Geocoder.search("#{params['location']}")
             
             if coords.first
-                p "THIS IS TRUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #{trial_run}"
+                p "THIS IS TRUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #{coords.first}"
                 @coords = coords.first.coordinates.reverse
-                @jobs = Job.all
+                jobs = Job.all.select { |job| Job.calc_dist(@coords[0],@coords[1],job.longitude,job.latitude) <= 100 }
+                @jobs = Job.append_skills(jobs)
             else
                 p "THIS IS FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #{coords.first}"
                 redirect_to root_path

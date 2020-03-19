@@ -20,8 +20,18 @@ class Job < ApplicationRecord
     a = Math.sin(dlat/2)**2 + Math.cos(lat1)*Math.cos(lat2)*Math.sin(dlon/2)**2
     c = 2 * Math.asin(Math.sqrt(a))
     r = 3956 # earth radius in miles
-
     return c*r
+  end
+
+  def self.append_skills(jobs)
+    jobs_and_skills = []
+    jobs.each do |job| 
+        jobs_and_skills.push({
+            job: job,
+            skills: job.skills
+        })
+    end
+    jobs_and_skills
   end
 end
  
