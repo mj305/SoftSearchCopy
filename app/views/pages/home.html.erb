@@ -13,11 +13,6 @@
         <%= text_field_tag(:q, "", class: "form_input", placeholder: "Set a Location") %>
         <%= submit_tag("SEARCH JOBS") %>
         <% end %>
-
-        <%= form_with(url: "/search?q=GET_ALL", method: "post") do %>
-        <%= label_tag(:q, "") %>
-        <%= submit_tag("SEARCH ALL JOBS", data: 'GET_ALL') %>
-        <% end %>
         
     </div>     
     <div class="search-item">
