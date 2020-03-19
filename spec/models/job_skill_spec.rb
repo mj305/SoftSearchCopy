@@ -4,8 +4,6 @@ require 'data'
 RSpec.describe JobSkill, type: :model do
   include MetaData
 
-  
-
   subject {
     described_class.new(
       job_id: MetaData::jobs(MetaData::employer.id)[1].id,
@@ -39,8 +37,20 @@ RSpec.describe JobSkill, type: :model do
       with_foreign_key('job_id') 
     end
 
-    it "should be able to access any job associated with it" do
-      expect(subject.job).to eq "blahblah@yahoo.com"
+    it "should be able to access the job associated with it" do
+      expect(subject.job.position).to eq "jr. dev"
+    end
+  end
+
+  describe "Skill Associations" do
+    
+    it "should belong to a skill" do
+      should belong_to(:skill).
+      with_foreign_key('skill_id') 
+    end
+
+    it "should be able to access the skill associated with it" do
+      expect(subject.skill.name).to eq "C++"
     end
   end
 end
