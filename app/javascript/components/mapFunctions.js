@@ -1,6 +1,4 @@
 
-export const flyToProps = { speed: 0.5, zoom: 6, bearing: 0, pitch: 0 };
-
 export const usCenter = [-98.5795,39.8283] // center of the united states
 
 export const geoLocationOptions = {
@@ -51,17 +49,6 @@ export  const SEARCH_LAYER = {
       'icon-allow-overlap': true
     }
   };
-
-export function filterGeoJsonPoints(search,points,rad) {
-    const center = search;
-    const radius = rad;
-    const options = {steps: 64, units: 'miles', properties: {foo: 'bar'}};
-    const circle = turf.circle(center, radius, options);
-
-    const filteredPoints = turf.pointsWithinPolygon(points, circle).features
-    return(filteredPoints)
-}
-
 
 export function pointFeature(point) {
     if(point.geometry) {

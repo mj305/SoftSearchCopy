@@ -5,13 +5,16 @@ import Pagination from './Pagination'
 import JobPic from '../../assets/images/job.png'
 import SearchPin from '../../assets/images/search.png'
 import { 
-    filterGeoJsonPoints, allJobsOption,
+    allJobsOption,
     pointFeature, options,
     geoJsonMarkers, onLoad,
-    geoLocationOptions,flyToProps,
-    usCenter
+    geoLocationOptions
 } from './mapFunctions'
 
+const style = {
+    width: "100rem",
+    height: "600px"
+}
 
 const Map = ({API_KEY, jobs}) => {
     const [filteredJobs, setFilteredJobs] = useState([])
@@ -22,11 +25,6 @@ const Map = ({API_KEY, jobs}) => {
     const [loading, setLoading] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
     const [jobsPerPage] = useState(10)
-
-    const style = {
-        width: "100rem",
-        height: "600px"
-    }
 
     const geoJSON = geoJsonMarkers(jobs.job_data)
 
