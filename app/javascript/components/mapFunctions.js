@@ -1,6 +1,7 @@
 
 export const flyToProps = { speed: 0.5, zoom: 6, bearing: 0, pitch: 0 };
 
+export const usCenter = [-98.5795,39.8283] // center of the united states
 
 export const geoLocationOptions = {
     positionOptions: {
@@ -12,6 +13,22 @@ export const geoLocationOptions = {
         maxZoom: 6
     }
 }
+
+export const allJobsOption = {
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: usCenter,
+    zoom: 4
+}
+
+export const options = center => {
+    return{
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center,
+            zoom: 6
+          }
+    }
 
 export const MARKER_LAYER = {
     id: 'markers',
@@ -36,19 +53,29 @@ export  const SEARCH_LAYER = {
   };
 
 export function filterGeoJsonPoints(search,points,rad) {
-    var center = search;
-    var radius = rad;
-    var options = {steps: 64, units: 'miles', properties: {foo: 'bar'}};
-    var circle = turf.circle(center, radius, options);
+    const center = search;
+    const radius = rad;
+    const options = {steps: 64, units: 'miles', properties: {foo: 'bar'}};
+    const circle = turf.circle(center, radius, options);
 
-    var filteredPoints = turf.pointsWithinPolygon(points, circle).features
-    // console.log(filteredPoints)
-    // setFilteredJobs(filteredPoints)
+    const filteredPoints = turf.pointsWithinPolygon(points, circle).features
     return(filteredPoints)
 }
 
 
 export function pointFeature(point) {
+    if(point.geometry) {
+        point = {
+            longitude: point.geometry.coordinates[0],
+            latitude: point.geometry.coordinates[1]
+        }
+    }
+    else if (!point.longitude) {
+        point = {
+            longitude: point[0],
+            latitude: point[1]
+        }
+    }
     return(
         {
             type: 'Feature',
@@ -62,6 +89,7 @@ export function pointFeature(point) {
 }
 
 export function geoJsonMarkers(jobJson) {
+
     const features = jobJson.map( job => {
         return pointFeature(job)
         })
