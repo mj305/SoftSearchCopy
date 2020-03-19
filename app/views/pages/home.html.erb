@@ -81,21 +81,123 @@
 
             </section>
         </div>
-
+</section>
 <!-- Company Info -->
     <section class="about-homepage">
-        <h2 class="subtitles-homepage">Over 1000+ Jobs Posted</h2>
-        <h3 class="subsheading-subtitles-homepage">Insert one sentence blurb about how amazing our founders are wow</h3>
-        <p>Insert paragraph about company Insert paragraph about company Insert paragraph about company</p>
+    <div class="row">
+        <div class="col-sm-6 xs-col-12">
+            <h2 class="subtitles-homepage">Over 1000+ Companies job posted</h2>
+            <h3 class="subsheading-subtitles-homepage">Insert one sentence blurb about how amazing our founders are wow</h3>
+            <p>Insert paragraph about company Insert paragraph about company Insert paragraph about company</p>
+        </div>
+        <div class="col-sm-6 xs-col-12">
+            <img src="assets/img1.png" width="95%" height="85%" />
+        </div>
+    </div>
     </section>
 
 <!-- Testimonials -->
     <section class="testimonials-homepage">
         <h2 class="subtitles-homepage">They believe in us. We believe in them.</h2>
+        <%= react_component "HomeTestimonials"%>
+
     </section>
 
+ <!-- Footer -->
+<footer class="page-footer font-small blue pt-4">
+
+  <div class='"container">
+
+  <!-- Footer Links -->
+  <div class="container-fluid text-center text-md-left" id="footer-content">
+
+    <!-- Grid row -->
+    <div class="row">
+
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5 class="footer-hd-color">Categories</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="#!" class="footer-ct-color">Skills</a>
+          </li>
+          <li>
+            <a href="#!" class="footer-ct-color">Backend Developer</a>
+          </li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5 class="footer-hd-color">Help And Advice</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="#!" class="footer-ct-color">Helping Center</a>
+          </li>
+          <li>
+            <a href="#!" class="footer-ct-color">Customer Support</a>
+          </li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5 class="footer-hd-color">Company</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="#!" class="footer-ct-color">About Us</a>
+          </li>
+          <li>
+            <a href="#!" class="footer-ct-color">Job Interview</a>
+          </li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5 class="footer-hd-color">Get In Touch</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="#!" class="footer-ct-color">Wyncode AcademyConsequat <br/>Miami, FL</a>
+          </li>
+          <li>
+            <a href="#!" class="footer-hd-color">info@SoftSearch.com</a>
+          </li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Links -->
+</div>
+
+
+</footer>
 <!-- Footer -->
-    <%= react_component "Footer" %>
-    <%= stylesheet_link_tag 'home' %>
 
 </body>
+
+
+<%= stylesheet_link_tag 'home' %>

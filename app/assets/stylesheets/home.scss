@@ -66,15 +66,28 @@ form {
 
 //body
 
-
 .companyinfo-homepage {
+  padding: 160px 170px 10px;
   background: white;
+}
+
+.about-homepage {
+  padding: 200px 150px 10px;
+  background: white;
+}
+
+.testimonials-homepage {
+  padding: 100px 150px 10px;
+  background: white;
+  display: flex;
+  justify-content: center;
 }
 
 .subtitles-homepage {
   font-family: "MetropolisSemiBold";
   font-size: 40px;
   color: #2f78f3;
+  padding-bottom: 5px;
 }
 
 .subsheading-subtitles-homepage {
@@ -87,18 +100,6 @@ p {
   font-size: 17px;
   color: #525f7f;
   font-family: "MetropolisRegular";
-}
-
-.companyinfo-homepage {
-  padding: 160px 210px 10px;
-}
-
-.about-homepage {
-  padding: 100px 210px 10px;
-}
-
-.testimonials-homepage {
-  padding: 100px 210px 10px;
 }
 
 //skills cards
@@ -258,4 +259,64 @@ li {
   display: -webkit-box!important;
   display: -ms-flexbox!important;
   display: flex!important;
+}
+
+//company info
+
+//footer
+
+
+footer {
+  margin-top: 50px;
+  height: 100px;
+  background: #F5F9FA;
+  font-size: 14px;
+}
+
+#footer-content {
+  padding: 20px 0px 30px 0px;
+}
+
+.footer-hd-color {
+  color: #2f78f3;
+  font-size: 16px !important;
+}
+
+.footer-ct-color {
+  color: #525f7f;
+}
+
+@media screen and (max-width: 600px) {
+  .title-homepage {
+    font-size: 40px;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .form_input {
+    margin-bottom: 10px;
+    width: 80%;
+  }
+
+  .search-item { 
+    width: 95%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .about-homepage {
+    padding: 100px 10px 10px;
+  }
+
+  .testimonials-homepage {
+    padding: 100px 10px 30px;
+  }
+
+  .subtitles-homepage {
+    padding: 0px 10px;
+  }
+
+  .subsheading-subtitles-homepage {
+    padding: 0px 10px;
+  }
 }
