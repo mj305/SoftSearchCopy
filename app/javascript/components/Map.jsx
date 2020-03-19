@@ -19,10 +19,9 @@ const Map = ({API_KEY, coords, jobs}) => {
     const [map, setMap] = useState({})
     const [search, setSearch] = useState('')
     const [query, setQuery] = useState('')    
-
     const [loading, setLoading] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
-    const [jobsPerPage, setJobsPerPage] = useState(10)
+    const [jobsPerPage] = useState(10)
 
     const style = {
         width: "100rem",
@@ -31,50 +30,13 @@ const Map = ({API_KEY, coords, jobs}) => {
 
     const geoJSON = geoJsonMarkers(jobs)
 
-    function createMap(mapOptions) {
-        const map = new mapboxgl.Map(mapOptions)
-        let filteredPoints
-
-        if(coords) {
-            filteredPoints = filterGeoJsonPoints(coords,geoJSON,100)
-        } else {
-            coords = usCenter
-            filteredPoints = geoJSON.features
-        }
-
-        setLoading(true)
-        setFilteredJobs(filteredPoints)
-        onLoad(map,coords,filteredPoints,JobPic,SearchPin)
-        map.addControl(new mapboxgl.GeolocateControl(geoLocationOptions))
-        map.addControl(new MapboxDirections({accessToken: API_KEY}),'top-left');
-        setMap( map )
-    }
-
-
     useEffect(() => {
         mapboxgl.accessToken = API_KEY;
         coords ? createMap(options(coords)) : createMap(allJobsOption)
-
         return () => {
             map.remove()
         }
     },[])
-
-
-    useEffect(() => {
-        if(apiCoords.length) {
-            const filteredPoints = filterGeoJsonPoints(apiCoords,geoJSON,100)            
-            setLoading(true)
-            setFilteredJobs(filteredPoints)
-
-            map.getSource('markers').setData(geoJsonMarkers(filteredPoints))
-            map.getSource('search').setData(pointFeature(apiCoords))
-            map.flyTo({
-                center: apiCoords, 
-                ...flyToProps
-            })
-        }
-    },[apiCoords])
 
     useEffect(() => {
         if(!query) return
@@ -84,26 +46,50 @@ const Map = ({API_KEY, coords, jobs}) => {
         } 
 
         geoCoder()
-        
+
     },[query])
 
+    useEffect(() => {
+        if(apiCoords.length) {
+            const filteredPoints = filterGeoJsonPoints(apiCoords,geoJSON,100)            
+            setLoading(true)
+            setFilteredJobs(filteredPoints)
+            map.getSource('markers').setData(geoJsonMarkers(filteredPoints))
+            map.getSource('search').setData(pointFeature(apiCoords))
+            map.flyTo({
+                center: apiCoords, 
+                ...flyToProps
+            })
+        }
+    },[apiCoords])
 
-    function onChange(event) {
-        console.log(event.target.value)
-        setSearch(event.target.value)
+    function createMap(mapOptions) {
+        const map = new mapboxgl.Map(mapOptions)
+        let filteredPoints
+        if(coords) {
+            filteredPoints = filterGeoJsonPoints(coords,geoJSON,100)
+        } else {
+            coords = usCenter
+            filteredPoints = geoJSON.features
+        }
+        setLoading(true)
+        setFilteredJobs(filteredPoints)
+        onLoad(map,coords,filteredPoints,JobPic,SearchPin)
+        map.addControl(new mapboxgl.GeolocateControl(geoLocationOptions))
+        map.addControl(new MapboxDirections({accessToken: API_KEY}),'top-left');
+        map.on('click','markers', showJob)
+        setMap( map )
     }
 
-    function onSubmit(event) {
-        event.preventDefault()
-        console.log(`This is the query!!!!!!!!!! ${query}`)
-        setQuery(search)
+    function showJob(event) {
+        console.log(event.features[0].properties)
+        // console.log(event.features)
     }
 
     function allJobs() {
         const filteredPoints = filterGeoJsonPoints(usCenter,geoJSON,3000)
         setLoading(true)
         setFilteredJobs(filteredPoints)
-       
         map.getSource('markers').setData(geoJsonMarkers(filteredPoints))
         map.getSource('search').setData(pointFeature(usCenter))
         map.flyTo({
@@ -111,6 +97,16 @@ const Map = ({API_KEY, coords, jobs}) => {
             speed: 0.5, 
             zoom: 4
         })
+    }
+
+    function onChange(event) {
+        setSearch(event.target.value)
+    }
+
+    function onSubmit(event) {
+        event.preventDefault()
+        console.log(`This is the query!!!!!!!!!! ${query}`)
+        setQuery(search)
     }
 
     useEffect(() => {

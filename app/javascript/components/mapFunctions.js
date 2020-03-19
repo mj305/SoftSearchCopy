@@ -66,11 +66,12 @@ export function filterGeoJsonPoints(search,points,rad) {
 export function pointFeature(point) {
     if(point.geometry) {
         point = {
+            ...point.properties,
             longitude: point.geometry.coordinates[0],
             latitude: point.geometry.coordinates[1]
         }
     }
-    else if (!point.longitude) {
+     if (!point.longitude) {
         point = {
             longitude: point[0],
             latitude: point[1]
@@ -83,7 +84,7 @@ export function pointFeature(point) {
                 type: 'Point',
                 coordinates: [point.longitude, point.latitude]
             },
-            properties: {...point}
+            properties: { ...point }
         }
     )
 }
