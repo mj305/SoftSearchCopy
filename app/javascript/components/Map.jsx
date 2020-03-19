@@ -61,6 +61,13 @@ const Map = ({API_KEY, coords, jobs}) => {
             new mapboxgl.GeolocateControl(geoLocationOptions)
         )
 
+        map.addControl(
+            new MapboxDirections({
+            accessToken: API_KEY
+            }),
+            'top-left'
+            );
+
         setMap( map )
     }
 
