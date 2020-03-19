@@ -1,38 +1,41 @@
 class MapsController < ApplicationController
     def show 
-        # @jobs = []
+        
         location = params['location']
-
-        # Job.all.each do |job|
-        #     @jobs.push({
-        #         job: job,
-        #         skills: job.skills
-        #     })
-        # end
-
 
         coords = [-80.1918,25.7617]
 
-
-        # trial_run = Job.all.select { |job| Job.calc_dist(coords[0],coords[1],job.longitude,job.latitude) <= 100 }
-
-
-
         if(location == "GET_ALL")
-            @coords = ""
-            @jobs = Job.all
+            @jobs = { job_data: Job.append_skills(Job.all), coords: [-98.5795,39.8283] }
         else
-            coords = Geocoder.search("#{params['location']}")
-            
-            if coords.first
-                p "THIS IS TRUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #{coords.first}"
-                @coords = coords.first.coordinates.reverse
-                jobs = Job.all.select { |job| Job.calc_dist(@coords[0],@coords[1],job.longitude,job.latitude) <= 100 }
-                @jobs = Job.append_skills(jobs)
-            else
-                p "THIS IS FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #{coords.first}"
-                redirect_to root_path
+            @jobs = geoCode(location)
+        end
+    end
+
+    def jobs
+        location = params['location']
+        respond_to do |format|
+            format.json do
+                if(location == 'GET_ALL')
+                    render json: { job_data: Job.append_skills(Job.all), coords: [-98.5795,39.8283] }
+                else
+                    render json: geoCode(location)
+                end
             end
+        end
+    end
+
+    private def geoCode(location)
+        coords = Geocoder.search("#{location}")
+        if coords.first
+            p "THIS IS TRUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #{coords.first}"
+            @coords = coords.first.coordinates.reverse
+            jobs = Job.all.select { |job| Job.calc_dist(@coords[0],@coords[1],job.longitude,job.latitude) <= 100 }
+            @jobs = Job.append_skills(jobs)
+            { job_data: @jobs, coords: @coords }
+        else
+            p "THIS IS FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #{coords.first}"
+            redirect_to root_path
         end
     end
 end 

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :jobs
 
   resource :map, only: [:show]
-
+  get 'map/jobs' => 'maps#jobs'
   post '/search' => 'pages#search'
 
   authenticated :user, ->(u) { !u.employer } do

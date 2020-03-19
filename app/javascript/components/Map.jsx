@@ -13,9 +13,9 @@ import {
 } from './mapFunctions'
 
 
-const Map = ({API_KEY, coords, jobs}) => {
+const Map = ({API_KEY, jobs}) => {
     const [filteredJobs, setFilteredJobs] = useState([])
-    const [apiCoords, setApiCoords] = useState([])
+    const [apiJobs, setApiJobs] = useState([])
     const [map, setMap] = useState({})
     const [search, setSearch] = useState('')
     const [query, setQuery] = useState('')    
@@ -28,11 +28,30 @@ const Map = ({API_KEY, coords, jobs}) => {
         height: "600px"
     }
 
-    const geoJSON = geoJsonMarkers(jobs)
+    const geoJSON = geoJsonMarkers(jobs.job_data)
+
+    const fetchJobData = async () => {
+        // const requests = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${API_KEY}`)
+        const request = await axios.get(`/map/jobs.json?location=${query}`)
+        console.log(request.data)
+        setApiJobs(request.data)
+    } 
 
     useEffect(() => {
         mapboxgl.accessToken = API_KEY;
-        coords ? createMap(options(coords)) : createMap(allJobsOption)
+        
+        // console.log(jobs.jobs)
+        console.log(geoJSON)
+        console.log(jobs)
+
+        if(jobs.coords[0] === -98.5795 && jobs.coords[1] === 39.8283) {
+            createMap(allJobsOption)
+        } else {
+            createMap(options(jobs.coords))
+        }
+
+        console.log('MADE IT THIS FAR!!')
+        // jobs.coords ? createMap(options(coords)) : createMap(allJobsOption)
         return () => {
             map.remove()
         }
@@ -40,45 +59,51 @@ const Map = ({API_KEY, coords, jobs}) => {
 
     useEffect(() => {
         if(!query) return
-        const geoCoder = async () => {
-            const response = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${API_KEY}`)
-            setApiCoords(response.data.features[0].geometry.coordinates)
-        } 
+        // const fetchJobData = async () => {
+        //     // const requests = await axios(`https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${API_KEY}`)
+        //     const request = await axios.get(`/map/jobs.json?location=${query}`)
+        //     console.log(request.data)
+        //     setApiJobs(request.data)
+        // } 
 
-        geoCoder()
+        fetchJobData()
 
     },[query])
 
     useEffect(() => {
-        if(apiCoords.length) {
-            const filteredPoints = filterGeoJsonPoints(apiCoords,geoJSON,100)         /////////////////////////////////////   
+        if(apiJobs.job_data) {
+            // const filteredPoints = filterGeoJsonPoints(apiCoords,geoJSON,100)         /////////////////////////////////////   
+            const filteredPoints = geoJsonMarkers(apiJobs.job_data)
+            // console.log(filteredPoints)
             setLoading(true)
-            setFilteredJobs(filteredPoints)
-            map.getSource('markers').setData(geoJsonMarkers(filteredPoints))
-            map.getSource('search').setData(pointFeature(apiCoords))
+            setFilteredJobs(filteredPoints.features)
+
+            map.getSource('markers').setData(filteredPoints)
+            map.getSource('search').setData(pointFeature(apiJobs.coords))
             map.flyTo({
-                center: apiCoords, 
+                center: apiJobs.coords, 
                 ...flyToProps
             })
         }
-    },[apiCoords])
+    },[apiJobs])
 
     function createMap(mapOptions) {
         const map = new mapboxgl.Map(mapOptions)
-        let filteredPoints
-        if(coords) {
-            // filteredPoints = filterGeoJsonPoints(coords,geoJSON,100)  //////////////////////////////
-            filteredPoints = geoJsonMarkers(jobs).features
-            console.log(filteredPoints)
-        } else {
-            coords = usCenter
-            filteredPoints = geoJSON.features /////////////////////////////////////////////
-        }
-        console.log(jobs)
+        // let filteredPoints
+        // if(coords) {
+        //     // filteredPoints = filterGeoJsonPoints(coords,geoJSON,100)  //////////////////////////////
+        //     filteredPoints = geoJsonMarkers(jobs).features
+        //     console.log(filteredPoints)
+        // } else {
+        //     coords = usCenter
+        //     filteredPoints = geoJSON.features /////////////////////////////////////////////
+        // }
+        const filteredPoints = geoJSON.features
+        // console.log(jobs)
 
         setLoading(true)
         setFilteredJobs(filteredPoints)
-        onLoad(map,coords,filteredPoints,JobPic,SearchPin)
+        onLoad(map,jobs.coords,filteredPoints,JobPic,SearchPin)
         map.addControl(new mapboxgl.GeolocateControl(geoLocationOptions))
         map.addControl(new MapboxDirections({accessToken: API_KEY}),'top-left');
         map.on('click','markers', showJob)
@@ -90,16 +115,20 @@ const Map = ({API_KEY, coords, jobs}) => {
     }
 
     function allJobs() {
-        const filteredPoints = filterGeoJsonPoints(usCenter,geoJSON,3000)  /////////////////////
-        setLoading(true)
-        setFilteredJobs(filteredPoints)
-        map.getSource('markers').setData(geoJsonMarkers(filteredPoints))
-        map.getSource('search').setData(pointFeature(usCenter))
-        map.flyTo({
-            center: usCenter, 
-            speed: 0.5, 
-            zoom: 4
-        })
+        // const filteredPoints = filterGeoJsonPoints(usCenter,geoJSON,3000)  /////////////////////
+        // setLoading(true)
+        // setFilteredJobs(filteredPoints)
+        // console.log(geoJsonMarkers(filteredPoints))
+        // map.getSource('markers').setData(geoJsonMarkers(filteredPoints))
+        // map.getSource('search').setData(pointFeature(usCenter))
+        // map.flyTo({
+        //     center: usCenter, 
+        //     speed: 0.5, 
+        //     zoom: 4
+        // })
+
+        setQuery('GET_ALL')
+
     }
 
     function onChange(event) {
@@ -108,7 +137,7 @@ const Map = ({API_KEY, coords, jobs}) => {
 
     function onSubmit(event) {
         event.preventDefault()
-        console.log(`This is the query!!!!!!!!!! ${query}`)
+        console.log(`This is the query!!!!!!!!!! ${search}`)
         setQuery(search)
     }
 

@@ -90,8 +90,10 @@ export function pointFeature(point) {
 }
 
 export function geoJsonMarkers(jobJson) {
+    
 
-    const features = jobJson.map( job => {
+    const features = jobJson.map( ({job,skills}) => {
+        job = { ...job, skills }
         return pointFeature(job)
         })
 
