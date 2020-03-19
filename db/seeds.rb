@@ -75,12 +75,12 @@
 #     )
 # end
 
-# programming_skills = ['Ruby','Python','C++','Java','React','C55',
-# 'Magento','SQL','C#','Swift','Objective C','Javascript','CSS','HTML']
+programming_skills = ['Ruby','Python','C++','Java','React','C55',
+'Magento','SQL','C#','Swift','Objective C','Javascript','CSS','HTML']
 
-# programming_skills.each do |skill|
-#   Skill.create_or_find_by!(name: skill)
-# end
+programming_skills.each do |skill|
+  Skill.create_or_find_by!(name: skill)
+end
 
 100.times do 
   jobs = Job.all

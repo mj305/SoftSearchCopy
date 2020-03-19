@@ -1,8 +1,8 @@
 require 'rails_helper'
-require 'user_data'
+require 'data'
 
 RSpec.describe Job, type: :model do
-  include UserData
+  include MetaData
   
   subject {
     described_class.new(
@@ -46,8 +46,8 @@ RSpec.describe Job, type: :model do
     end
 
     it "is not valid with a user_id that belongs to a user where employer:false" do
-      employee_user = UserData::employee
-      employee_jobs = UserData::jobs(employee_user.id)
+      employee_user = MetaData::employee
+      employee_jobs = MetaData::jobs(employee_user.id)
       expect(employee_jobs.length).to eq 0
     end
   end
@@ -69,17 +69,17 @@ RSpec.describe Job, type: :model do
   describe "JobApp Associations" do
 
     it "should be able to access its job_apps" do 
-      employer_job = UserData::user_meta_data[2][0]
+      employer_job = MetaData::user_meta_data[2][0]
       expect(employer_job.job_apps.length).to eq 1
     end
 
     it "should be able to access the user associated with the JobApp" do
-      employer_job = UserData::user_meta_data[2][0]
+      employer_job = MetaData::user_meta_data[2][0]
       expect(employer_job.job_apps[0].user.email).to eq "employee@gmail.com"
     end
 
     it "destroy its corresponding job_apps when destroyed" do
-      job_apps = UserData::user_meta_data(2)[0]
+      job_apps = MetaData::user_meta_data(2)[0]
       expect(job_apps.length).to eq 0
     end
 
@@ -91,17 +91,17 @@ RSpec.describe Job, type: :model do
   describe "UserFavorite Associations" do
 
     it "should be able to access its user_favorites" do 
-      employer_job = UserData::user_meta_data[2][0]
+      employer_job = MetaData::user_meta_data[2][0]
       expect(employer_job.user_favorites.length).to eq 1
     end
 
     it "should be able to access the user associated with the UserFavorite" do
-      employer_job = UserData::user_meta_data[2][0]
+      employer_job = MetaData::user_meta_data[2][0]
       expect(employer_job.user_favorites[0].user.email).to eq "employee@gmail.com"
     end
 
     it "destroy its corresponding user_favorites when destroyed" do
-      user_favs = UserData::user_meta_data(2)[1]
+      user_favs = MetaData::user_meta_data(2)[1]
       expect(user_favs.length).to eq 0
     end
 
