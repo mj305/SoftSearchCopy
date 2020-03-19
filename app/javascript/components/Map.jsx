@@ -83,7 +83,6 @@ const Map = ({API_KEY, coords, jobs}) => {
 
     function showJob(event) {
         console.log(event.features[0].properties)
-        // console.log(event.features)
     }
 
     function allJobs() {
