@@ -1,8 +1,7 @@
 class MapsController < ApplicationController
-    def show 
-        
-        location = params['location']
 
+    def show 
+        location = params['location']
         coords = [-80.1918,25.7617]
 
         if(location == "GET_ALL")
@@ -28,13 +27,11 @@ class MapsController < ApplicationController
     private def geoCode(location)
         coords = Geocoder.search("#{location}")
         if coords.first
-            p "THIS IS TRUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #{coords.first}"
             @coords = coords.first.coordinates.reverse
             jobs = Job.all.select { |job| Job.calc_dist(@coords[0],@coords[1],job.longitude,job.latitude) <= 100 }
             @jobs = Job.append_skills(jobs)
             { job_data: @jobs, coords: @coords }
         else
-            p "THIS IS FALSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #{coords.first}"
             redirect_to root_path
         end
     end

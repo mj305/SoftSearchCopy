@@ -16,7 +16,7 @@ const style = {
     height: "600px"
 }
 
-const Map = ({API_KEY, jobs}) => {
+const Map = ({API_KEY, jobs, all_skills}) => {
     const [filteredJobs, setFilteredJobs] = useState([])
     const [apiJobs, setApiJobs] = useState([])
     const [map, setMap] = useState({})
@@ -25,8 +25,13 @@ const Map = ({API_KEY, jobs}) => {
     const [loading, setLoading] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
     const [jobsPerPage] = useState(10)
-
+    
     const geoJSON = geoJsonMarkers(jobs.job_data)
+    // get current jobs 
+    const indexOfLastJob = currentPage * jobsPerPage
+    const indexOfFirstJob = indexOfLastJob - jobsPerPage
+    const currentJobs = filteredJobs.slice(indexOfFirstJob,indexOfLastJob)
+    const paginate = pageNumber => setCurrentPage(pageNumber)
 
     useEffect(() => {
         mapboxgl.accessToken = API_KEY;
@@ -45,6 +50,11 @@ const Map = ({API_KEY, jobs}) => {
         if(!query) return
         fetchJobData()
     },[query])
+
+    useEffect(() => {
+        if(!filteredJobs.length) return
+        setLoading(false)
+    },[filteredJobs])
 
     useEffect(() => {
         if(apiJobs.job_data) {
@@ -69,31 +79,18 @@ const Map = ({API_KEY, jobs}) => {
         onLoad(map,jobs.coords,filteredPoints,JobPic,SearchPin)
         map.addControl(new mapboxgl.GeolocateControl(geoLocationOptions))
         map.addControl(new MapboxDirections({accessToken: API_KEY}),'top-left');
-        map.on('click','markers', showJob)
+        map.on('click','markers', e => console.log(e.features[0].properties))
         setMap( map )
     }
 
-    function showJob(event) {
-        console.log(event.features[0].properties)
+    function skillFilter(e) {
+        console.log(e)
     }
 
     const fetchJobData = async () => {
         const request = await axios.get(`/map/jobs.json?location=${query}`)
         setApiJobs(request.data)
     } 
-
-    useEffect(() => {
-        if(!filteredJobs.length) return
-        setLoading(false)
-    },[filteredJobs])
-
-    // get current jobs 
-
-    const indexOfLastJob = currentPage * jobsPerPage
-    const indexOfFirstJob = indexOfLastJob - jobsPerPage
-    const currentJobs = filteredJobs.slice(indexOfFirstJob,indexOfLastJob)
-    const paginate = pageNumber => setCurrentPage(pageNumber)
-
     return(
         <>
             <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}> 
@@ -103,6 +100,11 @@ const Map = ({API_KEY, jobs}) => {
                     <input type="submit"/>
                 </form>
                 <button style={{marginBottom:'5rem'}} onClick={() => setQuery('GET_ALL')}>SEE ALL JOBS</button>
+            </div>
+            <div>
+                {all_skills.map( ({name},index) => (
+                    <button key={index} onClick={skillFilter}>{name}</button>
+                ))}
             </div>
                 <div id='map' style={style}></div>
                 <Jobs jobs={currentJobs} loading={loading} />
