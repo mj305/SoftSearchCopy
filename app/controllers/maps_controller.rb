@@ -32,7 +32,7 @@ class MapsController < ApplicationController
         currentJobs.each do |job|
             job['properties']['skills'].each do |skill|
                 if(skill['name'] == currentSkill)
-                    current_jobs.push(job['properties'])
+                    current_jobs.push({ job: job['properties'], skills: job['properties']['skills']})
                     break
                 end
             end

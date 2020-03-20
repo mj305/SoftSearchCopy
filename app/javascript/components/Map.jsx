@@ -113,7 +113,8 @@ const Map = ({API_KEY, jobs, all_skills}) => {
                 filteredJobs,
                 coords: jobs.coords
             }).then( res => {
-                console.log(res)
+                console.log(res.data)
+                setApiJobs(res.data)
             }).catch( err => {
                 console.log(err)
             })
