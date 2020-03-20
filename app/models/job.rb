@@ -26,6 +26,19 @@ class Job < ApplicationRecord
   end
 
   def self.append_skills(jobs)
+    # skills = Skill.all
+    jobs_per_skill = {}
+
+    # skills.each do |skill|
+    #   # jobs_per_skill.push({ "#{skill['name']}" => skill.jobs })
+    #   # jobs_per_skill["#{skill['name']}"] = skill.jobs
+    #   jobs_per_skill = skill.jobs
+    #   if(jobs_per_skill.include?())
+
+    # end
+
+
+    puts "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO////////////////#{jobs_per_skill}"
     jobs_and_skills = []
     jobs.each do |job| 
         jobs_and_skills.push({
@@ -33,7 +46,7 @@ class Job < ApplicationRecord
             skills: job.skills
         })
     end
-    jobs_and_skills
+    [jobs_and_skills, jobs_per_skill]
   end
 end
  
