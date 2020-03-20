@@ -7,7 +7,7 @@ class Job < ApplicationRecord
   has_many :skills, through: :job_skills
 
   # function that calculates distance between two points 
-  # on a spherical surface
+  # on a spherical surface with Haversine formula
   def self.calc_dist(lon1,lat1,lon2,lat2)
     deg2rad = Math::PI/180
 

@@ -1,4 +1,5 @@
 class MapsController < ApplicationController
+    skip_before_action :verify_authenticity_token
 
     def show 
         location = params['location']
@@ -22,6 +23,21 @@ class MapsController < ApplicationController
                 end
             end
         end
+    end
+
+    def filter
+        current_jobs = []
+        currentJobs = params['filteredJobs']
+        currentSkill = params['skillToFilter']
+        currentJobs.each do |job|
+            job['properties']['skills'].each do |skill|
+                if(skill['name'] == currentSkill)
+                    current_jobs.push(job['properties'])
+                    break
+                end
+            end
+         end
+        render json: { job_data: current_jobs, coords: params['coords']}
     end
 
     private def geoCode(location)
