@@ -87,8 +87,15 @@ form {
 }
 
 .about-homepage {
-  padding: 200px 150px 10px;
+  padding: 180px 150px 10px;
   background: white;
+}
+
+.about-text {
+  display:flex;
+  flex-direction: column;
+  align-self: center;
+
 }
 
 .testimonials-homepage {
@@ -102,10 +109,10 @@ form {
   font-family: "MetropolisSemiBold";
   font-size: 40px;
   color: #2f78f3;
-  padding-bottom: 5px;
+  padding-bottom: 7px;
 }
 
-.subsheading-subtitles-homepage {
+.subheading-subtitles-homepage {
   color: #525f7f;
   font-size: 22px;
   font-family: "MetropolisRegular";
@@ -115,6 +122,10 @@ p {
   font-size: 17px;
   color: #525f7f;
   font-family: "MetropolisRegular";
+}
+
+#about_title-spacing {
+  margin-top: 13px;
 }
 
 //skills cards
@@ -147,8 +158,12 @@ p {
 }
 .card-title {
   text-align:center;
-
 }
+
+a {
+  font-family: "MetropolisRegular";
+}
+
 .btn-md {
     line-height: 1.4;
     padding: 0.57143rem 1.42857rem;
@@ -179,6 +194,7 @@ p {
   border-radius: .25rem;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+
 .g-mr-10 {
   margin-right: 0.71429rem !important;
 }
@@ -341,6 +357,7 @@ footer {
 
   .subtitles-homepage {
     padding: 0px 10px;
+    margin-left: -13px;
   }
 
   .subsheading-subtitles-homepage {
