@@ -5,6 +5,10 @@ class PagesController < ApplicationController
     def home 
     end
 
+    def show
+        render template: "pages/#{params[:page]}"
+    end
+
     def search
         query = params['q']            
         puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! in the pages controller!!!#{params['q']}"
