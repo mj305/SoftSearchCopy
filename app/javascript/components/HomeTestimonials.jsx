@@ -40,56 +40,56 @@ const HomeTestimonials  = () => {
     };
     return (
       <div>        
-        <Slider {...settings}>
+        {/* <Slider {...settings}> */}
           <div>
            
-            <div class="card-slideshow" width="250px">
-              <div class="card-body">
-                  <img class = "card-img" src="assets/ruby.png"/>
-                  <h5 class="card-title">Name</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div className="card-slideshow" width="250px">
+              <div className="card-body">
+                  <img className = "card-img" src="assets/ruby.png"/>
+                  <h5 className="card-title">Name</h5>
+                  <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
               </div>
             </div>
           
           </div>
           <div>
-            <div class="card-slideshow" width="250px">
-              <div class="card-body">
-                  <img class = "card-img" src="assets/ruby.png"/>
-                  <h5 class="card-title">Name</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div className="card-slideshow" width="250px">
+              <div className="card-body">
+                  <img className = "card-img" src="assets/ruby.png"/>
+                  <h5 className="card-title">Name</h5>
+                  <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
               </div>
             </div>
           </div>
           <div>
-            <div class="card-slideshow" width="250px">
-              <div class="card-body">
-                  <img class = "card-img" src="assets/ruby.png"/>
-                  <h5 class="card-title">Name</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div className="card-slideshow" width="250px">
+              <div className="card-body">
+                  <img className = "card-img" src="assets/ruby.png"/>
+                  <h5 className="card-title">Name</h5>
+                  <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
               </div>
             </div>
           </div>
           <div>
-            <div class="card-slideshow" width="250px">
-              <div class="card-body">
-                  <img class = "card-img" src="assets/ruby.png"/>
-                  <h5 class="card-title">Name</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div className="card-slideshow" width="250px">
+              <div className="card-body">
+                  <img className = "card-img" src="assets/ruby.png"/>
+                  <h5 className="card-title">Name</h5>
+                  <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
               </div>
             </div>
           </div>
           <div>
-            <div class="card-slideshow" width="250px">
-              <div class="card-body">
-                  <img class = "card-img" src="assets/ruby.png"/>
-                  <h5 class="card-title">Name</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div className="card-slideshow" width="250px">
+              <div className="card-body">
+                  <img className = "card-img" src="assets/ruby.png"/>
+                  <h5 className="card-title">Name</h5>
+                  <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
               </div>
             </div>
           </div>
           
-        </Slider>
+        {/* </Slider> */}
       </div>
     );
 };

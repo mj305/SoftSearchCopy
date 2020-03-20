@@ -1,3 +1,6 @@
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
 //page
 p.alert {
   padding: 0;
@@ -264,8 +267,6 @@ li {
 //company info
 
 //footer
-
-
 footer {
   margin-top: 50px;
   height: 100px;
@@ -305,11 +306,11 @@ footer {
 
 @media screen and (max-width: 1200px) {
   .about-homepage {
-    padding: 100px 10px 10px;
+    padding: 100px 80px 10px;
   }
 
   .testimonials-homepage {
-    padding: 100px 10px 30px;
+    padding: 100px 80px 30px;
   }
 
   .subtitles-homepage {
