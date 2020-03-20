@@ -119,6 +119,7 @@ p {
   border-radius: 0.6rem;
   margin-top:20px;
   width: 100%;
+  text-align: center;
 }
 
 .card-img {
@@ -262,6 +263,15 @@ li {
   display: -webkit-box!important;
   display: -ms-flexbox!important;
   display: flex!important;
+}
+
+.card-image {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 20px 100px 30px;
+  width: 20%;
+  height: 20%;
 }
 
 //company info
