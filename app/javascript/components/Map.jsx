@@ -36,7 +36,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
 
     useEffect(() => {
         mapboxgl.accessToken = API_KEY;
-        // console.log(jobs.job_data[0])
+        console.log(jobs)
         if(jobs.coords[0] === -98.5795 && jobs.coords[1] === 39.8283) {
             createMap(allJobsOption)
         } else {
@@ -46,18 +46,6 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
             map.remove()
         }
     },[])
-
-    // useEffect(() => {
-    //     if(!filteredSkills.length) return
-    //     // console.log('HAAAAAAAAAAAAAAAAAAAAAAAAAAA')
-        
-    //     // map.getSource('markers').setData({
-    //     //     type: 'FeatureCollection',
-    //     //     features: filteredSkills
-    //     // })
-    //     setApiJobs(filteredSkills)
-    //     console.log(filteredSkills)
-    // },[filteredSkills])
 
     useEffect(() => {
         if(!query) return
@@ -103,40 +91,19 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
         setMap( map )
     }
 
-    // function skillFilter({ target }) {
-    //     if(target.value == 1) {
-    //         target.value = 0
-    //         const skillToUnfilter = target.name
+    function skillFilter({ target }) {
+        if(target.value == 1) {
+            target.value = 0
+            const skillToUnfilter = target.name
 
-    //         axios.post('/map/unfilter', {
-    //             skillToUnfilter,
-    //             jobs,
-                
-    //         }).then( res => {
-    //             console.log(res.data)
-    //             // console.log(filteredJobs)
-    //             // console.log(jobs)
-    //             setApiJobs(res.data)
-    //         }).catch( err => {
-    //             console.log(err)
-    //         })
             
-    //     } else {
-    //         target.value = 1
-    //         const skillToFilter = target.name
-
-    //         const job_data = filteredJobs.filter( ({ properties: { skills }}) => (
-    //             skills.some( ({ name }) => name == skillToFilter)
-    //         ))
-            
-    //         // setFilteredSkills([...filteredSkills, { job_data, skillToFilter }])
-
-    //         // console.log(someArray)
-    //         console.log(job_data)
+        } else {
+            target.value = 1
+            const skillToFilter = target.name
 
 
-    //     }
-    // }
+        }
+    }
 
     const fetchJobData = async () => {
         const request = await axios.get(`/map/jobs.json?location=${query}`)
