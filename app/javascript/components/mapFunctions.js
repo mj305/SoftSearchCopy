@@ -51,19 +51,19 @@ export  const SEARCH_LAYER = {
   };
 
 export function pointFeature(point) {
-    if(point.geometry) {
-        point = {
-            ...point.properties,
-            longitude: point.geometry.coordinates[0],
-            latitude: point.geometry.coordinates[1]
-        }
-    }
-     if (!point.longitude) {
-        point = {
-            longitude: point[0],
-            latitude: point[1]
-        }
-    }
+    // if(point.geometry) {
+    //     point = {
+    //         ...point.properties,
+    //         longitude: point.geometry.coordinates[0],
+    //         latitude: point.geometry.coordinates[1]
+    //     }
+    // }
+    //  if (!point.longitude) {
+    //     point = {
+    //         longitude: point[0],
+    //         latitude: point[1]
+    //     }
+    // }
     return(
         {
             type: 'Feature',

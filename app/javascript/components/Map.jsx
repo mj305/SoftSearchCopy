@@ -27,7 +27,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
     const [currentPage, setCurrentPage] = useState(1)
     const [jobsPerPage] = useState(10)
     
-    const geoJSON = geoJsonMarkers(jobs.job_data)
+    const geoJSON = geoJsonMarkers(jobs.job_data[0])
     // get current jobs 
     const indexOfLastJob = currentPage * jobsPerPage
     const indexOfFirstJob = indexOfLastJob - jobsPerPage
@@ -36,7 +36,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
 
     useEffect(() => {
         mapboxgl.accessToken = API_KEY;
-        console.log(jobs)
+        // console.log(jobs.job_data[0])
         if(jobs.coords[0] === -98.5795 && jobs.coords[1] === 39.8283) {
             createMap(allJobsOption)
         } else {
@@ -72,7 +72,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
     useEffect(() => {
         if(apiJobs.job_data) {
             console.log(apiJobs)
-            const filteredPoints = geoJsonMarkers(apiJobs.job_data)
+            const filteredPoints = geoJsonMarkers(apiJobs.job_data[0])
 
             // console.log(apiJobs.job_data)
             // console.log(geoJsonMarkers(apiJobs.job_data))
@@ -90,6 +90,10 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
     function createMap(mapOptions) {
         const map = new mapboxgl.Map(mapOptions)
         const filteredPoints = geoJSON.features
+
+
+        // console.log(geoJSON)
+
         setLoading(true)
         setFilteredJobs(filteredPoints)
         onLoad(map,jobs.coords,filteredPoints,JobPic,SearchPin)

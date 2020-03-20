@@ -26,9 +26,9 @@ class Job < ApplicationRecord
   end
 
   def self.append_skills(jobs)
-    # skills = Skill.all
+    skills = Skill.all
     jobs_per_skill = {}
-
+    jobs_per_skill
     # skills.each do |skill|
     #   # jobs_per_skill.push({ "#{skill['name']}" => skill.jobs })
     #   # jobs_per_skill["#{skill['name']}"] = skill.jobs
@@ -45,6 +45,13 @@ class Job < ApplicationRecord
             job: job,
             skills: job.skills
         })
+        job.skills.each do |skill|
+          if(jobs_per_skill.has_key?("#{skill}"))
+            jobs_per_skill["#{skill['name']}"].push(job)
+          else
+            jobs_per_skill["#{skill['name']}"] = [job]
+          end
+        end
     end
     [jobs_and_skills, jobs_per_skill]
   end
