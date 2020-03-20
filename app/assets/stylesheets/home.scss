@@ -45,7 +45,6 @@ p.alert {
 }
  
 //banner
-
 form {
   text-align: center;
   padding-top: 20px;
@@ -67,8 +66,21 @@ form {
   color: white;
 }
 
-//body
+.banner_input-button {
+  margin-left: 7px;
+  background-color: #0c53be;
+  border: none;
+  color: white;
+  padding: 13px 30px 9px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  font-family: "MetropolisSemiBold";
+  border-radius: 5px;
+}
 
+//body
 .companyinfo-homepage {
   padding: 160px 170px 10px;
   background: white;
