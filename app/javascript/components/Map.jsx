@@ -22,16 +22,13 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
     const [filteredJobs, setFilteredJobs] = useState([])
     const [apiJobs, setApiJobs] = useState([])
     const [map, setMap] = useState({})
-    const [skillLayers, setSkillLayers] = useState([])
+    const [currentSkills, setCurrentSkills] = useState(Object.keys(jobs.job_data[1]))  // array of current skills in jobs
     const [search, setSearch] = useState('')
     const [query, setQuery] = useState('')    
     const [loading, setLoading] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
     const [jobsPerPage] = useState(10)
     
-    const geoJSON = geoJsonMarkers(jobs.job_data[0])
-
-
     // get current jobs 
     const indexOfLastJob = currentPage * jobsPerPage
     const indexOfFirstJob = indexOfLastJob - jobsPerPage
@@ -64,14 +61,11 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
 
     useEffect(() => {
         if(apiJobs.job_data) {
-            console.log(apiJobs.job_data[1])
             const filteredPoints = geoJsonMarkers(apiJobs.job_data[0])
-
-            
+            setCurrentSkills(Object.keys(apiJobs.job_data[1]))
             setLoading(true)
             setFilteredJobs(filteredPoints.features)
             createLayers(map,apiJobs.job_data[1],all_skills)
-
             map.getSource('search').setData(pointFeature(apiJobs.coords)) 
             map.flyTo({center: apiJobs.coords, speed: 0.5,
                 zoom: (query === "GET_ALL" || query === "" ? 4 : 6 )})
@@ -80,11 +74,10 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
 
     function createMap(mapOptions) {
         const map = new mapboxgl.Map(mapOptions)
-        const filteredPoints = geoJSON.features
+        const filteredPoints = geoJsonMarkers(jobs.job_data[0]).features
 
         setLoading(true)
         setFilteredJobs(filteredPoints)
-        // onLoad(map,jobs.coords,jobs.job_data[1],JobPic,SearchPin)
         map.on('load', () => {
             map.loadImage(JobPic, (error, image) => {
                 if (error) throw error
@@ -106,26 +99,23 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
             map.addLayer(SEARCH_LAYER)
     
         })
-
-
-
         map.addControl(new mapboxgl.GeolocateControl(geoLocationOptions))
         map.addControl(new MapboxDirections({accessToken: API_KEY}),'top-left')
-        map.on('click','markers', e => console.log(e.features[0].properties))
+        // map.on('click','markers', e => console.log(e.features[0].properties))
         setMap( map )
     }
 
     function skillFilter({ target }) {
-        if(target.value == 1) {
-            target.value = 0
-            const skillToUnfilter = target.name
-
-            
+        const visibility = map.getLayoutProperty(target.name, 'visibility');
+        console.log(visibility)
+        
+        if (visibility === 'visible') {
+            map.setLayoutProperty(target.name, 'visibility', 'none');
+            target.className = '';
         } else {
-            target.value = 1
-            const skillToFilter = target.name
-
-
+        target.className = 'active';
+        map.setLayoutProperty(target.name, 'visibility', 'visible');
+        
         }
     }
 
@@ -143,11 +133,11 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
                 </form>
                 <button style={{marginBottom:'5rem'}} onClick={() => setQuery('GET_ALL')}>SEE ALL JOBS</button>
             </div>
-            {/* <div>
-                {all_skills.map( ({name},index) => (
-                    <button name={name} value={0} key={index} onClick={skillFilter}>{name}</button>
+            <div>
+                {currentSkills.map( (name,index) => (
+                    <button className='active' name={name} key={index} onClick={skillFilter}>{name}</button>
                 ))}
-            </div> */}
+            </div>
                 <div id='map' style={style}></div>
                 <Jobs jobs={currentJobs} loading={loading} />
                 <Pagination jobsPerPage={jobsPerPage} totalJobs={filteredJobs.length} paginate={paginate} />
