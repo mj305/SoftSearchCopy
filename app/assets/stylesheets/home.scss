@@ -8,7 +8,7 @@ p.alert {
 }
 
 //nav
-#login, #signup{
+#login, #signup {
   width: 6rem;
   height: 2.5rem;
   color: white; 
@@ -17,6 +17,28 @@ p.alert {
 
 #signup{
   color: #3099fc;
+}
+
+.active {
+  background-color: #4CAF50; 
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.inactive {
+  background-color: black; 
+  border: none;
+  color: darkgrey;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }
 
 #login:hover {

@@ -6,7 +6,7 @@ const Navigation = ({ isSignedIn }) => {
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3">
     <h5 class="my-0 mr-md-auto font-weight-normal">kdpmfss Logo</h5>
     <nav id="navlinks" class="my-2 my-md-0 mr-md-4">
-      <a class="p-2 text-white px-4" href="#">Find Jobs</a>
+      <a class="p-2 text-white px-4" href="/map?location=GET_ALL">Find Jobs</a>
       <a class="p-2 text-white" href="#">Post a Job</a>
     </nav>
     {isSignedIn ? 

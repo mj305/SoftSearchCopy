@@ -15,11 +15,6 @@
         <%= submit_tag("SEARCH JOBS", {:class => 'banner_input-button'}) %>
         <% end %>
 
-        <%= form_with(url: "/search?q=GET_ALL", method: "post") do %>
-        <%= label_tag(:q, "") %>
-        <%= submit_tag("SEARCH ALL JOBS", data: 'GET_ALL', :class => 'banner_input-button') %>
-        <% end %>
-        
     </div>     
     <div class="search-item">
         <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ All</a>

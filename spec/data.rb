@@ -1,4 +1,4 @@
-module UserData
+module MetaData
     
     # creates an employer User
     def self.employer
@@ -55,15 +55,30 @@ module UserData
 
     # creates user_favorites and returns them as a collection
     def self.user_favs(id,job_ids)
-    UserFavorite.create(
-        user_id: id,
-        job_id: job_ids[0].id
-    )
-    UserFavorite.create(
-        user_id: id,
-        job_id: job_ids[1].id
-    )
-    UserFavorite.where(user_id: id)
+        UserFavorite.create(
+            user_id: id,
+            job_id: job_ids[0].id
+        )
+        UserFavorite.create(
+            user_id: id,
+            job_id: job_ids[1].id
+        )
+        UserFavorite.where(user_id: id)
+    end
+
+    # creates skills
+
+    def self.skills
+        Skill.create(name: "Ruby")
+        Skill.create(name: "Python")
+        
+    end
+
+    def self.job_skills(employerNumber,skill)
+        JobSkill.create(
+            job_id: jobs(employer.id)[employerNumber].id,
+            skill_id: Skill.create(name: "#{skill}").id
+        )
     end
 
     # if argument if 0 destroy employer, if 1 destroy employee, if 2 destroy employer_jobs.first
