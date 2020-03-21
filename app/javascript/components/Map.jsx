@@ -37,8 +37,6 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
 
     useEffect(() => {
         mapboxgl.accessToken = API_KEY;
-        // console.log(all_skills)
-
         if(jobs.coords[0] === -98.5795 && jobs.coords[1] === 39.8283) {
             createMap(allJobsOption)
         } else {
@@ -106,16 +104,14 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
     }
 
     function skillFilter({ target }) {
-        const visibility = map.getLayoutProperty(target.name, 'visibility');
-        console.log(visibility)
-        
+        const visibility = map.getLayoutProperty(target.name, 'visibility')
+
         if (visibility === 'visible') {
             map.setLayoutProperty(target.name, 'visibility', 'none');
-            target.className = '';
+            target.className = 'inactive';
         } else {
         target.className = 'active';
-        map.setLayoutProperty(target.name, 'visibility', 'visible');
-        
+        map.setLayoutProperty(target.name, 'visibility', 'visible'); 
         }
     }
 
@@ -135,7 +131,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
             </div>
             <div>
                 {currentSkills.map( (name,index) => (
-                    <button className='active' name={name} key={index} onClick={skillFilter}>{name}</button>
+                    <button className="active" name={name} key={index} onClick={skillFilter}>{name}</button>
                 ))}
             </div>
                 <div id='map' style={style}></div>
@@ -146,17 +142,3 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
 }
 
 export default Map
-
-
-
-
-
-
-
-
-
-
-
-
-
-

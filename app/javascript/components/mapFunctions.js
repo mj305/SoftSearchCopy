@@ -71,7 +71,6 @@ export function pointFeature(point) {
 
 export function geoJsonMarkers(jobJson) {
     let features
-    // console.log(jobJson)
     if(!jobJson.length || !jobJson[0].job) {
         features = jobJson.map( job => pointFeature(job))
     } else {
@@ -88,8 +87,7 @@ export function geoJsonMarkers(jobJson) {
 }
 
 export function createLayers(MAP,jobObject, allSkills) {
-    // console.log(jobObject)
-    // console.log(allSkills[0])
+
     allSkills.map( ({ name }) => {
         if(MAP.getLayer(`${name}`)) {
             MAP.removeLayer(`${name}`)
@@ -99,7 +97,6 @@ export function createLayers(MAP,jobObject, allSkills) {
         } 
     })
     const currentSkills = Object.keys(jobObject)
-    // console.log(`${currentSkills[0]}`)
     const jobsPerSkillArray = Object.values(jobObject)
     const geoJsonArray = jobsPerSkillArray.map( jobs => {
         return geoJsonMarkers(jobs)
@@ -115,7 +112,8 @@ export function createLayers(MAP,jobObject, allSkills) {
             layout: {
               'icon-image': 'JobPic',
               'icon-size': 0.25,
-              'icon-allow-overlap': true
+              'icon-allow-overlap': true,
+              'visibility': 'visible'
             }
         })        
     })
