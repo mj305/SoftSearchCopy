@@ -2,9 +2,11 @@
 
 Rails.application.routes.draw do
   get 'jobs/index'
+  get 'home/index'
   devise_for :users
   root 'pages#home'
   resources :jobs
+  get "/pages/:page" => "pages#show"
 
   resource :map, only: [:show]
   get 'map/jobs' => 'maps#jobs'
