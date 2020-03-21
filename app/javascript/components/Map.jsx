@@ -8,7 +8,9 @@ import {
     allJobsOption,
     pointFeature, options,
     geoJsonMarkers, onLoad,
-    geoLocationOptions
+    geoLocationOptions,
+    createLayers,
+    SEARCH_LAYER
 } from './mapFunctions'
 
 const style = {
@@ -28,6 +30,8 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
     const [jobsPerPage] = useState(10)
     
     const geoJSON = geoJsonMarkers(jobs.job_data[0])
+
+
     // get current jobs 
     const indexOfLastJob = currentPage * jobsPerPage
     const indexOfFirstJob = indexOfLastJob - jobsPerPage
@@ -36,7 +40,8 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
 
     useEffect(() => {
         mapboxgl.accessToken = API_KEY;
-        console.log(jobs)
+        // console.log(all_skills)
+
         if(jobs.coords[0] === -98.5795 && jobs.coords[1] === 39.8283) {
             createMap(allJobsOption)
         } else {
@@ -59,17 +64,15 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
 
     useEffect(() => {
         if(apiJobs.job_data) {
-            console.log(apiJobs)
+            console.log(apiJobs.job_data[1])
             const filteredPoints = geoJsonMarkers(apiJobs.job_data[0])
 
-            // console.log(apiJobs.job_data)
-            // console.log(geoJsonMarkers(apiJobs.job_data))
-            // console.log(filteredPoints.features)
             
             setLoading(true)
             setFilteredJobs(filteredPoints.features)
-            map.getSource('markers').setData(filteredPoints)
-            map.getSource('search').setData(pointFeature(apiJobs.coords))
+            createLayers(map,apiJobs.job_data[1],all_skills)
+
+            map.getSource('search').setData(pointFeature(apiJobs.coords)) 
             map.flyTo({center: apiJobs.coords, speed: 0.5,
                 zoom: (query === "GET_ALL" || query === "" ? 4 : 6 )})
         }
@@ -79,14 +82,35 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
         const map = new mapboxgl.Map(mapOptions)
         const filteredPoints = geoJSON.features
 
-
-        // console.log(geoJSON)
-
         setLoading(true)
         setFilteredJobs(filteredPoints)
-        onLoad(map,jobs.coords,filteredPoints,JobPic,SearchPin)
+        // onLoad(map,jobs.coords,jobs.job_data[1],JobPic,SearchPin)
+        map.on('load', () => {
+            map.loadImage(JobPic, (error, image) => {
+                if (error) throw error
+                map.addImage('JobPic', image)
+            })
+            createLayers(map,jobs.job_data[1],all_skills)
+            map.loadImage(SearchPin, (error, image) => {
+                if (error) throw error
+                map.addImage('SearchPin', image)
+            })
+            map.addSource('search', {type: 'geojson', data:    {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: jobs.coords
+                },
+                properties: {foo: 'bar'}
+            }})
+            map.addLayer(SEARCH_LAYER)
+    
+        })
+
+
+
         map.addControl(new mapboxgl.GeolocateControl(geoLocationOptions))
-        map.addControl(new MapboxDirections({accessToken: API_KEY}),'top-left');
+        map.addControl(new MapboxDirections({accessToken: API_KEY}),'top-left')
         map.on('click','markers', e => console.log(e.features[0].properties))
         setMap( map )
     }
@@ -106,8 +130,8 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
     }
 
     const fetchJobData = async () => {
-        const request = await axios.get(`/map/jobs.json?location=${query}`)
-        setApiJobs(request.data)
+        const response = await axios.get(`/map/jobs.json?location=${query}`)
+        setApiJobs(response.data)
     } 
     return(
         <>
@@ -132,3 +156,17 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
 }
 
 export default Map
+
+
+
+
+
+
+
+
+
+
+
+
+
+

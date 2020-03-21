@@ -36,7 +36,7 @@ class Job < ApplicationRecord
         jobs_and_skills.push({job: job,skills: job.skills})
         if(jobs_length == all_jobs_length)
           skills.each do |skill|
-            jobs_per_skill["#{skill['name']}"] = [skill.jobs]
+            jobs_per_skill["#{skill['name']}"] = skill.jobs
           end
         else
           job.skills.each do |skill|

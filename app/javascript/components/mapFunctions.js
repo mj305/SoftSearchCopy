@@ -28,7 +28,7 @@ export const options = center => {
           }
     }
 
-export const MARKER_LAYER = {
+export  const MARKER_LAYER =  {
     id: 'markers',
     type: 'symbol',
     source: 'markers',
@@ -51,19 +51,12 @@ export  const SEARCH_LAYER = {
   };
 
 export function pointFeature(point) {
-    // if(point.geometry) {
-    //     point = {
-    //         ...point.properties,
-    //         longitude: point.geometry.coordinates[0],
-    //         latitude: point.geometry.coordinates[1]
-    //     }
-    // }
-    //  if (!point.longitude) {
-    //     point = {
-    //         longitude: point[0],
-    //         latitude: point[1]
-    //     }
-    // }
+     if (!point.longitude) {
+        point = {
+            longitude: point[0],
+            latitude: point[1]
+        }
+    }
     return(
         {
             type: 'Feature',
@@ -77,11 +70,16 @@ export function pointFeature(point) {
 }
 
 export function geoJsonMarkers(jobJson) {
-
-    const features = jobJson.map( ({job,skills}) => {
-        job = { ...job, skills }
-        return pointFeature(job)
-        })
+    let features
+    // console.log(jobJson)
+    if(!jobJson.length || !jobJson[0].job) {
+        features = jobJson.map( job => pointFeature(job))
+    } else {
+        features = jobJson.map( ({ job,skills }) => {
+            job = { ...job, skills }
+            return pointFeature(job)
+            })
+    }
 
     return {
         type: 'FeatureCollection',
@@ -89,31 +87,37 @@ export function geoJsonMarkers(jobJson) {
     }
 }
 
-export function onLoad(MAP, search, points, ...pics) {
-    MAP.on('load', () => {
-        MAP.loadImage(pics[0], (error, image) => {
-            if (error) throw error
-            MAP.addImage('JobPic', image)
-        })
-        MAP.addSource('markers', {type: 'geojson', data: {
-            type: 'FeatureCollection',
-            features: points
-        } })
-        MAP.addLayer(MARKER_LAYER)
-
-        
-        MAP.loadImage(pics[1], (error, image) => {
-            if (error) throw error
-            MAP.addImage('SearchPin', image)
-        })
-        MAP.addSource('search', {type: 'geojson', data:    {
-            type: 'Feature',
-            geometry: {
-                type: 'Point',
-                coordinates: search
-            },
-            properties: {foo: 'bar'}
-        }})
-        MAP.addLayer(SEARCH_LAYER)
+export function createLayers(MAP,jobObject, allSkills) {
+    // console.log(jobObject)
+    // console.log(allSkills[0])
+    allSkills.map( ({ name }) => {
+        if(MAP.getLayer(`${name}`)) {
+            MAP.removeLayer(`${name}`)
+        } 
+        if(MAP.getSource(`${name}`)) {
+            MAP.removeSource(`${name}`)
+        } 
     })
+    const currentSkills = Object.keys(jobObject)
+    // console.log(`${currentSkills[0]}`)
+    const jobsPerSkillArray = Object.values(jobObject)
+    const geoJsonArray = jobsPerSkillArray.map( jobs => {
+        return geoJsonMarkers(jobs)
+    })
+
+    geoJsonArray.map( (geoJson,index) => {
+        MAP.addSource(`${currentSkills[index]}`, 
+        {type: 'geojson', data: geoJson })
+        MAP.addLayer({
+            id: `${currentSkills[index]}`,
+            type: 'symbol',
+            source: `${currentSkills[index]}`,
+            layout: {
+              'icon-image': 'JobPic',
+              'icon-size': 0.25,
+              'icon-allow-overlap': true
+            }
+        })        
+    })
+
 }
