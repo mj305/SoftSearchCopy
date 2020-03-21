@@ -21,6 +21,7 @@ const style = {
 const Map = ({ API_KEY, jobs, all_skills }) => {
     const [filteredJobs, setFilteredJobs] = useState([])
     const [apiJobs, setApiJobs] = useState([])
+    const [visibleSkills, setVisibleSkills] = useState(Object.keys(jobs.job_data[1]))
     const [map, setMap] = useState({})
     const [currentSkills, setCurrentSkills] = useState(Object.keys(jobs.job_data[1]))  // array of current skills in jobs
     const [search, setSearch] = useState('')
@@ -28,7 +29,6 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
     const [loading, setLoading] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
     const [jobsPerPage] = useState(10)
-    
     // get current jobs 
     const indexOfLastJob = currentPage * jobsPerPage
     const indexOfFirstJob = indexOfLastJob - jobsPerPage
@@ -59,6 +59,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
 
     useEffect(() => {
         if(apiJobs.job_data) {
+            setVisibleSkills(Object.keys(apiJobs.job_data[1]))
             const filteredPoints = geoJsonMarkers(apiJobs.job_data[0])
             setCurrentSkills(Object.keys(apiJobs.job_data[1]))
             setLoading(true)
@@ -104,15 +105,11 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
     }
 
     function skillFilter({ target }) {
-        const visibility = map.getLayoutProperty(target.name, 'visibility')
-
-        if (visibility === 'visible') {
-            map.setLayoutProperty(target.name, 'visibility', 'none');
-            target.className = 'inactive';
-        } else {
-        target.className = 'active';
-        map.setLayoutProperty(target.name, 'visibility', 'visible'); 
-        }
+        const [ newVisibility, newVisibleSkills ] = visibleSkills.includes(target.name) ?
+        ['none', visibleSkills.filter( skill => skill !== target.name)] :
+        ['visible', [...visibleSkills, target.name]]
+        map.setLayoutProperty(target.name, 'visibility', newVisibility)
+        setVisibleSkills(newVisibleSkills)
     }
 
     const fetchJobData = async () => {
@@ -131,7 +128,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
             </div>
             <div>
                 {currentSkills.map( (name,index) => (
-                    <button className="active" name={name} key={index} onClick={skillFilter}>{name}</button>
+                    <button className={visibleSkills.includes(name) ? 'active':"inactive"} name={name} key={index} onClick={skillFilter}>{name}</button>
                 ))}
             </div>
                 <div id='map' style={style}></div>

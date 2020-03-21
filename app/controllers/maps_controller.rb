@@ -25,7 +25,9 @@ class MapsController < ApplicationController
         end
     end
 
-    private def geoCode(location)
+    private 
+    
+    def geoCode(location)
         coords = Geocoder.search("#{location}")
         if coords.first
             @coords = coords.first.coordinates.reverse
