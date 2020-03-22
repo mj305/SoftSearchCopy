@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Jobs from './Jobs'
 import Pagination from './Pagination'
+
 import JobPic from '../../assets/images/job.png'
 import SearchPin from '../../assets/images/search.png'
 import { 
     allJobsOption,
     pointFeature, options,
-    geoJsonMarkers, onLoad,
+    geoJsonMarkers,
     geoLocationOptions,
     createLayers,
     SEARCH_LAYER
@@ -15,7 +16,7 @@ import {
 
 const style = {
     width: "100rem",
-    height: "600px"
+    height: "100vh"
 }
 
 const Map = ({ API_KEY, jobs, all_skills }) => {
@@ -28,7 +29,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
     const [query, setQuery] = useState('')    
     const [loading, setLoading] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
-    const [jobsPerPage] = useState(10)
+    const [jobsPerPage] = useState(5)
     // get current jobs 
     const indexOfLastJob = currentPage * jobsPerPage
     const indexOfFirstJob = indexOfLastJob - jobsPerPage
@@ -73,8 +74,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
 
     function createMap(mapOptions) {
         const map = new mapboxgl.Map(mapOptions)
-        const filteredPoints = geoJsonMarkers(jobs.job_data[0]).features
-
+        const filteredPoints = geoJsonMarkers(jobs.job_data[0]).features   
         setLoading(true)
         setFilteredJobs(filteredPoints)
         map.on('load', () => {
@@ -110,30 +110,69 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
         ['visible', [...visibleSkills, target.name]]
         map.setLayoutProperty(target.name, 'visibility', newVisibility)
         setVisibleSkills(newVisibleSkills)
+        const filteredPoints = geoJsonMarkers(jobs.job_data[0]).features
+        const currentVisibleJobs = filteredPoints.filter( 
+            ({ properties: { skills } }) => ( skills.some( ({ name }) => (
+                newVisibleSkills.includes(name)))))
+        setFilteredJobs(currentVisibleJobs)
+    }
+
+    function showNoSkills() {
+        visibleSkills.forEach( skill => {
+            map.setLayoutProperty(skill, 'visibility', 'none')
+        })
+        setVisibleSkills([])
+        setFilteredJobs([])
+    }
+
+    function showAllSkills() {
+        currentSkills.forEach( skill => {
+            map.setLayoutProperty(skill, 'visibility', 'visible')
+        })
+        setVisibleSkills(currentSkills)
+        const filteredPoints = geoJsonMarkers(jobs.job_data[0]).features
+        console.log(jobs.job_data[0])
+        setFilteredJobs(filteredPoints)
     }
 
     const fetchJobData = async () => {
         const response = await axios.get(`/map/jobs.json?location=${query}`)
         setApiJobs(response.data)
     } 
+
     return(
         <>
             <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}> 
-                <form style={{marginBottom:'1rem'}}  onSubmit={e => { e.preventDefault()
-                                                                      setQuery(search)  }}>
-                    <input type="text" name={query} onChange={e => setSearch(e.target.value)}/>
-                    <input type="submit"/>
-                </form>
                 <button style={{marginBottom:'5rem'}} onClick={() => setQuery('GET_ALL')}>SEE ALL JOBS</button>
             </div>
-            <div>
-                {currentSkills.map( (name,index) => (
-                    <button className={visibleSkills.includes(name) ? 'active':"inactive"} name={name} key={index} onClick={skillFilter}>{name}</button>
-                ))}
+            <div id="skills">
+            {currentSkills.length ? (
+                    <div>
+                        <button className='banner_input-button' onClick={showAllSkills}>Show all</button>
+                        <button className='banner_input-button' onClick={showNoSkills}>Show none</button>
+                    </div>  ) : null
+                }
+                <div>
+                    {currentSkills.map( (name,index) => (
+                        <button id="skill-button" className={`btn btn-md u-btn-outline-primary g-mr-10 g-mb-15 ${visibleSkills.includes(name) ? 'active':"inactive"}`} 
+                        name={name} key={index} onClick={skillFilter}>+{name}</button>))
+                    }
+                </div>
             </div>
+            <div id='map-and-listings'>
+                <div id="listings-and-page-numbers">
+                    <form id="map-search-bar" className="form-inline mr-auto" style={{marginBottom:'1rem'}}  onSubmit={e => { e.preventDefault()
+                                                                        setQuery(search)  }}>
+                        <input id="map-search-input" className="form-control mr-sm-2" type="text" name={query} onChange={e => setSearch(e.target.value)}/>
+                        <input className='banner_input-button' type="submit"/>
+                    </form>
+                    <Jobs jobs={currentJobs} loading={loading} />
+
+                    {/* <Pagination jobsPerPage={jobsPerPage} totalJobs={filteredJobs.length} paginate={paginate} /> */}
+                </div>
                 <div id='map' style={style}></div>
-                <Jobs jobs={currentJobs} loading={loading} />
-                <Pagination jobsPerPage={jobsPerPage} totalJobs={filteredJobs.length} paginate={paginate} />
+            </div>
+            <Pagination jobsPerPage={jobsPerPage} totalJobs={filteredJobs.length} paginate={paginate} />
         </>
     )
 }

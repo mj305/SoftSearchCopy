@@ -15,7 +15,7 @@
 
 # Ignore .env contaning Mapbox API key
 /.env
-
+    
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep

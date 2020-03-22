@@ -9,6 +9,7 @@ class JobsController < ApplicationController
   end
   def new
     @job = Job.new
+    @skills = Skill.all
   end
   def create
     job = Job.new(job_params)

@@ -29,7 +29,7 @@
 # UserFavorite.create_or_find_by!(user_id: User.where(email: "carolina@gmail.com").ids[0], job_id: Job.fourth.id)
 # UserFavorite.create_or_find_by!(user_id: User.where(email: "chris@gmail.com").ids[0], job_id: Job.fifth.id)
 
-# 1000.times do
+# 100.times do
 #     User.create_or_find_by!(
 #         email: Faker::Internet.email,
 #         password: Faker::Lorem.characters(number:10),
@@ -38,27 +38,21 @@
 # end
 
 
-# 100.times do
-#   User.create_or_find_by(
-#     email: Faker::Internet.email,
-#     password: Faker::Lorem.characters(number: 10),
-#     employer: true
-#   )
-# end
-# 1000.times do
+# 10000.times do
 #   employers = User.where(employer: true)
 #   Job.create_or_find_by(
 #     position: Faker::Job.title,
 #     description: Faker::Lorem.paragraph,
-#     date: Faker::Date.backward(days: 120),
 #     longitude: Faker::Address.longitude,
 #     latitude: Faker::Address.latitude,
 #     user_id: employers[rand(1...employers.length)].id
 #   )
 # end
 
-# 10000.times do
-#     # latlng = Geocoder.search(Faker::Address.street_address).first
+# 500.times do
+#     sleep 1
+
+#     latlng = Geocoder.search(Faker::Address.street_address).first
 
 #     next unless latlng
 
@@ -69,7 +63,6 @@
 #     Job.create_or_find_by!(
 #         position: Faker::Job.title,
 #         description: Faker::Lorem.paragraph,
-#         date: Faker::Date.backward(days: 120),
 #         longitude: latlng[1],
 #         latitude: latlng[0],
 #         user_id: employers[rand(1...employers.length)].id
@@ -79,9 +72,10 @@
 programming_skills = ['Ruby','Python','C++','Java','React','C55',
 'Magento','SQL','C#','Swift','Objective C','Javascript','CSS','HTML']
 
-# programming_skills.each do |skill|
-#   Skill.create_or_find_by!(name: skill)
-# end
+programming_skills.each do |skill|
+  Skill.create_or_find_by!(name: skill)
+end
+
 
 # 100.times do 
 #   jobs = Job.all
@@ -94,12 +88,19 @@ programming_skills = ['Ruby','Python','C++','Java','React','C55',
 # end
 
 Job.all.each do |job|
-  if(job.skills.length == 1)
-    skill = job.skills[0]
-    availableSkills = Skill.where.not(name: skill.name)
-    JobSkill.create_or_find_by!(
-      job_id: job.id,
-      skill_id: availableSkills[rand(1...availableSkills.length)].id
-    )
-  end
+  JobSkill.create_or_find_by!(
+    job_id: job.id,
+    skill_id: Skill.all[rand(0...Skill.all.length)].id
+  )
 end
+
+# Job.all.each do |job|
+#   if(job.skills.length == 1)
+#     skill = job.skills[0]
+#     availableSkills = Skill.where.not(name: skill.name)
+#     JobSkill.create_or_find_by!(
+#       job_id: job.id,
+#       skill_id: availableSkills[rand(1...availableSkills.length)].id
+#     )
+#   end
+# end
