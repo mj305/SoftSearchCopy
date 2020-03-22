@@ -14,7 +14,8 @@
  *= require_self
  */
 
- //login page
+ //login page and sign up pages
+
  .container-login {
     width: 100%;  
     min-height: 100vh;
@@ -36,7 +37,7 @@
     border-radius: 10px;
     overflow: hidden;
     padding: 77px 55px 33px 55px;
-  
+
     box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
     -webkit-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
@@ -62,7 +63,7 @@
   .form-check {
     padding-top: 8px;
   }
-  
+
   .container-login100-form-btn {
     display: -webkit-box;
     display: -webkit-flex;
@@ -73,7 +74,7 @@
     justify-content: center;
     padding-top: 0px;
   }
-  
+
   .wrap-login100-form-btn {
     width: 100%;
     display: block;
@@ -83,7 +84,7 @@
     overflow: hidden;
     margin: 0 auto;
   }
-  
+
   .login100-form-bgbtn {
     position: absolute;
     z-index: -1;
@@ -96,20 +97,20 @@
     background: linear-gradient(right, #21d4fd, #b721ff, #21d4fd, #b721ff);
     top: 0;
     left: -100%;
-  
+
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
     -moz-transition: all 0.4s;
     transition: all 0.4s;
   }
-  
+
   .login100-form-btn {
     font-family: "MetropolisMedium";
     font-size: 15px;
     color: #fff;
     line-height: 1.2;
     text-transform: uppercase;
-  
+
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -121,7 +122,7 @@
     width: 100%;
     height: 50px;
   }
-  
+
   .wrap-login100-form-btn:hover .login100-form-bgbtn {
     left: 0;
   }
@@ -138,4 +139,29 @@
     font-family: "MetropolisMedium";
     background-color: #2f78f3;
     color: white;
+  } 
+
+  //job posting page
+  .skills-checkboxes {
+    padding-top: 20px;
+  }
+
+  .smallsubtitle {
+    font-family: "MetropolisSemiBold";
+    font-size: 18px;
+    padding-top: 3px;
+    padding-bottom: 7px;
+    text-align: center;
+  }
+
+  .subheading-subtitles-posting {
+    color: #525f7f;
+    font-size: 16px;
+    font-family: "MetropolisRegular";
+    text-align: left;
+  }
+
+  .post-page {
+      width: 700px
+
   }
