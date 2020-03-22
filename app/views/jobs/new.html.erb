@@ -1,18 +1,16 @@
 <div class="container-login">
 <div class="wrap-login">
 <h1 class=subtitles-login-page>Post a Job Listing</h1>
-
 <%= form_with(model: @job, url:jobs_path) do |f| %>
-      <%= f.label :description %>
-      <%= f.text_field :description, class: "description" %>
       <%= f.label :position %>
       <%= f.text_field :position, class: "position" %>
+      <%= f.label :description %>
+      <%= f.text_area :description, class: "description" %>
       <%= f.label :longitude, class: "longitude" %>
       <%= f.number_field :longitude, step: :any %>
       <%= f.label :latitude, class: "latitude" %>
       <%= f.number_field :latitude, step: :any %>
-      <%= f.label :latitude, class: "latitude" %>
-      <%= f.number_field :latitude, step: :any %>
+
 
    <div class="skills-checkboxes">
    <h2 class="smallsubtitle">Choose Required Skill(s)</h2>
@@ -21,8 +19,14 @@
       <%= label_tag "#{skill["name"]}" %>
       <% end %>
    </div> 
-
-      
-   <a href="/jobs/" class="btn btn-md u-btn-primary g-mr-10 g-mb-15"> <%= f.submit "Submit", class: "btn btn-primary" %> </a>
-<% end %>
-<hr>
+<br>
+<div class="container-login100-form-btn">
+  <div class="wrap-login100-form-btn">
+  <div class="login100-form-bgbtn"></div>
+  <button class="login100-form-btn">   
+   <a href="/jobs/"> <%= f.submit "Submit"%> </a>
+   </button>
+  </div>
+  </div>
+  </div>
+  <% end %>
