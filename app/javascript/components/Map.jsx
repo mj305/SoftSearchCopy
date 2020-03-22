@@ -73,26 +73,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
 
     function createMap(mapOptions) {
         const map = new mapboxgl.Map(mapOptions)
-        let filteredPoints = geoJsonMarkers(jobs.job_data[0]).features
-
-        // filteredPoints = filteredPoints.filter( ({ properties: { skills } }) => (
-        //     skills.some( ({ name }) => (
-        //         visibleSkills.includes(name)
-        //     ))
-        // ))
-
-        console.log(
-            // filteredPoints[0].properties.skills
-            // filteredPoints.filter( ({ properties: { skills } }) => (
-            //     skills.some( ({ name }) => (
-            //         visibleSkills.includes(name)
-            //     ))
-            // ))
-            filteredPoints
-            )
-
-        
-
+        let filteredPoints = geoJsonMarkers(jobs.job_data[0]).features   
         setLoading(true)
         setFilteredJobs(filteredPoints)
         map.on('load', () => {
@@ -128,6 +109,14 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
         ['visible', [...visibleSkills, target.name]]
         map.setLayoutProperty(target.name, 'visibility', newVisibility)
         setVisibleSkills(newVisibleSkills)
+        let filteredPoints = geoJsonMarkers(jobs.job_data[0]).features
+        setFilteredJobs(
+            filteredPoints.filter( ({ properties: { skills } }) => (
+                    skills.some( ({ name }) => (
+                        newVisibleSkills.includes(name)
+                    ))
+                ))
+        )
     }
 
     function showNoSkills() {
