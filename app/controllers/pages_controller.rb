@@ -3,6 +3,7 @@ class PagesController < ApplicationController
     #before_action :ensure_applicant_user!
 
     def home 
+        @skills = Skill.all
     end
 
     def show
