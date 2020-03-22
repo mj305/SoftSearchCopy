@@ -110,6 +110,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
         ['visible', [...visibleSkills, target.name]]
         map.setLayoutProperty(target.name, 'visibility', newVisibility)
         setVisibleSkills(newVisibleSkills)
+        
         const filteredPoints = geoJsonMarkers(jobs.job_data[0]).features
         const currentVisibleJobs = filteredPoints.filter( 
             ({ properties: { skills } }) => ( skills.some( ({ name }) => (
@@ -141,7 +142,9 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
     } 
 
     return(
-        <>
+        <>                        {/* <a onClick={() => paginate(number)} href="miami" className='page-link'>
+        {number}
+    </a> */}
             <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}> 
                 <button style={{marginBottom:'5rem'}} onClick={() => setQuery('GET_ALL')}>SEE ALL JOBS</button>
             </div>
@@ -155,7 +158,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
                 <div>
                     {currentSkills.map( (name,index) => (
                         <button id="skill-button" className={`btn btn-md u-btn-outline-primary g-mr-10 g-mb-15 ${visibleSkills.includes(name) ? 'active':"inactive"}`} 
-                        name={name} key={index} onClick={skillFilter}>+{name}</button>))
+                        name={name} key={index} onClick={skillFilter}>{visibleSkills.includes(name) ? '-':"+"}{name}</button>))
                     }
                 </div>
             </div>
