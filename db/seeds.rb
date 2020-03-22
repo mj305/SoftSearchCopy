@@ -37,6 +37,7 @@
 #     )
 # end
 
+
 # 100.times do
 #   User.create_or_find_by(
 #     email: Faker::Internet.email,

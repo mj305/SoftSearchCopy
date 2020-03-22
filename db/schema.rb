@@ -39,7 +39,6 @@ ActiveRecord::Schema.define(version: 2020_03_19_033509) do
   create_table "jobs", force: :cascade do |t|
     t.string "position", null: false
     t.text "description", null: false
-    t.string "date", null: false
     t.float "longitude", null: false
     t.float "latitude", null: false
     t.bigint "user_id", null: false
