@@ -14,7 +14,7 @@
  *= require_self
  */
 
- //login page
+ //login page and sign up pages
  .container-login {
     width: 100%;  
     min-height: 100vh;
@@ -139,3 +139,16 @@
     background-color: #2f78f3;
     color: white;
   } 
+
+  //job posting page
+  .skills-checkboxes {
+    padding-top: 20px;
+  }
+
+  .smallsubtitle {
+    font-family: "MetropolisSemiBold";
+    font-size: 18px;
+    padding-top: 3px;
+    padding-bottom: 7px;
+    text-align: center;
+  }
