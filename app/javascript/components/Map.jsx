@@ -60,6 +60,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
 
     useEffect(() => {
         if(apiJobs.job_data) {
+            setCurrentPage(1)
             setVisibleSkills(Object.keys(apiJobs.job_data[1]))
             const filteredPoints = geoJsonMarkers(apiJobs.job_data[0])
             setCurrentSkills(Object.keys(apiJobs.job_data[1]))
@@ -131,8 +132,14 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
             map.setLayoutProperty(skill, 'visibility', 'visible')
         })
         setVisibleSkills(currentSkills)
-        const filteredPoints = geoJsonMarkers(jobs.job_data[0]).features
-        console.log(jobs.job_data[0])
+        const filteredPoints = (apiJobs.job_data ? 
+        geoJsonMarkers(apiJobs.job_data[0]).features :
+        geoJsonMarkers(jobs.job_data[0]).features) 
+
+        console.log(apiJobs.length)
+        console.log(!apiJobs.job_data[0])
+        console.log(filteredPoints)
+
         setFilteredJobs(filteredPoints)
     }
 
