@@ -112,7 +112,9 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
         map.setLayoutProperty(target.name, 'visibility', newVisibility)
         setVisibleSkills(newVisibleSkills)
         
-        const filteredPoints = geoJsonMarkers(jobs.job_data[0]).features
+        const filteredPoints = (apiJobs.job_data ? 
+            geoJsonMarkers(apiJobs.job_data[0]).features :
+            geoJsonMarkers(jobs.job_data[0]).features) 
         const currentVisibleJobs = filteredPoints.filter( 
             ({ properties: { skills } }) => ( skills.some( ({ name }) => (
                 newVisibleSkills.includes(name)))))
@@ -135,11 +137,6 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
         const filteredPoints = (apiJobs.job_data ? 
         geoJsonMarkers(apiJobs.job_data[0]).features :
         geoJsonMarkers(jobs.job_data[0]).features) 
-
-        console.log(apiJobs.length)
-        console.log(!apiJobs.job_data[0])
-        console.log(filteredPoints)
-
         setFilteredJobs(filteredPoints)
     }
 
