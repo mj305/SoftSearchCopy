@@ -17,21 +17,9 @@
 
     </div>     
     <div class="search-item">
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ All</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ React</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Java</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Javascript</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ C++</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Styling</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Magento</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ SQL</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Python</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ C Sharp</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Swift</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ C+</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Python</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Objective C</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ MongoDb</a>
+          <% @skills.each do |skill|%> 
+          <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ <%= skill["name"]%></a>
+      <% end %>
     </div>
 </header>
 
