@@ -79,7 +79,6 @@ export function geoJsonMarkers(jobJson) {
             return pointFeature(job)
             })
     }
-
     return {
         type: 'FeatureCollection',
         features

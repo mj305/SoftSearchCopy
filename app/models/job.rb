@@ -33,20 +33,20 @@ class Job < ApplicationRecord
     jobs_and_skills = []
 
     jobs.each do |job| 
-        jobs_and_skills.push({job: job,skills: job.skills})
-        if(jobs_length == all_jobs_length)
-          skills.each do |skill|
-            jobs_per_skill["#{skill['name']}"] = skill.jobs
-          end
-        else
-          job.skills.each do |skill|
-            if(jobs_per_skill.has_key?("#{skill}"))
-              jobs_per_skill["#{skill['name']}"].push(job)
-            else
-              jobs_per_skill["#{skill['name']}"] = [job]
-            end
+      jobs_and_skills.push({job: job,skills: job.skills})
+      if(jobs_length == all_jobs_length)
+        skills.each do |skill|
+          jobs_per_skill["#{skill['name']}"] = skill.jobs
+        end
+      else
+        job.skills.each do |skill|
+          if(jobs_per_skill.has_key?("#{skill}"))
+            jobs_per_skill["#{skill['name']}"].push(job)
+          else
+            jobs_per_skill["#{skill['name']}"] = [job]
           end
         end
+      end
     end
     [jobs_and_skills, jobs_per_skill]
   end
