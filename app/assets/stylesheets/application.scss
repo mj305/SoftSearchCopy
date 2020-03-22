@@ -130,6 +130,12 @@
     font-family: "MetropolisLight";
     font-size: 14px;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 15px;
     padding-bottom: 1px;
+  }
+
+  p.alert {
+    font-family: "MetropolisMedium";
+    background-color: #2f78f3;
+    color: white;
   }
