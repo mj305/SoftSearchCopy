@@ -1,15 +1,20 @@
 <div class="container-login">
 <div class="wrap-login">
 <h1 class=subtitles-login-page>Post a Job Listing</h1>
-<%= form_with(model: @job, url:jobs_path) do |f| %>
+<%= form_with(model: @job, url:jobs_path, class: "subheading-subtitles-posting") do |f| %>
+      <%= f.label :company %>
+      <%= f.text_field :companyname %>
       <%= f.label :position %>
-      <%= f.text_field :position, class: "position" %>
+      <%= f.text_field :position %>
       <%= f.label :description %>
-      <%= f.text_area :description, class: "description" %>
-      <%= f.label :longitude, class: "longitude" %>
-      <%= f.number_field :longitude, step: :any %>
-      <%= f.label :latitude, class: "latitude" %>
-      <%= f.number_field :latitude, step: :any %>
+      <br>
+      <%= f.text_area :description, size: "28x8" %>
+      <br>
+      <%= f.label :longitude%>
+      <%= f.number_field :longitude %>
+      <br>
+      <%= f.label :latitude %>
+      <%= f.number_field :latitude %>
 
 
    <div class="skills-checkboxes">
