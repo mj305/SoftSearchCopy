@@ -8,7 +8,7 @@ const Jobs = ({ jobs, loading }) => {
     return(
         <ul id='listings' className='list-group mb-4'>
             {jobs.map(({properties},index) => (
-                <div key={index} className="card w-100">
+                <div key={index} className="card m-0 w-100">
                     <div className="card-body">
                         <h5 className="card-title">{properties.position}</h5>
                         <p className="card-text">{properties.description}</p>

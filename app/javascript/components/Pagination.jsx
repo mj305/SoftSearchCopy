@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Pagination = ({ jobsPerPage, totalJobs, paginate }) => {
     const pageNumbers = []
@@ -12,10 +12,6 @@ const Pagination = ({ jobsPerPage, totalJobs, paginate }) => {
             <ul className='pagination'>
                 {pageNumbers.map(number => (
                     <li key={number} className='page-item'>
-                        {/* <a onClick={() => paginate(number)} href="miami" className='page-link'>
-                            {number}
-                        </a> */}
-
                         <button onClick={() => paginate(number)} className='page-link'>
                             {number}
                         </button>

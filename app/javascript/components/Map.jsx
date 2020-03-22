@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Jobs from './Jobs'
 import Pagination from './Pagination'
+
 import JobPic from '../../assets/images/job.png'
 import SearchPin from '../../assets/images/search.png'
 import { 
     allJobsOption,
     pointFeature, options,
-    geoJsonMarkers, onLoad,
+    geoJsonMarkers,
     geoLocationOptions,
     createLayers,
     SEARCH_LAYER
@@ -144,17 +145,19 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
             <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}> 
                 <button style={{marginBottom:'5rem'}} onClick={() => setQuery('GET_ALL')}>SEE ALL JOBS</button>
             </div>
-            <div>
-                {currentSkills.map( (name,index) => (
-                    <button className={visibleSkills.includes(name) ? 'active':"inactive"} 
-                    name={name} key={index} onClick={skillFilter}>{name}</button>))
+            <div id="skills">
+            {currentSkills.length ? (
+                    <div>
+                        <button className='banner_input-button' onClick={showAllSkills}>Show all</button>
+                        <button className='banner_input-button' onClick={showNoSkills}>Show none</button>
+                    </div>  ) : null
                 }
-                {currentSkills.length ? (
-                    <>
-                        <button onClick={showAllSkills}>Show all</button>
-                        <button onClick={showNoSkills}>Show none</button>
-                    </>  ) : null
-                }
+                <div>
+                    {currentSkills.map( (name,index) => (
+                        <button id="skill-button" className={`btn btn-md u-btn-outline-primary g-mr-10 g-mb-15 ${visibleSkills.includes(name) ? 'active':"inactive"}`} 
+                        name={name} key={index} onClick={skillFilter}>+{name}</button>))
+                    }
+                </div>
             </div>
             <div id='map-and-listings'>
                 <div id="listings-and-page-numbers">
@@ -164,10 +167,12 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
                         <input className='banner_input-button' type="submit"/>
                     </form>
                     <Jobs jobs={currentJobs} loading={loading} />
+
                     {/* <Pagination jobsPerPage={jobsPerPage} totalJobs={filteredJobs.length} paginate={paginate} /> */}
                 </div>
                 <div id='map' style={style}></div>
             </div>
+            <Pagination jobsPerPage={jobsPerPage} totalJobs={filteredJobs.length} paginate={paginate} />
         </>
     )
 }
