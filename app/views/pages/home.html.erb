@@ -24,8 +24,8 @@
 </header>
 
 <!-- Skills Cards -->
-<section class="companyinfo-homepage">
-    <h2 class="subtitles-homepage">Explore By Skill</h2>
+<section class="companyinfo-homepage background-title">
+    <h2 class="subtitles-homepage"><span class="carets"> < </span>Explore By Skill<span class="carets"> /> </span></h2>
     <h3 class="subheading-subtitles-homepage">Narrow the search down by what you are good at.<br>Or learn whats in demand.</h3>
 
         <div class="centered">
@@ -172,7 +172,7 @@
     <section class="about-homepage">
     <div class="row">
         <div class="about-text col-sm-6 xs-col-12">
-            <h2 class="subtitles-homepage">Over 1000+ Companies job posted</h2>
+            <h2 class="subtitles-homepage"><span class="carets"> < </span>Over 1000+ Companies Job Posted<span class="carets">/> </span></h2>
             <h3 class="subheading-subtitles-homepage">Founded By Programmers for Programmers</h3>
             <p id="about_title-spacing">Whether you’re a front end programmer or a back end engineer, you can find developer job opportunities in a city near you. Updated daily with aggregated data from all your favourite sites to give you the best option filtered for you.</p>
         </div>
@@ -187,13 +187,13 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<div id="myCarousel" class="carousel slide" data-ride="carousel">
-            			<h2 class="subtitles-homepage testimonials">They Believe in Us, We Believe In Them</h2>
+            			<h2 class="subtitles-homepage testimonials"> <span class="carets"> < </span>They Believe in Us, We Believe In Them<span class="carets"> /> </span></h2>
 
 				<!-- Carousel indicators -->
 				<ol class="carousel-indicators">
-					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-					<li data-target="#myCarousel" data-slide-to="1"></li>
-					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="0" class="active active-button"></li>
+					<li data-target="#myCarousel" data-slide-to="1" class="active-button"></li>
+					<li data-target="#myCarousel" data-slide-to="2" class="active-button"></li>
 				</ol>   
 				<!-- Wrapper for carousel items -->
 				<div class="carousel-inner"> 
@@ -203,13 +203,13 @@
 								<div class="media">
 									<div class="media-left d-flex mr-3">
 										<a href="#">
-											<img src="/examples/images/clients/1.jpg" alt="">
+                                        <%= image_tag("headshot-guy-1.jpg", :alt => "rss feed") %>
 										</a>
 									</div>
 									<div class="media-body">
 										<div class="testimonial">
-											<p>Lorem ipsum dolor sit amet, consec adipiscing elit. Nam eusem scelerisque tempor, varius quam luctus dui. Mauris magna metus nec.</p>
-											<p class="overview"><b>Adam Wilson</b>, Media Analyst</p>
+											<p>"Soft Search made it easy to find jobs around my area.. So glad I looked here! I was able to find jobs specific to what I am good at"</p>
+											<p class="overview"><b>Adam Wilson</b>, Web Developer</p>
 										</div>
 									</div>
 								</div>
@@ -218,13 +218,13 @@
 								<div class="media">
 									<div class="media-left d-flex mr-3">
 										<a href="#">
-											<img src="/examples/images/clients/2.jpg" alt="">
+                                        <%= image_tag("headshot-girl-1.jpg", :alt => "rss feed") %>
 										</a>
 									</div>
 									<div class="media-body">
 										<div class="testimonial">
-											<p>Vestibulum quis quam ut magna consequat faucibus. Pellentesque eget mi suscipit tincidunt. Utmtc tempus dictum. Pellentesque virra.</p>
-											<p class="overview"><b>Brittany Moreno</b>, Web Developer</p>
+											<p>"It was so easy to find jobs based on my skill set! I am absolutely in love with this. It is a big help if you're trying to figure out what language you should learn next."</p>
+											<p class="overview"><b>Brittany Moreno</b>, Back-end Developer</p>
 										</div>
 									</div>
 								</div>
@@ -237,13 +237,13 @@
 								<div class="media">
 									<div class="media-left d-flex mr-3">
 										<a href="#">
-											<img src="/examples/images/clients/3.jpg" alt="">
+                                        <%= image_tag("headshot-girl-2.jpg", :alt => "rss feed") %>
 										</a>
 									</div>
 									<div class="media-body">
 										<div class="testimonial">
-											<p>Lorem ipsum dolor sit amet, consec adipiscing elit. Nam eusem scelerisque tempor, varius quam luctus dui. Mauris magna metus nec.</p>
-											<p class="overview"><b>Cary Holz</b>, Seo Analyst</p>
+											<p>"I don’t need to spend hours reading job descriptions because Soft Search personalizes my search based on my skill set."</p>
+											<p class="overview"><b>Cary Holz</b>, SQL Consultant</p>
 										</div>
 									</div>
 								</div>
@@ -252,12 +252,12 @@
 								<div class="media">
 									<div class="media-left d-flex mr-3">
 										<a href="#">
-											<img src="/examples/images/clients/4.jpg" alt="">
+                                        <%= image_tag("headshot-guy-2.jpg", :alt => "rss feed") %>
 										</a>
 									</div>
 									<div class="media-body">
 										<div class="testimonial">
-											<p>Vestibulum quis quam ut magna consequat faucibus. Pellentesque eget mi suscipit tincidunt. Utmtc tempus dictum. Pellentesque virra.</p>
+											<p>"I was able to find more potential jobs and went to more interviews than with other sites. Helps you figure out what's in demand."</p>
 											<p class="overview"><b>Derek Saveley</b>, Web Designer</p>
 										</div>
 									</div>
@@ -271,13 +271,13 @@
 								<div class="media">
 									<div class="media-left d-flex mr-3">
 										<a href="#">
-											<img src="/examples/images/clients/5.jpg" alt="">
+                                        <%= image_tag("headshot-girl-3.jpg", :alt => "rss feed") %>
 										</a>
 									</div>
 									<div class="media-body">
 										<div class="testimonial">
-											<p>Lorem ipsum dolor sit amet, consec adipiscing elit. Nam eusem scelerisque tempor, varius quam luctus dui. Mauris magna metus nec.</p>
-											<p class="overview"><b>Martin Sommer</b>, UX Analyst</p>
+											<p> “Soft Search makes it so easy to find jobs that fit my skills. I can narrow down my search to jobs that suit me exactly. Talk about a time saver.”</p>
+											<p class="overview"><b>Melissa Sommer</b>, Front-end Analyst</p>
 										</div>
 									</div>
 								</div>
@@ -286,12 +286,12 @@
 								<div class="media">
 									<div class="media-left d-flex mr-3">
 										<a href="#">
-											<img src="/examples/images/clients/6.jpg" alt="">
+                                        <%= image_tag("headshot-guy-3.jpg", :alt => "rss feed") %>
 										</a>
 									</div>
 									<div class="media-body">
 										<div class="testimonial">
-											<p>Vestibulum quis quam ut magna consequat faucibus. Pellentesque eget mi suscipit tincidunt. Utmtc tempus dictum. Pellentesque virra.</p>
+											<p>“I will never use any other career website, Soft Search is all I need to find the right position. Has the best jobs from all around the world.”</p>
 											<p class="overview"><b>John Williams</b>, Web Developer</p>
 										</div>
 									</div>

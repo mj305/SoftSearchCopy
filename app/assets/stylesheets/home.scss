@@ -123,6 +123,19 @@ p {
 }
 
 //skills cards
+.carets {
+  color: grey;
+  opacity: 0.25;
+  font-size: 24px;
+  vertical-align: super;
+}
+
+.background-title {
+  background-image: image-url('background-dots.png'); 
+  background-repeat: no-repeat;
+  background-position:70px 160px;
+}
+
 .cards {
   border-radius: 0.6rem;
   margin-top: 50px;
@@ -318,7 +331,8 @@ li {
 
 .container-testimonials {
   background: white;
-  font-family: "MetropolisRegular"
+  font-family: "MetropolisRegular";
+  padding-bottom: 20px;
 }
 
 .testimonials {
@@ -327,14 +341,12 @@ li {
 }
 
 .active {
-  background-color: white;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+  background-color: white !important;
+}
+
+.active-button {
+  background-color: #2f78f3 !important;
+  padding: 1px 1px;
 }
 
 .carousel {
@@ -354,7 +366,8 @@ li {
 	border-radius: 50%;
 }
 .carousel .testimonial {
-	padding: 0 15px 0 60px ;
+  text-align: left;
+  padding: 0 15px 0 20px ;
 	position: relative;
 }
 .carousel .testimonial::before {
@@ -367,15 +380,16 @@ li {
 	top: 0;
 }
 .carousel .overview b {
-	text-transform: uppercase;
+  font-family: "MetropolisSemiBold";
+  text-transform: uppercase;
 	color: #1c47e3;
 }
 .carousel .carousel-indicators {
-	bottom: -40px;
+	bottom: -70px;
 }
 .carousel-indicators li, .carousel-indicators li.active {
 	width: 18px;
-    height: 18px;
+  height: 18px;
 	border-radius: 50%;
 	margin: 1px 3px;
 }
@@ -388,7 +402,6 @@ li {
     background: #1c47e3;    
     border: 5px double;    
 }
-
 //footer
 // footer {
 //   margin-top: 50px;
