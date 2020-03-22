@@ -15,7 +15,7 @@ import {
 
 const style = {
     width: "100rem",
-    height: "600px"
+    height: "100vh"
 }
 
 const Map = ({ API_KEY, jobs, all_skills }) => {
@@ -28,7 +28,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
     const [query, setQuery] = useState('')    
     const [loading, setLoading] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
-    const [jobsPerPage] = useState(10)
+    const [jobsPerPage] = useState(5)
     // get current jobs 
     const indexOfLastJob = currentPage * jobsPerPage
     const indexOfFirstJob = indexOfLastJob - jobsPerPage
@@ -73,7 +73,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
 
     function createMap(mapOptions) {
         const map = new mapboxgl.Map(mapOptions)
-        let filteredPoints = geoJsonMarkers(jobs.job_data[0]).features   
+        const filteredPoints = geoJsonMarkers(jobs.job_data[0]).features   
         setLoading(true)
         setFilteredJobs(filteredPoints)
         map.on('load', () => {
@@ -109,14 +109,11 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
         ['visible', [...visibleSkills, target.name]]
         map.setLayoutProperty(target.name, 'visibility', newVisibility)
         setVisibleSkills(newVisibleSkills)
-        let filteredPoints = geoJsonMarkers(jobs.job_data[0]).features
-        setFilteredJobs(
-            filteredPoints.filter( ({ properties: { skills } }) => (
-                    skills.some( ({ name }) => (
-                        newVisibleSkills.includes(name)
-                    ))
-                ))
-        )
+        const filteredPoints = geoJsonMarkers(jobs.job_data[0]).features
+        const currentVisibleJobs = filteredPoints.filter( 
+            ({ properties: { skills } }) => ( skills.some( ({ name }) => (
+                newVisibleSkills.includes(name)))))
+        setFilteredJobs(currentVisibleJobs)
     }
 
     function showNoSkills() {
@@ -132,7 +129,8 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
             map.setLayoutProperty(skill, 'visibility', 'visible')
         })
         setVisibleSkills(currentSkills)
-        let filteredPoints = geoJsonMarkers(jobs.job_data[0]).features
+        const filteredPoints = geoJsonMarkers(jobs.job_data[0]).features
+        console.log(jobs.job_data[0])
         setFilteredJobs(filteredPoints)
     }
 
@@ -144,11 +142,6 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
     return(
         <>
             <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}> 
-                <form style={{marginBottom:'1rem'}}  onSubmit={e => { e.preventDefault()
-                                                                      setQuery(search)  }}>
-                    <input type="text" name={query} onChange={e => setSearch(e.target.value)}/>
-                    <input type="submit"/>
-                </form>
                 <button style={{marginBottom:'5rem'}} onClick={() => setQuery('GET_ALL')}>SEE ALL JOBS</button>
             </div>
             <div>
@@ -163,9 +156,18 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
                     </>  ) : null
                 }
             </div>
+            <div id='map-and-listings'>
+                <div id="listings-and-page-numbers">
+                    <form id="map-search-bar" className="form-inline mr-auto" style={{marginBottom:'1rem'}}  onSubmit={e => { e.preventDefault()
+                                                                        setQuery(search)  }}>
+                        <input id="map-search-input" className="form-control mr-sm-2" type="text" name={query} onChange={e => setSearch(e.target.value)}/>
+                        <input className='banner_input-button' type="submit"/>
+                    </form>
+                    <Jobs jobs={currentJobs} loading={loading} />
+                    {/* <Pagination jobsPerPage={jobsPerPage} totalJobs={filteredJobs.length} paginate={paginate} /> */}
+                </div>
                 <div id='map' style={style}></div>
-                <Jobs jobs={currentJobs} loading={loading} />
-                <Pagination jobsPerPage={jobsPerPage} totalJobs={filteredJobs.length} paginate={paginate} />
+            </div>
         </>
     )
 }
