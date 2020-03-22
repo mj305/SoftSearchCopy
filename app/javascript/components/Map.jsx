@@ -112,10 +112,25 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
         setVisibleSkills(newVisibleSkills)
     }
 
+    function showNoSkills() {
+        visibleSkills.forEach( skill => {
+            map.setLayoutProperty(skill, 'visibility', 'none')
+        })
+        setVisibleSkills([])
+    }
+
+    function showAllSkills() {
+        currentSkills.forEach( skill => {
+            map.setLayoutProperty(skill, 'visibility', 'visible')
+        })
+        setVisibleSkills(currentSkills)
+    }
+
     const fetchJobData = async () => {
         const response = await axios.get(`/map/jobs.json?location=${query}`)
         setApiJobs(response.data)
     } 
+
     return(
         <>
             <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}> 
@@ -128,8 +143,15 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
             </div>
             <div>
                 {currentSkills.map( (name,index) => (
-                    <button className={visibleSkills.includes(name) ? 'active':"inactive"} name={name} key={index} onClick={skillFilter}>{name}</button>
-                ))}
+                    <button className={visibleSkills.includes(name) ? 'active':"inactive"} 
+                    name={name} key={index} onClick={skillFilter}>{name}</button>))
+                }
+                {currentSkills.length ? (
+                    <>
+                        <button onClick={showAllSkills}>Show all</button>
+                        <button onClick={showNoSkills}>Show none</button>
+                    </>  ) : null
+                }
             </div>
                 <div id='map' style={style}></div>
                 <Jobs jobs={currentJobs} loading={loading} />
