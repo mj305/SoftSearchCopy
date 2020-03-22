@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class JobsController < ApplicationController
+class Employers::JobsController < Employers::AdminBaseController
   def index
     @jobs = Job.all
   end
