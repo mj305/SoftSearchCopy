@@ -1,8 +1,8 @@
 require 'rails_helper'
-require 'user_data'
+require 'data'
 
 RSpec.describe JobApp, type: :model do
-  include UserData
+  include MetaData
   
   subject {
     described_class.new(
@@ -49,9 +49,9 @@ RSpec.describe JobApp, type: :model do
     end
 
     it "is not valid with a user_id that belongs to a user where employer:true" do
-      employer_user = UserData::employer
-      employer_jobs = UserData::jobs(employer_user.id)
-      employer_apps = UserData::job_apps(employer_user.id,employer_jobs)
+      employer_user = MetaData::employer
+      employer_jobs = MetaData::jobs(employer_user.id)
+      employer_apps = MetaData::job_apps(employer_user.id,employer_jobs)
       expect(employer_apps.length).to eq 0
     end
   end

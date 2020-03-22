@@ -36,23 +36,26 @@
 #         employer: true
 #     )
 # end
-100.times do
-  User.create_or_find_by(
-    email: Faker::Internet.email,
-    password: Faker::Lorem.characters(number: 10),
-    employer: true
-  )
-end
-1000.times do
-  employers = User.where(employer: true)
-  Job.create_or_find_by(
-    position: Faker::Job.title,
-    description: Faker::Lorem.paragraph,
-    longitude: Faker::Address.longitude,
-    latitude: Faker::Address.latitude,
-    user_id: employers[rand(1...employers.length)].id
-  )
-end
+
+
+# 100.times do
+#   User.create_or_find_by(
+#     email: Faker::Internet.email,
+#     password: Faker::Lorem.characters(number: 10),
+#     employer: true
+#   )
+# end
+# 1000.times do
+#   employers = User.where(employer: true)
+#   Job.create_or_find_by(
+#     position: Faker::Job.title,
+#     description: Faker::Lorem.paragraph,
+#     date: Faker::Date.backward(days: 120),
+#     longitude: Faker::Address.longitude,
+#     latitude: Faker::Address.latitude,
+#     user_id: employers[rand(1...employers.length)].id
+#   )
+# end
 
 # 10000.times do
 #     # latlng = Geocoder.search(Faker::Address.street_address).first
@@ -72,3 +75,31 @@ end
 #         user_id: employers[rand(1...employers.length)].id
 #     )
 # end
+
+programming_skills = ['Ruby','Python','C++','Java','React','C55',
+'Magento','SQL','C#','Swift','Objective C','Javascript','CSS','HTML']
+
+# programming_skills.each do |skill|
+#   Skill.create_or_find_by!(name: skill)
+# end
+
+# 100.times do 
+#   jobs = Job.all
+#   skills = Skill.all
+
+#   JobSkill.create_or_find_by!(
+#     job_id: jobs[rand(1...jobs.length)].id,
+#     skill_id: skills[rand(1...skills.length)].id
+#   )
+# end
+
+Job.all.each do |job|
+  if(job.skills.length == 1)
+    skill = job.skills[0]
+    availableSkills = Skill.where.not(name: skill.name)
+    JobSkill.create_or_find_by!(
+      job_id: job.id,
+      skill_id: availableSkills[rand(1...availableSkills.length)].id
+    )
+  end
+end

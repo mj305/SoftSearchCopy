@@ -1,6 +1,5 @@
 
-export const flyToProps = { speed: 0.5, zoom: 6, bearing: 0, pitch: 0 };
-
+export const usCenter = [-98.5795,39.8283] // center of the united states
 
 export const geoLocationOptions = {
     positionOptions: {
@@ -13,7 +12,23 @@ export const geoLocationOptions = {
     }
 }
 
-export const MARKER_LAYER = {
+export const allJobsOption = {
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: usCenter,
+    zoom: 4
+}
+
+export const options = center => {
+    return{
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center,
+            zoom: 6
+          }
+    }
+
+export  const MARKER_LAYER =  {
     id: 'markers',
     type: 'symbol',
     source: 'markers',
@@ -35,20 +50,13 @@ export  const SEARCH_LAYER = {
     }
   };
 
-export function filterGeoJsonPoints(search,points,rad) {
-    var center = search;
-    var radius = rad;
-    var options = {steps: 64, units: 'miles', properties: {foo: 'bar'}};
-    var circle = turf.circle(center, radius, options);
-
-    var filteredPoints = turf.pointsWithinPolygon(points, circle).features
-    // console.log(filteredPoints)
-    // setFilteredJobs(filteredPoints)
-    return(filteredPoints)
-}
-
-
 export function pointFeature(point) {
+     if (!point.longitude) {
+        point = {
+            longitude: point[0],
+            latitude: point[1]
+        }
+    }
     return(
         {
             type: 'Feature',
@@ -56,15 +64,21 @@ export function pointFeature(point) {
                 type: 'Point',
                 coordinates: [point.longitude, point.latitude]
             },
-            properties: {...point}
+            properties: { ...point }
         }
     )
 }
 
 export function geoJsonMarkers(jobJson) {
-    const features = jobJson.map( job => {
-        return pointFeature(job)
-        })
+    let features
+    if(!jobJson.length || !jobJson[0].job) {
+        features = jobJson.map( job => pointFeature(job))
+    } else {
+        features = jobJson.map( ({ job,skills }) => {
+            job = { ...job, skills }
+            return pointFeature(job)
+            })
+    }
 
     return {
         type: 'FeatureCollection',
@@ -72,31 +86,36 @@ export function geoJsonMarkers(jobJson) {
     }
 }
 
-export function onLoad(MAP, search, points, ...pics) {
-    MAP.on('load', () => {
-        MAP.loadImage(pics[0], (error, image) => {
-            if (error) throw error
-            MAP.addImage('JobPic', image)
-        })
-        MAP.addSource('markers', {type: 'geojson', data: {
-            type: 'FeatureCollection',
-            features: points
-        } })
-        MAP.addLayer(MARKER_LAYER)
+export function createLayers(MAP,jobObject, allSkills) {
 
-        
-        MAP.loadImage(pics[1], (error, image) => {
-            if (error) throw error
-            MAP.addImage('SearchPin', image)
-        })
-        MAP.addSource('search', {type: 'geojson', data:    {
-            type: 'Feature',
-            geometry: {
-                type: 'Point',
-                coordinates: search
-            },
-            properties: {foo: 'bar'}
-        }})
-        MAP.addLayer(SEARCH_LAYER)
+    allSkills.map( ({ name }) => {
+        if(MAP.getLayer(`${name}`)) {
+            MAP.removeLayer(`${name}`)
+        } 
+        if(MAP.getSource(`${name}`)) {
+            MAP.removeSource(`${name}`)
+        } 
     })
+    const currentSkills = Object.keys(jobObject)
+    const jobsPerSkillArray = Object.values(jobObject)
+    const geoJsonArray = jobsPerSkillArray.map( jobs => {
+        return geoJsonMarkers(jobs)
+    })
+
+    geoJsonArray.map( (geoJson,index) => {
+        MAP.addSource(`${currentSkills[index]}`, 
+        {type: 'geojson', data: geoJson })
+        MAP.addLayer({
+            id: `${currentSkills[index]}`,
+            type: 'symbol',
+            source: `${currentSkills[index]}`,
+            layout: {
+              'icon-image': 'JobPic',
+              'icon-size': 0.25,
+              'icon-allow-overlap': true,
+              'visibility': 'visible'
+            }
+        })        
+    })
+
 }
