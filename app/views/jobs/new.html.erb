@@ -14,6 +14,13 @@
       <%= f.label :latitude, class: "latitude" %>
       <%= f.number_field :latitude, step: :any %>
 
+   <div class="skills-checkboxes">
+   <% @skills.each do |skill|%> 
+     <%= check_box_tag "#{skill["name"]}", "yes" %>
+     <%= label_tag "#{skill["name"]}" %>
+   <% end %>
+   </div>
+
       
    <a href="/jobs/" class="btn btn-md u-btn-primary g-mr-10 g-mb-15"> <%= f.submit "Submit", class: "btn btn-primary" %> </a>
 <% end %>
