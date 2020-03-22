@@ -1,4 +1,6 @@
-<h1> New Job Page</h1>
+<div class="container-login">
+<div class="wrap-login">
+<h1 class=subtitles-login-page>Post a Job Listing</h1>
 
 <%= form_with(model: @job, url:jobs_path) do |f| %>
       <%= f.label :description %>
@@ -9,8 +11,9 @@
       <%= f.number_field :longitude, step: :any %>
       <%= f.label :latitude, class: "latitude" %>
       <%= f.number_field :latitude, step: :any %>
-      <%= f.label :user_id, class: "user_id" %>
-      <%= f.number_field :user_id %>
+      <%= f.label :latitude, class: "latitude" %>
+      <%= f.number_field :latitude, step: :any %>
+
       
    <a href="/jobs/" class="btn btn-md u-btn-primary g-mr-10 g-mb-15"> <%= f.submit "Submit", class: "btn btn-primary" %> </a>
 <% end %>
