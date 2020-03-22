@@ -329,7 +329,109 @@ li {
 }
 
 //testimonials 
-
+.demo{ background: #807d6f; }
+.testimonial{
+    padding-left: 150px;
+    margin: 50px 0;
+}
+.testimonial:before,
+.testimonial:after{
+    content: "";
+    display: block;
+    clear: both;
+}
+.testimonial .pic{
+    display: inline-block;
+    width: 23%;
+    float: left;
+    margin-right: 5%;
+}
+.testimonial .pic img{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+.testimonial .testimonial-content{
+    display: inline-block;
+    width: 72%;
+    padding-top: 25px;
+}
+.testimonial-content .title{
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+    padding-right: 10px;
+    margin: 0;
+}
+.testimonial .post{
+    display: inline-block;
+    font-size: 18px;
+    color: #f7de44;
+}
+.testimonial .description{
+    font-size: 18px;
+    font-style: italic;
+    color: #fff;
+    margin-top: 25px;
+}
+.owl-theme .owl-controls{
+    position: absolute;
+    top: 27%;
+}
+.owl-theme .owl-controls .owl-buttons div{
+    display: block;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+    margin: 0 0 5px 0;
+    opacity: 1;
+    position: relative;
+}
+.owl-prev:before,
+.owl-next:before{
+    content: "\f104";
+    font-family: "fontawesome";
+    font-size: 60px;
+    color: #f7de44;
+    position: absolute;
+    top: 0;
+    left: 20%;
+}
+.owl-next:before{
+    content: "\f105";
+}
+@media only screen and (max-width:1280px){
+    .testimonial{ padding-left: 80px; }
+}
+@media only screen and (max-width:767px){
+    .testimonial{
+        text-align: center;
+        padding-left: 0;
+        margin: 0 15px;
+    }
+    .testimonial .pic{
+        width: 100px;
+        height: 100px;
+        float: none;
+        margin-right: 0;
+    }
+    .testimonial .testimonial-content{
+        width: 100%;
+    }
+    .owl-theme .owl-controls,
+    .owl-prev:before,
+    .owl-next:before{
+        position: static;
+    }
+    .owl-theme .owl-controls .owl-buttons div{
+        display: inline-block;
+        margin-bottom: 0;
+    }
+}
 
 //footer
 footer {
