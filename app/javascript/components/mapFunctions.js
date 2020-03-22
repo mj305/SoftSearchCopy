@@ -86,7 +86,6 @@ export function geoJsonMarkers(jobJson) {
 }
 
 export function createLayers(MAP,jobObject, allSkills) {
-
     allSkills.map( ({ name }) => {
         if(MAP.getLayer(`${name}`)) {
             MAP.removeLayer(`${name}`)
@@ -100,7 +99,6 @@ export function createLayers(MAP,jobObject, allSkills) {
     const geoJsonArray = jobsPerSkillArray.map( jobs => {
         return geoJsonMarkers(jobs)
     })
-
     geoJsonArray.map( (geoJson,index) => {
         MAP.addSource(`${currentSkills[index]}`, 
         {type: 'geojson', data: geoJson })
