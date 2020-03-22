@@ -1,0 +1,141 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+ //login page
+ .container-login {
+    width: 100%;  
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: #f2f2f2;  
+  }
+
+  .wrap-login {
+    width: 390px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 77px 55px 33px 55px;
+
+    box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+    -o-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+    -ms-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .subtitles-login-page {
+    font-family: "MetropolisSemiBold";
+    font-size: 40px;
+    color: #2f78f3;
+    padding-bottom: 7px;
+    text-align: center;
+  }
+
+  .form-group {
+    font-family: "MetropolisRegular";
+    padding-top: 3px;
+    padding-bottom: 3px;
+    text-align: left;
+  }
+
+  .form-check {
+    padding-top: 8px;
+  }
+
+  .container-login100-form-btn {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 0px;
+  }
+
+  .wrap-login100-form-btn {
+    width: 100%;
+    display: block;
+    position: relative;
+    z-index: 1;
+    border-radius: 25px;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+
+  .login100-form-bgbtn {
+    position: absolute;
+    z-index: -1;
+    width: 300%;
+    height: 100%;
+    background: #a64bf4;
+    background: -webkit-linear-gradient(right, #21d4fd, #b721ff, #21d4fd, #b721ff);
+    background: -o-linear-gradient(right, #21d4fd, #b721ff, #21d4fd, #b721ff);
+    background: -moz-linear-gradient(right, #21d4fd, #b721ff, #21d4fd, #b721ff);
+    background: linear-gradient(right, #21d4fd, #b721ff, #21d4fd, #b721ff);
+    top: 0;
+    left: -100%;
+
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+  }
+
+  .login100-form-btn {
+    font-family: "MetropolisMedium";
+    font-size: 15px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 100%;
+    height: 50px;
+  }
+
+  .wrap-login100-form-btn:hover .login100-form-bgbtn {
+    left: 0;
+  }
+
+  .login-bottom {
+    font-family: "MetropolisLight";
+    font-size: 14px;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 1px;
+  }
+
+  p.alert {
+    font-family: "MetropolisMedium";
+    background-color: #2f78f3;
+    color: white;
+  } 
