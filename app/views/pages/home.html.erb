@@ -17,21 +17,9 @@
 
     </div>     
     <div class="search-item">
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ All</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ React</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Java</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Javascript</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ C++</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Styling</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Magento</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ SQL</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Python</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ C Sharp</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Swift</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ C+</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Python</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ Objective C</a>
-        <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ MongoDb</a>
+          <% @skills.each do |skill|%> 
+          <a href="#" class="btn btn-md u-btn-outline-primary g-mr-10 g-mb-15">+ <%= skill["name"]%></a>
+      <% end %>
     </div>
 </header>
 
@@ -195,17 +183,135 @@
     </section>
 
 <!-- Testimonials -->
-    <section class="testimonials-homepage">
-        <h2 class="subtitles-homepage">They believe in us. We believe in them.</h2>
-        <%= react_component "HomeTestimonials" %>
-    </section>
+ <section class="container-testimonials">
+	<div class="row">
+		<div class="col-sm-12">
+			<div id="myCarousel" class="carousel slide" data-ride="carousel">
+            			<h2 class="subtitles-homepage testimonials">They Believe in Us, We Believe In Them</h2>
+
+				<!-- Carousel indicators -->
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+				</ol>   
+				<!-- Wrapper for carousel items -->
+				<div class="carousel-inner"> 
+					<div class="item carousel-item active">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="media">
+									<div class="media-left d-flex mr-3">
+										<a href="#">
+											<img src="/examples/images/clients/1.jpg" alt="">
+										</a>
+									</div>
+									<div class="media-body">
+										<div class="testimonial">
+											<p>Lorem ipsum dolor sit amet, consec adipiscing elit. Nam eusem scelerisque tempor, varius quam luctus dui. Mauris magna metus nec.</p>
+											<p class="overview"><b>Adam Wilson</b>, Media Analyst</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="media">
+									<div class="media-left d-flex mr-3">
+										<a href="#">
+											<img src="/examples/images/clients/2.jpg" alt="">
+										</a>
+									</div>
+									<div class="media-body">
+										<div class="testimonial">
+											<p>Vestibulum quis quam ut magna consequat faucibus. Pellentesque eget mi suscipit tincidunt. Utmtc tempus dictum. Pellentesque virra.</p>
+											<p class="overview"><b>Brittany Moreno</b>, Web Developer</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>			
+					</div>
+					<div class="item carousel-item">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="media">
+									<div class="media-left d-flex mr-3">
+										<a href="#">
+											<img src="/examples/images/clients/3.jpg" alt="">
+										</a>
+									</div>
+									<div class="media-body">
+										<div class="testimonial">
+											<p>Lorem ipsum dolor sit amet, consec adipiscing elit. Nam eusem scelerisque tempor, varius quam luctus dui. Mauris magna metus nec.</p>
+											<p class="overview"><b>Cary Holz</b>, Seo Analyst</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="media">
+									<div class="media-left d-flex mr-3">
+										<a href="#">
+											<img src="/examples/images/clients/4.jpg" alt="">
+										</a>
+									</div>
+									<div class="media-body">
+										<div class="testimonial">
+											<p>Vestibulum quis quam ut magna consequat faucibus. Pellentesque eget mi suscipit tincidunt. Utmtc tempus dictum. Pellentesque virra.</p>
+											<p class="overview"><b>Derek Saveley</b>, Web Designer</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>			
+					</div>
+					<div class="item carousel-item">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="media">
+									<div class="media-left d-flex mr-3">
+										<a href="#">
+											<img src="/examples/images/clients/5.jpg" alt="">
+										</a>
+									</div>
+									<div class="media-body">
+										<div class="testimonial">
+											<p>Lorem ipsum dolor sit amet, consec adipiscing elit. Nam eusem scelerisque tempor, varius quam luctus dui. Mauris magna metus nec.</p>
+											<p class="overview"><b>Martin Sommer</b>, UX Analyst</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="media">
+									<div class="media-left d-flex mr-3">
+										<a href="#">
+											<img src="/examples/images/clients/6.jpg" alt="">
+										</a>
+									</div>
+									<div class="media-body">
+										<div class="testimonial">
+											<p>Vestibulum quis quam ut magna consequat faucibus. Pellentesque eget mi suscipit tincidunt. Utmtc tempus dictum. Pellentesque virra.</p>
+											<p class="overview"><b>John Williams</b>, Web Developer</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>			
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
 
  <!-- Footer -->
-<footer class="page-footer font-small blue pt-4">
+<%
+=begin%>
+ <footer class="page-footer font-small blue pt-4">
 
   <div class="container-box">
 
-  <!-- Footer Links -->
   <div class="container-fluid text-center text-md-left" id="footer-content">
     <div class="row">
       <div class="col-md-3 mb-md-0 mb-3">
@@ -261,7 +367,9 @@
     </div>
   </div>
 </div>
-</footer>
+</footer> 
+<%
+=end%>
 
 
 <%= stylesheet_link_tag 'home' %>
