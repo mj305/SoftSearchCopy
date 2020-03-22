@@ -48,7 +48,6 @@ end
   Job.create_or_find_by(
     position: Faker::Job.title,
     description: Faker::Lorem.paragraph,
-    date: Faker::Date.backward(days: 120),
     longitude: Faker::Address.longitude,
     latitude: Faker::Address.latitude,
     user_id: employers[rand(1...employers.length)].id

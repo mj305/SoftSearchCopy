@@ -5,10 +5,11 @@ Rails.application.routes.draw do
   get 'home/index'
   devise_for :users
   root 'pages#home'
-  resources :jobs
+  resources :jobs, only: [:index, :show, :new, :create]
   get "/pages/:page" => "pages#show"
 
   resource :map, only: [:show]
+  
 
   post '/search' => 'pages#search'
 
@@ -24,7 +25,7 @@ Rails.application.routes.draw do
     namespace :employers do
       resources :admins, only: [:index]
       root to: 'admins#index'
-      # resource :admin_job_applications, only: [:new, :create]
+      resources :jobs, only: [:new, :create]
 
       # root "pages#home"
     end
