@@ -130,6 +130,12 @@ p {
   vertical-align: super;
 }
 
+.background-title {
+  background-image: image-url('background-dots.png'); 
+  background-repeat: no-repeat;
+  background-position:70px 160px;
+}
+
 .cards {
   border-radius: 0.6rem;
   margin-top: 50px;
