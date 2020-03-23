@@ -1,6 +1,6 @@
 <div class="container-login">
     <div class="wrap-login post-page">
-        <h1 class=subtitles-login-page>Apply For This Job</h1>
+        <h1 class=subtitles-login-page>Apply To This Job</h1>
 
     <%= form_with(model: @job_app, url:applicants_job_applications_path, class: "subheading-subtitles-posting") do |f| %>
     <%= f.label :name %><%= f.text_field :name, class: "form-control" %>
@@ -13,49 +13,12 @@
     <br />
 
 <div class="skills-checkboxes">
-<h2 class="smallsubtitle">Choose Skill You Have</h2>
-    <%= f.label :Ruby %>
-    <%= f.check_box :Ruby %>
-
-    <%= f.label :Python %>
-    <%= f.check_box :Python %>
-
-    <%= f.label :"C++" %>
-    <%= f.check_box :"C++" %>
-
-    <%= f.label :Java %>
-    <%= f.check_box :Java %>
-
-    <%= f.label :React %>
-    <%= f.check_box :React %>
-
-    <%= f.label :C55 %>
-    <%= f.check_box :C55 %>
-
-    <%= f.label :Mangento %>
-    <%= f.check_box :Mangento %>
-
-    <%= f.label :SQL %>
-    <%= f.check_box :SQL %>
-    <br />
-
-    <%= f.label :"C#" %>
-    <%= f.check_box :"C#" %>
-
-    <%= f.label :Swift %>
-    <%= f.check_box :Swift %>
-
-    <%= f.label :Objective_C %>
-    <%= f.check_box :Objective_C %>
-
-    <%= f.label :Javascript %>
-    <%= f.check_box :Javascript %>
-
-    <%= f.label :CSS %>
-    <%= f.check_box :CSS %>
-
-    <%= f.label :HTML %>
-    <%= f.check_box :HTML %>
+<h2 class="smallsubtitle">Choose Skill(S) You Have</h2>
+        <% Skill.all.each do |skill|%>
+        <%= check_box_tag "#{skill["name"]}", "yes" %>
+        <%= label_tag "#{skill["name"]}" %>
+        <% end %>
+        </div>
 
 <div class="container-login100-form-btn">
   <div class="wrap-login100-form-btn">
