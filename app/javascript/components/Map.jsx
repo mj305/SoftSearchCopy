@@ -19,7 +19,7 @@ const style = {
     height: "100vh"
 }
 
-const Map = ({ API_KEY, jobs, all_skills }) => {
+const Map = ({ API_KEY, jobs, all_skills, userID }) => {
     const [filteredJobs, setFilteredJobs] = useState([])
     const [apiJobs, setApiJobs] = useState([])
     const [visibleSkills, setVisibleSkills] = useState(Object.keys(jobs.job_data[1]))
@@ -47,6 +47,8 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
             map.remove()
         }
     },[])
+
+    console.log(userID)
 
     useEffect(() => {
         if(!query) return
@@ -173,7 +175,7 @@ const Map = ({ API_KEY, jobs, all_skills }) => {
                         <input id="map-search-input" className="form-control mr-sm-2" type="text" name={query} onChange={e => setSearch(e.target.value)}/>
                         <input className='banner_input-button' type="submit"/>
                     </form>
-                    <Jobs jobs={currentJobs} loading={loading} />
+                    <Jobs userID={userID} jobs={currentJobs} loading={loading} />
 
                     {/* <Pagination jobsPerPage={jobsPerPage} totalJobs={filteredJobs.length} paginate={paginate} /> */}
                 </div>

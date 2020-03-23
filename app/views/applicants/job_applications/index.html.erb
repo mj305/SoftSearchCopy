@@ -1,6 +1,7 @@
 <h1>Job applications </h1>
 
-<%= form_with(model: @job_app, url:applicants_job_applications_path) do |f| %>
+<%= form_with(model: @job_app, url:applicants_user_job_applications_path) do |f| %>
+
 <%= f.label :name %>
 <%= f.text_field :name %>
 <br />
