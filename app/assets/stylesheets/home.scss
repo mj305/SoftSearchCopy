@@ -56,6 +56,11 @@ form {
   background: radial-gradient(circle, rgba(86,172,254,1) 0%, rgba(47,119,242,1) 71%);
 }
 
+.background-banner {
+  background-image: image-url('banner-noise.png'); 
+  background-repeat: no-repeat;
+}
+
 .top-banner-homepage {
   padding: 170px 30px 130px 30px;
 }
