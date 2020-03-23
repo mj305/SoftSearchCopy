@@ -425,23 +425,22 @@ footer {
   .search-item { 
     width: 95%;
   }
+  
+  .about-homepage {
+    padding: 50px 80px 10px;
+  }
 
+  .testimonials-homepage {
+    padding: 100px 80px 30px;
+  }
 
-.about-homepage {
-  padding: 50px 80px 10px;
-}
+  .subtitles-homepage {
+    margin-left: -30px;
+  }
 
-.testimonials-homepage {
-  padding: 100px 80px 30px;
-}
-
-.subtitles-homepage {
-  margin-left: -30px;
-}
-
-.subsheading-subtitles-homepage {
-  padding: 0px 10px;
-}
+  .subsheading-subtitles-homepage {
+    padding: 0px 10px;
+  }
 }
 
 @media screen and (max-width: 1200px) {
