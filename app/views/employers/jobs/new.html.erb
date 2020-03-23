@@ -2,9 +2,9 @@
     <div class="wrap-login post-page">
         <h1 class=subtitles-login-page>Post a Job Listing</h1>
 
-        <%= form_with(model: @job, url:new_employers_job_path, class: "subheading-subtitles-posting") do |f| %>
+        <%= form_with(model: @job, url: employers_jobs_path, class: "subheading-subtitles-posting") do |f| %>
         <%= f.label :company %>
-        <%= f.text_field :companyname, class: "form-control" %>
+        <%= f.text_field :company_name, class: "form-control" %>
         <br>
         <%= f.label :position %>
         <%= f.text_field :position, class: "form-control" %>
@@ -19,20 +19,16 @@
         <%= f.label :latitude %>
         <%= f.number_field :latitude, class: "form-control" %>
 
-
         <div class="skills-checkboxes">
             <h2 class="smallsubtitle">Choose Required Skill(s)</h2>
-            <% @skills.each do |skill|%>
-            <%= check_box_tag "#{skill["name"]}", "yes" %>
-            <%= label_tag "#{skill["name"]}" %>
-            <% end %>
+            <%= f.collection_check_boxes :skills, @skills, :id, :name %>
         </div>
         <br>
         <div class="container-login100-form-btn">
             <div class="wrap-login100-form-btn">
                 <div class="login100-form-bgbtn"></div>
                 <button class="login100-form-btn">
-                    <a href="/employers/jobs/"> <%= f.submit "Submit"%> </a>
+                     <%= f.submit "Submit"%>
                 </button>
             </div>
         </div>
