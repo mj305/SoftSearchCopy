@@ -148,9 +148,7 @@ const Map = ({ API_KEY, jobs, all_skills, userID }) => {
     } 
 
     return(
-        <>                        {/* <a onClick={() => paginate(number)} href="miami" className='page-link'>
-        {number}
-    </a> */}
+        <>                        
             <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}> 
                 <button style={{marginBottom:'5rem'}} onClick={() => setQuery('GET_ALL')}>SEE ALL JOBS</button>
             </div>

@@ -8,7 +8,6 @@ RSpec.describe Job, type: :model do
     described_class.new(
       position: "sr. dev",
       description: "Loremh",
-      date: "02/03/2020",
       longitude: -80.2,
       latitude:45.1,
       user_id: User.create(email:"blah@yahoo.com",password:"123456", employer:true).id 
@@ -27,10 +26,6 @@ RSpec.describe Job, type: :model do
 
     it "is not valid without a description" do
       should validate_presence_of(:description)
-    end
-
-    it "is not valid without a date" do
-      should validate_presence_of(:date)
     end
 
     it "is not valid without a longitude" do
