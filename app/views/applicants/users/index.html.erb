@@ -1,7 +1,25 @@
-<h1>New User Page</h1>
-
-<% if current_user %>   
-    <h1>I am logged in</h1>
-<% else %>
-    <h1>I am not logged in </h1>
-<% end %>
+<a href="/applicants/users" class="btn btn-md u-btn-primary g-mr-10 g-mb-15">Job Favorites</a>
+<hr />
+<% if @user_favorites.exists? %>
+<div class="bg-white rounded shadow table-responsive" style="width: 90vw;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="p-3 uppercase text-left text-xs text-gray-700">ID</th>
+                <th class="p-3 uppercase text-left text-xs text-gray-700">Job</th>
+                <th class="p-3 uppercase text-left text-xs text-gray-700">date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @user_favorites.each do |favorite| %>
+            <tr class="group border-t border-gray-400 hover:bg-gray-100">
+                <td class="p-3"><%= favorite.user_id %></td>
+                <td class="p-3"><%= favorite.job_id %></td>
+                <%= link_to "View", "user_favorites/#{favorite.id}", class: "btn btn-link no-underline" %>
+                </td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <% end %>
+</div>
