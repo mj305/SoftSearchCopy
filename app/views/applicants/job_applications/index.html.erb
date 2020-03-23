@@ -2,17 +2,18 @@
     <div class="wrap-login post-page">
         <h1 class=subtitles-login-page>Job applications</h1>
 
-    <%= form_with(model: @job_app, url:applicants_job_applications_path) do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= form_with(model: @job_app, url:applicants_job_applications_path, class: "subheading-subtitles-posting") do |f| %>
+    <%= f.label :name %><%= f.text_field :name, class: "form-control" %>
     <br />
     <%= f.label :job_id %>
-    <%= f.text_field :job_id %>
+    <%= f.text_field :job_id, class: "form-control" %>
     <br />
     <%= f.label :email %>
-    <%= f.text_field :email %>
+    <%= f.text_field :email, class: "form-control" %>
     <br />
 
+<div class="skills-checkboxes">
+<h2 class="smallsubtitle">Choose Skill You Have</h2>
     <%= f.label :Ruby %>
     <%= f.check_box :Ruby %>
 
@@ -56,8 +57,16 @@
     <%= f.label :HTML %>
     <%= f.check_box :HTML %>
 
-    <%= f.submit "Submit"%>
+<div class="container-login100-form-btn">
+  <div class="wrap-login100-form-btn">
+  <div class="login100-form-bgbtn"></div>
+  <button class="login100-form-btn">
+      <%= f.submit "Submit", class: 'login100-form-btn' %>
+          </button>
+  </div>
+  </div>
 
+</div>
 </div>
 </div>
 <% end %>
