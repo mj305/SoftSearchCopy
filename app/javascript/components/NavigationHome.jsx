@@ -1,10 +1,11 @@
 import React from 'react';
-// import logo from './logo.png';
+// import logo from 'app/assets/images/logo.png';
 
 const Navigation = ({ isSignedIn }) => {
   return (
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3">
     <h5 class="my-0 mr-md-auto font-weight-normal">kdpmfss Logo</h5>
+{/* <img src={logo} alt="logo" className="logo-img" /> */}
     <nav id="navlinks" class="my-2 my-md-0 mr-md-4">
       <a class="p-2 text-white" href="/employers/jobs/new">Post a Job</a>
       <a class="p-2 text-white px-4" href="/map?location=GET_ALL">Find Jobs</a>
