@@ -19,6 +19,7 @@
                 <th class="p-3 uppercase text-left text-xs text-gray-700">date</th>
                 <th class="p-3 uppercase text-left text-xs text-gray-700">Longitude</th>
                 <th class="p-3 uppercase text-left text-xs text-gray-700">Latitude</th>
+                <th class="p-3 uppercase text-left text-xs text-gray-700">Skills</th>
                 <th class="p-3 uppercase text-left text-xs text-gray-700">User</th>
                 <th class="p-3 uppercase text-left text-xs text-gray-700 w-20">Actions</th>
             </tr>
@@ -32,6 +33,8 @@
                 <td class="p-3"><%= job.created_at %></td>
                 <td class="p-3"><%= job.longitude %></td>
                 <td class="p-3"><%= job.latitude %></td>
+                <td class="p-3"><%= job.latitude %></td>
+                <td class="p-3"><%= job.skill_names %></td>
                 <td class="p-3"><%= job.user.email %></td>
                 <td>
                     <%= link_to "View", "jobs/#{job.id}", class: "btn btn-link no-underline" %>

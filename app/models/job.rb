@@ -8,6 +8,11 @@ class Job < ApplicationRecord
 
   # function that calculates distance between two points 
   # on a spherical surface with Haversine formula
+
+  def skill_names 
+    skills.map { |s| s.name }.join(', ')
+  end 
+
   def self.calc_dist(lon1,lat1,lon2,lat2)
     deg2rad = Math::PI/180
 
