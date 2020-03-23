@@ -23,7 +23,6 @@ module MetaData
     Job.create(
         position: "sr. dev",
         description: "Loremh",
-        date: "02/03/2020",
         longitude: -80.2,
         latitude:45.1,
         user_id: id
@@ -31,7 +30,6 @@ module MetaData
     Job.create(
         position: "jr. dev",
         description: "Lsdfsdfsforemh",
-        date: "01/03/2020",
         longitude: -80.2,
         latitude:45.1,
         user_id: id

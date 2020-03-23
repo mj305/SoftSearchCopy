@@ -8,5 +8,5 @@ class Applicants::UserBaseController < ApplicationController
     unless current_user && (current_user.employer == false)
       redirect_to root_path
     end
-end
+  end
 end

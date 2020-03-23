@@ -8,6 +8,6 @@
 {
     API_KEY: ENV['MAPBOX_KEY'],
     jobs: @jobs,
-    all_skills: Skill.all
-
+    all_skills: Skill.all,
+    userID: current_user.id
 }) %>
