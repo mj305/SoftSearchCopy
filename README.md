@@ -1,67 +1,44 @@
-# Final Project: Before You Can Start!
+# Soft Search
 
-## TODO: Submit your wireframes in the form of a pull request
+Soft Search is a career search web application specifically created for Software Development.
 
-This example wireframe lives in `readme_assets/wireframe_example.jpg`
+The application is a personalized job platform that provides the user a career opportunity feed that most approaches the user’s skill set. Users can find career opportunities based on location by displaying the job postings on a map.
 
-Swap it out with your actual wireframes...
 
-![Wireframe Example](readme_assets/wireframe_example.jpg)
+## CONTRIBUTORS
+Elvis Hernandez
+Iman Bashir
+Leigh Chin
+Maria Beckles
 
-## TODO: Submit your ERD in the form of a pull request
 
-This example Entity Relational Diagram lives in `readme_assets/erd_example.png`
+# Technologies used
+Ruby →  2.6.0 or higher
+Bootstrap 
+React-rails
+Faker gem to seed the database
+postgresql as the database
+Mapbox Gl JS
 
-![ERD Example](readme_assets/erd_example.png)
+# Proper authentication system 
+The API Website: https://bit.ly/MapBoxGL
+Sign up with your email.
+Get your API Key.
+Create environment variable:  MAPBOX_KEY=API_KEY
+Place API Key in the .env file.
 
-Swap it out with your actual ERD...
+# Setup To Start
+rails db:create
+rails db:migrate
+bundle
+yarn
+rails s
+Open http://localhost:3000 to view in the browser.
 
-# README
+# Deployment
+heroku create
+git push heroku master
+heroku run rake db:migrate
+Heroku open
 
-This is a boilerplate Rails project that uses:
 
-* `ruby ~> 2.7`
-* `postgresql` as the database
-* `webpacker` with `react`
-* the `react_on_rails` gem
-
-## Instructor Setup
-
-* `git clone git@github.com:wyncode/final_project_template.git`
-* `cd final_project_template`
-* `git remote remove origin`
-* Create a repo on GitHub that matches the project name
-* `git remote add origin that-repo-name` && `git push origin -u master`
-* Make `master` a [protected branch](https://help.github.com/articles/configuring-protected-branches/)
-* Pull Requests should only be mergeable after 2 reviews
-* At least 1 review needs to be from a [CODEOWNER](https://help.github.com/articles/about-codeowners/)
-* Invite team members as collaborators with write access
-* Create a Slack Channel, invite team members and TAs
-* in Slack: `/github subscribe wyncode/repo_name issues,reviews,comments`
-
-## Student Setup
-
-* `rails db:create` (with your Postgres server up and running)
-* `bundle`
-* `yarn`
-* `rails s`
-
-## Collaboration
-
-* Talk to an instructor about the next feature / enhancement / bugfix you would like to address
-* Create an issue with a User Story and Acceptance Criteria
-* Create a branch that corresponds with your issue
-* Submit a pull request into master
-* Request a code review from one of your teammates
-* Once it's approved, request a code review from one or more of the project's [CODEOWNERS](CODEOWNERS)
-
-## Deployment
-
-### The Node.js buildback must be added first or precompiling of assets may fail on Heroku: [See this issue](https://github.com/rails/webpacker/issues/1164#issuecomment-443474860)
-
-* `heroku create your-app-name`
-* `heroku buildpacks:set --index 1 heroku/nodejs`
-* `heroku buildpacks:add heroku/ruby`
-* `git push heroku master`
-* `heroku run rails db:migrate`
-* _optional_: `heroku run rails db:seed`
