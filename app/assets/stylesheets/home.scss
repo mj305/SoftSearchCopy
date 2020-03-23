@@ -403,16 +403,17 @@ li {
     border: 5px double;    
 }
 //footer
-// footer {
-//   margin-top: 50px;
-//   height: 100px;
-//   background: #F5F9FA;
-//   font-size: 14px;
-// }
+footer {
+  margin-top: 0px;
+  height: 100px;
+  background: white !important;
+  font-size: 16px;
+}
 
-// #footer-content {
-//   padding: 20px 0px 30px 0px;
-// }
+.footer-container {
+  margin-top: 30px;
+  background-color: #f8f9fa!important;
+}
 
 // .footer-hd-color {
 //   color: #2f78f3;
