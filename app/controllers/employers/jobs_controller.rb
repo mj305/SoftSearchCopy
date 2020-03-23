@@ -13,11 +13,12 @@ class Employers::JobsController < Employers::AdminBaseController
   end
   def create
     job = Job.new(job_params)
-    if job.save
-      redirect_to job
-   else
-      redirect_to new_job_path, alert:job.errors.full_messages.to_sentence
-   end
+  #   if job.save
+  #     redirect_to job
+  #  else
+  #     redirect_to new_job_path, alert:job.errors.full_messages.to_sentence
+  #  end
+  job.save
   end
 
   private

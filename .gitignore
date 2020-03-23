@@ -32,3 +32,7 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+
+# readme assets added to prevent future problems
+/readme_assets
