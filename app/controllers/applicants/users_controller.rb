@@ -1,5 +1,4 @@
 class Applicants::UsersController < Applicants::UserBaseController
-   
     def index
         @user_favorites = UserFavorite.all
     end

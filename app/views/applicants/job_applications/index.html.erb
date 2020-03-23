@@ -1,58 +1,36 @@
-<h1>Job applications </h1>
 
-<%= form_with(model: @job_app, url:applicants_job_applications_path) do |f| %>
-<%= f.label :name %>
-<%= f.text_field :name %>
-<br />
-<%= f.label :job_id %>
-<%= f.text_field :job_id %>
-<br />
-<%= f.label :email %>
-<%= f.text_field :email %>
-<br />
+<div class="container-login">
+    <div class="wrap-login post-page">
+        <h1 class=subtitles-login-page>Apply To This Job</h1>
 
-<%= f.label :Ruby %>
-<%= f.check_box :Ruby %>
+    <%= form_with(model: @job_app, url:applicants_job_applications_path, class: "subheading-subtitles-posting") do |f| %>
+    <%= f.label :name %><%= f.text_field :name, class: "form-control" %>
+    <br />
+    <%= f.label :job_id %>
+    <%= f.text_field :job_id, class: "form-control" %>
+    <br />
+    <%= f.label :email %>
+    <%= f.text_field :email, class: "form-control" %>
+    <br />
 
-<%= f.label :Python %>
-<%= f.check_box :Python %>
+<div class="skills-checkboxes">
+<h2 class="smallsubtitle">Choose Skill(S) You Have</h2>
+        <% Skill.all.each do |skill|%>
+        <%= check_box_tag "#{skill["name"]}", "yes" %>
+        <%= label_tag "#{skill["name"]}" %>
+        <% end %>
+        </div>
 
-<%= f.label :"C++" %>
-<%= f.check_box :"C++" %>
+<div class="container-login100-form-btn">
+  <div class="wrap-login100-form-btn">
+  <div class="login100-form-bgbtn"></div>
+  <button class="login100-form-btn">
+      <%= f.submit "Submit", class: 'login100-form-btn' %>
+          </button>
+  </div>
+  </div>
 
-<%= f.label :Java %>
-<%= f.check_box :Java %>
-
-<%= f.label :React %>
-<%= f.check_box :React %>
-
-<%= f.label :C55 %>
-<%= f.check_box :C55 %>
-
-<%= f.label :Mangento %>
-<%= f.check_box :Mangento %>
-
-<%= f.label :SQL %>
-<%= f.check_box :SQL %>
-<br />
-
-<%= f.label :"C#" %>
-<%= f.check_box :"C#" %>
-
-<%= f.label :Swift %>
-<%= f.check_box :Swift %>
-
-<%= f.label :Objective_C %>
-<%= f.check_box :Objective_C %>
-
-<%= f.label :Javascript %>
-<%= f.check_box :Javascript %>
-
-<%= f.label :CSS %>
-<%= f.check_box :CSS %>
-
-<%= f.label :HTML %>
-<%= f.check_box :HTML %>
-
-<%= f.submit "Submit"%>
+</div>
+</div>
+</div>
 <% end %>
