@@ -415,46 +415,49 @@ footer {
   background-color: #f8f9fa!important;
 }
 
-// .footer-hd-color {
-//   color: #2f78f3;
-//   font-size: 16px !important;
-// }
+//Responsivity 
+@media screen and (max-width: 430px) {
+  .form_input {
+    margin-bottom: 10px;
+    width: 80%;
+  }
 
-// .footer-ct-color {
-//   color: #525f7f;
-// }
+  .search-item { 
+    width: 95%;
+  }
 
-// @media screen and (max-width: 600px) {
-//   .title-homepage {
-//     font-size: 40px;
-//   }
-// }
 
-// @media screen and (max-width: 430px) {
-//   .form_input {
-//     margin-bottom: 10px;
-//     width: 80%;
-//   }
+.about-homepage {
+  padding: 50px 80px 10px;
+}
 
-//   .search-item { 
-//     width: 95%;
-//   }
-// }
+.testimonials-homepage {
+  padding: 100px 80px 30px;
+}
 
-// @media screen and (max-width: 1200px) {
-//   .about-homepage {
-//     padding: 100px 80px 10px;
-//   }
+.subtitles-homepage {
+  margin-left: -30px;
+}
 
-//   .testimonials-homepage {
-//     padding: 100px 80px 30px;
-//   }
+.subsheading-subtitles-homepage {
+  padding: 0px 10px;
+}
+}
 
-//   .subtitles-homepage {
-//     margin-left: -13px;
-//   }
+@media screen and (max-width: 1200px) {
+  .about-homepage {
+    padding: 100px 80px 10px;
+  }
 
-//   .subsheading-subtitles-homepage {
-//     padding: 0px 10px;
-//   }
-// }
+  .testimonials-homepage {
+    padding: 100px 80px 30px;
+  }
+
+  .subtitles-homepage {
+    margin-left: -13px;
+  }
+
+  .subsheading-subtitles-homepage {
+    padding: 0px 10px;
+  }
+}
